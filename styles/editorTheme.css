@@ -1,5 +1,9 @@
 .editor-container {
-	@apply relative;
+	@apply relative h-full;
+}
+
+.editor-input {
+	@apply outline-0 h-full;
 }
 
 .ltr {
@@ -16,10 +20,6 @@
 
 .editor-paragraph {
 	@apply relative;
-}
-
-.editor-input {
-	@apply outline-0;
 }
 
 .editor-text-bold {
