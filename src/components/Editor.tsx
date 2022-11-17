@@ -13,13 +13,16 @@ import { defaulTheme } from './theme'
 
 // When the editor changes, you can get notified via the
 // LexicalOnChangePlugin!
-function onChange(editorState: EditorState) {
+function onChange(editorState: EditorState, setText: Function) {
 	editorState.read(() => {
 		// Read the contents of the EditorState here.
 		const root = $getRoot()
 		const selection = $getSelection()
 
-		console.log(root, selection)
+		// console.log(root, selection)
+		// setText(editorState.)
+		const jsonData = editorState.toJSON()
+		setText(JSON.stringify(jsonData))
 	})
 }
 
@@ -45,7 +48,11 @@ function onError(error: any) {
 	console.error(error)
 }
 
-export default function Editor() {
+type Props = {
+	setText: Function
+}
+
+export default function Editor(props: Props) {
 	const initialConfig = {
 		namespace: 'MyEditor',
 		theme: defaulTheme,
@@ -62,7 +69,7 @@ export default function Editor() {
 					}
 					ErrorBoundary={LexicalErrorBoundary}
 				/>
-				<OnChangePlugin onChange={onChange} />
+				<OnChangePlugin onChange={(es) => onChange(es, props.setText)} />
 				<HistoryPlugin />
 				<MyCustomAutoFocusPlugin />
 			</div>
