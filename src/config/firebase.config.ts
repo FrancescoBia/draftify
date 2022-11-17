@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app'
+import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCQSjLvkWIxLanzecsl_SdbyIUngvOPSjg',
@@ -9,4 +10,10 @@ const firebaseConfig = {
 	appId: '1:1078150081537:web:e48f1a5e8475ca90062400',
 }
 
-export const app = initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig)
+const database = getFirestore(app)
+
+// emulators
+connectFirestoreEmulator(database, 'localhost', 8080)
+
+export { database }
