@@ -4,17 +4,12 @@ import { useEffect } from 'react'
 import { EditorState } from 'lexical'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
-import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
-
-const theme = {
-	// Theme styling goes here
-	// ...
-}
+import { defaulTheme } from './theme'
 
 // When the editor changes, you can get notified via the
 // LexicalOnChangePlugin!
@@ -50,10 +45,10 @@ function onError(error: any) {
 	console.error(error)
 }
 
-export function Editor() {
+export default function Editor() {
 	const initialConfig = {
 		namespace: 'MyEditor',
-		theme,
+		theme: defaulTheme,
 		onError,
 	}
 
@@ -61,7 +56,9 @@ export function Editor() {
 		<LexicalComposer initialConfig={initialConfig}>
 			<RichTextPlugin
 				contentEditable={<ContentEditable />}
-				placeholder={<div>Enter some text...</div>}
+				placeholder={
+					<div className='editor-placeholder'>Enter some text...</div>
+				}
 				ErrorBoundary={LexicalErrorBoundary}
 			/>
 			<OnChangePlugin onChange={onChange} />

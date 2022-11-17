@@ -1,0 +1,19 @@
+.ltr {
+	@apply text-left;
+}
+
+.rtl {
+	@apply text-right;
+}
+
+.editor-placeholder {
+	@apply text-gray-400 absolute top-4 left-4 select-none pointer-events-none;
+}
+
+.editor-paragraph {
+	@apply relative;
+}
+
+.editor-text-bold {
+	@apply text-red-500;
+}

@@ -1,4 +1,6 @@
-const exampleTheme = {
+// NB the style/CSS file of this is in the global "styles" folder in root
+
+export const defaulTheme = {
 	ltr: 'ltr',
 	rtl: 'rtl',
 	placeholder: 'editor-placeholder',
@@ -65,5 +67,3 @@ const exampleTheme = {
 		variable: 'editor-tokenVariable',
 	},
 }
-
-export default exampleTheme

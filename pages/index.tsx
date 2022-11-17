@@ -1,5 +1,8 @@
 import Head from 'next/head'
-import { Editor } from '../src/components/Editor'
+import dynamic from 'next/dynamic'
+const Editor = dynamic(() => import('../src/components/Editor'), {
+	ssr: false,
+})
 
 export default function Home() {
 	return (
@@ -10,9 +13,9 @@ export default function Home() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<main>
+			<div className='p-4 h-full'>
 				<Editor />
-			</main>
+			</div>
 		</div>
 	)
 }
