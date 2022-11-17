@@ -1,3 +1,7 @@
+.editor-container {
+	@apply relative;
+}
+
 .ltr {
 	@apply text-left;
 }
@@ -7,11 +11,15 @@
 }
 
 .editor-placeholder {
-	@apply text-gray-400 absolute top-4 left-4 select-none pointer-events-none;
+	@apply text-gray-400 absolute top-0 left-0 select-none pointer-events-none;
 }
 
 .editor-paragraph {
 	@apply relative;
+}
+
+.editor-input {
+	@apply outline-0;
 }
 
 .editor-text-bold {

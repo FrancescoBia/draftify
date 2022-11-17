@@ -54,16 +54,18 @@ export default function Editor() {
 
 	return (
 		<LexicalComposer initialConfig={initialConfig}>
-			<RichTextPlugin
-				contentEditable={<ContentEditable />}
-				placeholder={
-					<div className='editor-placeholder'>Enter some text...</div>
-				}
-				ErrorBoundary={LexicalErrorBoundary}
-			/>
-			<OnChangePlugin onChange={onChange} />
-			<HistoryPlugin />
-			<MyCustomAutoFocusPlugin />
+			<div className='editor-container'>
+				<RichTextPlugin
+					contentEditable={<ContentEditable className='editor-input' />}
+					placeholder={
+						<div className='editor-placeholder'>Enter some text...</div>
+					}
+					ErrorBoundary={LexicalErrorBoundary}
+				/>
+				<OnChangePlugin onChange={onChange} />
+				<HistoryPlugin />
+				<MyCustomAutoFocusPlugin />
+			</div>
 		</LexicalComposer>
 	)
 }
