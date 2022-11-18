@@ -7,15 +7,15 @@ const Editor = dynamic(() => import('../src/components/Editor'), {
 
 import { fetchNote, saveNote } from '../src/controllers/firebase'
 
-const initialText =
-	'{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Lorem ipsum dolorem sit amet","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":1,"mode":"normal","style":"","text":"This text should be in bold","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":2,"mode":"normal","style":"","text":"This should be in italic","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
-
 export default function Home() {
 	const [text, setText] = useState('')
 
 	function saveText() {
+		const today = new Date().toISOString()
+		const dateKey = today.substring(0, 10)
+
 		const myNote: Note = {
-			id: 'my-new-note',
+			id: dateKey,
 			dateCreated: 'today',
 			lastModified: 'today',
 			content: text,
@@ -26,7 +26,10 @@ export default function Home() {
 	}
 
 	useEffect(() => {
-		fetchNote({ noteId: 'my-new-note' }).then((note) => setText(note?.content))
+		const today = new Date().toISOString()
+		const dateKey = today.substring(0, 10)
+
+		fetchNote({ noteId: dateKey }).then((note) => setText(note?.content))
 	}, [])
 
 	return (
