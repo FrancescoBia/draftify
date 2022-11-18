@@ -58,6 +58,7 @@ function onError(error: any) {
 type Props = {
 	setText: Function
 	initialText: string
+	placeholder?: string
 }
 
 type InitialConfig = Parameters<typeof LexicalComposer>[0]['initialConfig']
@@ -89,7 +90,7 @@ export default function Editor(props: Props) {
 				<RichTextPlugin
 					contentEditable={<ContentEditable className='editor-input' />}
 					placeholder={
-						<div className='editor-placeholder'>Enter some text...</div>
+						<div className='editor-placeholder'>{props.placeholder}</div>
 					}
 					ErrorBoundary={LexicalErrorBoundary}
 				/>
