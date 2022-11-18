@@ -6,6 +6,7 @@ const Editor = dynamic(() => import('../src/components/Editor'), {
 })
 
 import { fetchNote, saveNote } from '../src/controllers/firebase'
+import { Navigator } from '../src/components/Navigator'
 
 export default function Home() {
 	const [text, setText] = useState('')
@@ -41,9 +42,7 @@ export default function Home() {
 			</Head>
 
 			<div className='h-screen flex'>
-				<div className='h-full w-12 bg-gray-100 group'>
-					<div className='absolute z-10 top-0 left-0 w-56 bg-white h-screen shadow-lg hidden group-hover:block opacity-0 hover:opacity-100 transition-opacity duration-500'></div>
-				</div>
+				<Navigator />
 				<div className='grow flex flex-col h-full overflow-y-scroll'>
 					<div className='max-w-2xl mx-auto mb-20'>
 						<div className='p-4 flex justify-between items-center'>
