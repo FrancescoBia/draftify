@@ -1,3 +1,8 @@
+/* 
+Default styles
+https://codesandbox.io/s/lexical-rich-text-example-5tncvy?file=/src/styles.css
+*/
+
 .editor-container {
 	@apply relative h-full;
 }
@@ -24,4 +29,8 @@
 
 .editor-text-bold {
 	@apply text-red-500;
+}
+
+.editor-heading-h1 {
+	@apply text-2xl font-bold;
 }
