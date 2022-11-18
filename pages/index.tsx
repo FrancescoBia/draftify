@@ -48,8 +48,8 @@ export default function Home() {
 
 			<div className='h-screen flex'>
 				<Navigator />
-				<div className='grow flex flex-col h-full overflow-y-scroll'>
-					<div className='max-w-2xl mx-auto mb-20'>
+				<div className='grow flex h-full overflow-y-scroll justify-center'>
+					<div className='max-w-2xl mb-20 grow'>
 						<div className='p-4 flex justify-between items-center'>
 							<p className='text-gray-500'>18th November</p>
 							<button
