@@ -5,6 +5,8 @@ const Editor = dynamic(() => import('../src/components/Editor'), {
 	ssr: false,
 })
 
+import { saveNote } from '../src/controllers/firebase'
+
 const initialText =
 	'{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Lorem ipsum dolorem sit amet","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":1,"mode":"normal","style":"","text":"This text should be in bold","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":2,"mode":"normal","style":"","text":"This should be in italic","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
 
@@ -12,7 +14,13 @@ export default function Home() {
 	const [text, setText] = useState('')
 
 	function saveText() {
-		console.log(text)
+		const myNote: Note = {
+			id: 'my-new-note',
+			dateCreated: 'today',
+			lastModified: 'today',
+			content: text,
+		}
+		saveNote({ note: myNote })
 	}
 
 	return (

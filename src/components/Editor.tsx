@@ -1,7 +1,6 @@
-import { $getRoot, $getSelection, LexicalCommand } from 'lexical'
+import { $getRoot, $getSelection } from 'lexical'
 import { useEffect } from 'react'
 
-import { InitialEditorStateType } from '@lexical/react/LexicalComposer'
 import { EditorState } from 'lexical'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
