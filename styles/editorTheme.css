@@ -8,7 +8,7 @@ https://codesandbox.io/s/lexical-rich-text-example-5tncvy?file=/src/styles.css
 }
 
 .editor-input {
-	@apply outline-0 h-full text-gray-800;
+	@apply outline-0 h-full text-gray-800 dark:text-gray-200;
 }
 
 .editor-input > * {
