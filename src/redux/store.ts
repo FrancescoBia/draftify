@@ -1,7 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import noteReducer from './note-slice'
 
 export const store = configureStore({
-	reducer: {},
+	reducer: {
+		note: noteReducer,
+	},
 	enhancers: [],
 })
 

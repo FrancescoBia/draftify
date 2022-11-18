@@ -56,7 +56,7 @@ function onError(error: any) {
 }
 
 type Props = {
-	setText: Function
+	setText: (value: string) => any
 	initialText: string
 	placeholder?: string
 }

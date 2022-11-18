@@ -5,10 +5,15 @@ const Editor = dynamic(() => import('../src/components/Editor'), {
 	ssr: false,
 })
 
-import { fetchNote, saveNote } from '../src/controllers/firebase'
+import { useAppSelector, useAppDispatch } from '../src/redux/hooks'
+
+import { _saveNote } from '../src/controllers/firebase'
 import { Navigator } from '../src/components/Navigator'
+import { fetchNote } from '../src/redux/note-slice'
 
 export default function Home() {
+	const dispatch = useAppDispatch()
+	const note = useAppSelector((s) => s.note)
 	const [text, setText] = useState('')
 
 	function saveText() {
@@ -21,7 +26,7 @@ export default function Home() {
 			lastModified: 'today',
 			content: text,
 		}
-		saveNote({ note: myNote }).then(() => {
+		_saveNote({ note: myNote }).then(() => {
 			console.log('note saved')
 		})
 	}
@@ -30,8 +35,8 @@ export default function Home() {
 		const today = new Date().toISOString()
 		const dateKey = today.substring(0, 10)
 
-		fetchNote({ noteId: dateKey }).then((note) => setText(note?.content))
-	}, [])
+		dispatch(fetchNote({ noteId: dateKey })).unwrap()
+	}, [dispatch])
 
 	return (
 		<>
@@ -56,11 +61,13 @@ export default function Home() {
 							</button>
 						</div>
 						<div className='grow p-4'>
-							<Editor
-								setText={setText}
-								initialText={text}
-								placeholder='What you are you thinking?'
-							/>
+							{note && (
+								<Editor
+									setText={setText}
+									initialText={note.content}
+									placeholder='What you are you thinking?'
+								/>
+							)}
 						</div>
 					</div>
 				</div>
