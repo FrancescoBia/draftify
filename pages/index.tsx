@@ -24,7 +24,7 @@ export default function Home() {
 			id: dateKey,
 			dateCreated: 'today',
 			lastModified: 'today',
-			content: text,
+			content: JSON.parse(text),
 		}
 		_saveNote({ note: myNote }).then(() => {
 			console.log('note saved')
@@ -64,7 +64,7 @@ export default function Home() {
 							{note && (
 								<Editor
 									setText={setText}
-									initialText={note.content}
+									initialText={JSON.stringify(note.content)}
 									placeholder='What you are you thinking?'
 								/>
 							)}

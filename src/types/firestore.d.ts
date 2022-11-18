@@ -7,7 +7,7 @@ interface Note {
 	readonly dateCreated: string
 	lastModified: string
 	// title?: string
-	content: string
+	content: string | any
 }
 
 interface Workspace {
