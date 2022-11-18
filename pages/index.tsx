@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 const Editor = dynamic(() => import('../src/components/Editor'), {
 	ssr: false,
 })
 
-import { saveNote } from '../src/controllers/firebase'
+import { fetchNote, saveNote } from '../src/controllers/firebase'
 
 const initialText =
 	'{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Lorem ipsum dolorem sit amet","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":1,"mode":"normal","style":"","text":"This text should be in bold","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":2,"mode":"normal","style":"","text":"This should be in italic","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
@@ -20,8 +20,14 @@ export default function Home() {
 			lastModified: 'today',
 			content: text,
 		}
-		saveNote({ note: myNote })
+		saveNote({ note: myNote }).then(() => {
+			console.log('note saved')
+		})
 	}
+
+	useEffect(() => {
+		fetchNote({ noteId: 'my-new-note' }).then((note) => setText(note?.content))
+	}, [])
 
 	return (
 		<>
@@ -43,7 +49,7 @@ export default function Home() {
 						</button>
 					</div>
 					<div className='grow p-6'>
-						<Editor setText={setText} initialText={initialText} />
+						<Editor setText={setText} initialText={text} />
 					</div>
 				</div>
 			</div>
