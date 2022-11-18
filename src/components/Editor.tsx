@@ -9,7 +9,14 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
+import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
+import { TRANSFORMERS } from '@lexical/markdown'
 import { defaulTheme } from './theme'
+import { HeadingNode, QuoteNode } from '@lexical/rich-text'
+import { TableCellNode, TableNode, TableRowNode } from '@lexical/table'
+import { ListItemNode, ListNode } from '@lexical/list'
+import { CodeHighlightNode, CodeNode } from '@lexical/code'
+import { AutoLinkNode, LinkNode } from '@lexical/link'
 
 // When the editor changes, you can get notified via the
 // LexicalOnChangePlugin!
@@ -61,6 +68,19 @@ export default function Editor(props: Props) {
 		theme: defaulTheme,
 		onError,
 		editorState: props.initialText,
+		nodes: [
+			HeadingNode,
+			ListNode,
+			ListItemNode,
+			QuoteNode,
+			CodeNode,
+			CodeHighlightNode,
+			TableNode,
+			TableCellNode,
+			TableRowNode,
+			AutoLinkNode,
+			LinkNode,
+		],
 	}
 
 	return (
@@ -76,6 +96,7 @@ export default function Editor(props: Props) {
 				<OnChangePlugin onChange={(es) => onChange(es, props.setText)} />
 				<HistoryPlugin />
 				<MyCustomAutoFocusPlugin />
+				<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
 			</div>
 		</LexicalComposer>
 	)
