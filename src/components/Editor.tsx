@@ -1,6 +1,7 @@
-import { $getRoot, $getSelection } from 'lexical'
+import { $getRoot, $getSelection, LexicalCommand } from 'lexical'
 import { useEffect } from 'react'
 
+import { InitialEditorStateType } from '@lexical/react/LexicalComposer'
 import { EditorState } from 'lexical'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
@@ -50,13 +51,17 @@ function onError(error: any) {
 
 type Props = {
 	setText: Function
+	initialText: string
 }
 
+type InitialConfig = Parameters<typeof LexicalComposer>[0]['initialConfig']
+
 export default function Editor(props: Props) {
-	const initialConfig = {
+	const initialConfig: InitialConfig = {
 		namespace: 'MyEditor',
 		theme: defaulTheme,
 		onError,
+		editorState: props.initialText,
 	}
 
 	return (
