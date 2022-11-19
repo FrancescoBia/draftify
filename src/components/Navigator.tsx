@@ -1,4 +1,6 @@
 import { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
+import { fetchNote } from '../redux/actions'
 
 type Props = {
 	notesIdList: Array<Note['id']>
@@ -29,7 +31,15 @@ type NoteItemProps = {
 }
 
 const NoteItem = (props: NoteItemProps) => {
-	return <button className='px-4 py-2 text-left'>{props.noteId}</button>
+	const dispatch = useAppDispatch()
+	return (
+		<button
+			className='px-4 py-2 text-left'
+			onClick={() => dispatch(fetchNote({ noteId: props.noteId }))}
+		>
+			{props.noteId}
+		</button>
+	)
 }
 
 export { Navigator }
