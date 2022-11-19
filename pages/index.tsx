@@ -11,9 +11,15 @@ import { _saveNote } from '../src/controllers/firebase'
 import { Navigator } from '../src/components/Navigator'
 import { fetchAllNotes } from '../src/redux/actions'
 
+/* 
+TODO
+- add loading state
+- 
+*/
+
 export default function Home() {
 	const dispatch = useAppDispatch()
-	const note = useAppSelector((s) => s.note)
+	const note = useAppSelector((s) => s.editableNote)
 	const [text, setText] = useState('')
 
 	function saveText() {
@@ -61,13 +67,11 @@ export default function Home() {
 							</button>
 						</div>
 						<div className='grow p-4 pb-20'>
-							{note && (
-								<Editor
-									setText={setText}
-									initialText={JSON.stringify(note.content)}
-									placeholder='What you are you thinking?'
-								/>
-							)}
+							<Editor
+								setText={setText}
+								initialText={JSON.stringify(note?.content)}
+								placeholder='What you are you thinking?'
+							/>
 						</div>
 					</div>
 				</div>

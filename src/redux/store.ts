@@ -4,7 +4,7 @@ import notesReducer from './notes-slice'
 
 export const store = configureStore({
 	reducer: {
-		note: editableNote,
+		editableNote: editableNote,
 		allNotes: notesReducer,
 	},
 	enhancers: [],
