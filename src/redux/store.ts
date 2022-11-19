@@ -1,11 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import noteReducer from './note-slice'
-import noteListReducer from './noteList-slice'
+import editableNote from './editableNote-slice'
+import notesReducer from './notes-slice'
 
 export const store = configureStore({
 	reducer: {
-		note: noteReducer,
-		allNotes: noteListReducer,
+		note: editableNote,
+		allNotes: notesReducer,
 	},
 	enhancers: [],
 })

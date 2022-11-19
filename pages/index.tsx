@@ -9,8 +9,7 @@ import { useAppSelector, useAppDispatch } from '../src/redux/hooks'
 
 import { _saveNote } from '../src/controllers/firebase'
 import { Navigator } from '../src/components/Navigator'
-import { fetchNote } from '../src/redux/note-slice'
-import { fetchAllNotes } from '../src/redux/noteList-slice'
+import { fetchAllNotes } from '../src/redux/actions'
 
 export default function Home() {
 	const dispatch = useAppDispatch()
@@ -37,8 +36,6 @@ export default function Home() {
 		const dateKey = today.substring(0, 10)
 
 		dispatch(fetchAllNotes())
-
-		dispatch(fetchNote({ noteId: dateKey })).unwrap()
 	}, [dispatch])
 
 	return (
