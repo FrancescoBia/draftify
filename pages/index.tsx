@@ -19,13 +19,12 @@ TODO
 
 export default function Home() {
 	const dispatch = useAppDispatch()
-	const note = useAppSelector((s) => s.editableNote)
+	const { editableNote, allNotes } = useAppSelector((s) => s)
 	const [text, setText] = useState('')
+	const today = new Date().toISOString()
+	const dateKey = today.substring(0, 10)
 
 	function saveText() {
-		const today = new Date().toISOString()
-		const dateKey = today.substring(0, 10)
-
 		const myNote: Note = {
 			id: dateKey,
 			dateCreated: 'today',
@@ -38,9 +37,6 @@ export default function Home() {
 	}
 
 	useEffect(() => {
-		const today = new Date().toISOString()
-		const dateKey = today.substring(0, 10)
-
 		dispatch(fetchAllNotes())
 	}, [dispatch])
 
@@ -53,11 +49,11 @@ export default function Home() {
 			</Head>
 
 			<div className='h-screen flex'>
-				<Navigator />
+				<Navigator notesIdList={Object.keys(allNotes).reverse()} />
 				<div className='grow flex h-full overflow-y-scroll justify-center'>
 					<div className='max-w-2xl grow'>
 						<div className='p-4 flex justify-between items-center'>
-							<p className='text-gray-500'>18th November</p>
+							<p className='text-gray-500'>{editableNote?.id || dateKey}</p>
 							<button
 								onClick={saveText}
 								type='button'
@@ -69,7 +65,7 @@ export default function Home() {
 						<div className='grow p-4 pb-20'>
 							<Editor
 								setText={setText}
-								initialText={JSON.stringify(note?.content)}
+								initialText={JSON.stringify(editableNote?.content)}
 								placeholder='What you are you thinking?'
 							/>
 						</div>
