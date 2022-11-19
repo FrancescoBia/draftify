@@ -49,7 +49,7 @@ export default function Home() {
 			</Head>
 
 			<div className='h-screen flex'>
-				<Navigator notesIdList={Object.keys(allNotes).reverse()} />
+				<Navigator notesIdList={Object.keys(allNotes).sort().reverse()} />
 				<div className='grow flex h-full overflow-y-scroll justify-center'>
 					<div className='max-w-2xl grow'>
 						<div className='p-4 flex justify-between items-center'>
