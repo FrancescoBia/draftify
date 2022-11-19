@@ -6,20 +6,20 @@ type NoteListState = {
 	[noteId: Note['id']]: Note
 }
 
-export const fetchAllNotes = createAsyncThunk('noteList/fetch', async () => {
-	const allNotes = await _fetchAllNotes()
-	return allNotes
-})
-
 const noteId: Note['id'] = getNoteIdFromDate()
-const initialState: NoteListState = {
-	[noteId]: {
-		dateCreated: noteId,
-		lastModified: noteId,
-	} as Note,
+const todaysNote: Note = {
+	id: noteId,
+	dateCreated: noteId,
+	lastModified: noteId,
+	content: undefined,
 }
 
-export default createReducer(initialState, (builder) => {
+export const fetchAllNotes = createAsyncThunk('noteList/fetch', async () => {
+	const allNotes = await _fetchAllNotes()
+	return { [todaysNote.id]: todaysNote, ...allNotes }
+})
+
+export default createReducer({} as NoteListState, (builder) => {
 	builder.addCase(fetchAllNotes.fulfilled, (state, action) => {
 		return { ...state, ...action.payload }
 	})
