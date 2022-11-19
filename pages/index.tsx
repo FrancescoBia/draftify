@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Head from 'next/head'
+import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 const Editor = dynamic(() => import('../src/components/Editor'), {
 	ssr: false,
@@ -18,7 +18,8 @@ TODO
 */
 
 export default function Home() {
-	const dispatch = useAppDispatch()
+	const router = useRouter()
+
 	const { editableNote, allNotes } = useAppSelector((s) => s)
 	const [text, setText] = useState('')
 	const today = new Date().toISOString()
@@ -37,17 +38,11 @@ export default function Home() {
 	}
 
 	useEffect(() => {
-		dispatch(fetchAllNotes())
-	}, [dispatch])
+		router.push('/today')
+	}, [router])
 
 	return (
 		<>
-			<Head>
-				<title>Journal</title>
-				<meta name='description' content='My journal app' />
-				<link rel='icon' href='/favicon.ico' />
-			</Head>
-
 			<div className='h-screen flex'>
 				<Navigator notesIdList={Object.keys(allNotes).sort().reverse()} />
 				<div className='grow flex h-full overflow-y-scroll justify-center'>
