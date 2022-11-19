@@ -9,7 +9,7 @@ import { store } from '../src/redux/store'
 export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<Provider store={store}>
-			<Workspace>
+			<WorkspaceLayout>
 				<Component {...pageProps}>
 					<Head>
 						<title>Journal</title>
@@ -17,23 +17,29 @@ export default function App({ Component, pageProps }: AppProps) {
 						<link rel='icon' href='/favicon.ico' />
 					</Head>
 				</Component>
-			</Workspace>
+			</WorkspaceLayout>
 		</Provider>
 	)
 }
 
-import { useAppDispatch } from '../src/redux/hooks'
+import { useAppDispatch, useAppSelector } from '../src/redux/hooks'
 import { fetchAllNotes } from '../src/redux/actions'
-
-type WorkspaceProps = {
+import { Navigator } from '../src/components/Navigator'
+type WorkspaceLayoutProps = {
 	children: React.ReactNode
 }
-function Workspace(props: WorkspaceProps) {
+function WorkspaceLayout(props: WorkspaceLayoutProps) {
 	const dispatch = useAppDispatch()
+	const { allNotes } = useAppSelector((s) => s)
 
 	useEffect(() => {
 		dispatch(fetchAllNotes())
 	}, [dispatch])
 
-	return <>{props.children}</>
+	return (
+		<div className='h-screen flex'>
+			<Navigator notesIdList={Object.keys(allNotes).sort().reverse()} />
+			{props.children}
+		</div>
+	)
 }
