@@ -1,8 +1,8 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit'
-import { _fetchAllNotes } from '../controllers/firebase'
+import { _fetchNote, _fetchAllNotes } from '../controllers/firebase'
 import { getNoteIdFromDate } from '../utils/dateFormatter'
 
-type NoteListState = {
+export type NoteListState = {
 	[noteId: Note['id']]: Note
 }
 
@@ -14,13 +14,26 @@ const todaysNote: Note = {
 	content: undefined,
 }
 
+export const fetchNote = createAsyncThunk(
+	'note/fetch',
+	async ({ noteId }: { noteId: string }) => {
+		const note = await _fetchNote({ noteId })
+		return note
+	}
+)
+
 export const fetchAllNotes = createAsyncThunk('noteList/fetch', async () => {
 	const allNotes = await _fetchAllNotes()
-	return { [todaysNote.id]: todaysNote, ...allNotes }
+	return { [todaysNote.id]: todaysNote, ...allNotes } as NoteListState
 })
 
 export default createReducer({} as NoteListState, (builder) => {
-	builder.addCase(fetchAllNotes.fulfilled, (state, action) => {
-		return { ...state, ...action.payload }
-	})
+	builder
+		.addCase(fetchAllNotes.fulfilled, (state, action) => {
+			return { ...state, ...action.payload }
+		})
+		.addCase(fetchNote.fulfilled, (state, action) => {
+			const note = action.payload
+			return { ...state, [note.id]: note }
+		})
 })
