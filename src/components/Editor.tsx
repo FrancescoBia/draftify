@@ -59,15 +59,17 @@ type Props = {
 	setText: (value: string) => any
 	initialText?: string
 	placeholder?: string
+	editable?: boolean
 }
 
 type InitialConfig = Parameters<typeof LexicalComposer>[0]['initialConfig']
 
-export default function Editor(props: Props) {
+export default function Editor({ editable = true, ...props }: Props) {
 	const initialConfig: InitialConfig = {
 		namespace: 'MyEditor',
 		theme: defaulTheme,
 		onError,
+		editable,
 		editorState: props.initialText,
 		nodes: [
 			HeadingNode,

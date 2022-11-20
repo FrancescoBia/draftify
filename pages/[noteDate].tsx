@@ -65,7 +65,11 @@ function RenderNote({ note }: NoteProps) {
 				</button>
 			</div>
 			<div className='grow p-4 pb-20'>
-				<Editor setText={() => {}} initialText={JSON.stringify(note.content)} />
+				<Editor
+					setText={() => {}}
+					initialText={JSON.stringify(note.content)}
+					editable={false}
+				/>
 			</div>
 		</div>
 	)
