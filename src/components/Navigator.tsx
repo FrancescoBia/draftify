@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import { fetchNote } from '../redux/actions'
+import { useRouter } from 'next/router'
+import { getNoteIdFromDate } from '../utils/dateFormatter'
 
 type Props = {
 	notesIdList: Array<Note['id']>
@@ -31,11 +32,15 @@ type NoteItemProps = {
 }
 
 const NoteItem = (props: NoteItemProps) => {
-	const dispatch = useAppDispatch()
+	const router = useRouter()
+
 	return (
 		<button
 			className='px-4 py-2 text-left'
-			onClick={() => dispatch(fetchNote({ noteId: props.noteId }))}
+			onClick={() => {
+				// dispatch(fetchNote({ noteId: props.noteId }))
+				router.push(`/${props.noteId}`)
+			}}
 		>
 			{props.noteId}
 		</button>

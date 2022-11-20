@@ -20,7 +20,7 @@ type EditableNoteProps = {
 }
 function EditableNote(props: EditableNoteProps) {
 	const { editableNote } = useAppSelector((s) => s)
-	const [noteContent, setNoteContent] = useState('')
+	const [noteContent, setNoteContent] = useState(editableNote?.content)
 
 	if (!editableNote) return <>note is loading</>
 
@@ -38,7 +38,7 @@ function EditableNote(props: EditableNoteProps) {
 		<div className='grow flex h-full overflow-y-scroll justify-center'>
 			<div className='max-w-2xl grow'>
 				<div className='p-4 flex justify-between items-center'>
-					<p className='text-gray-500'>{props.noteId}</p>
+					<p className='text-gray-500'>{editableNote.id}</p>
 					<button
 						onClick={saveNote}
 						type='button'
@@ -50,7 +50,7 @@ function EditableNote(props: EditableNoteProps) {
 				<div className='grow p-4 pb-20'>
 					<Editor
 						setText={setNoteContent}
-						initialText={JSON.stringify(editableNote?.content)}
+						initialText={JSON.stringify(noteContent)}
 						placeholder='What you are you thinking?'
 					/>
 				</div>
