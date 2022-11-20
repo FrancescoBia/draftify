@@ -6,7 +6,7 @@ const Editor = dynamic(() => import('../src/components/Editor'), {
 import { useAppSelector, useAppDispatch } from '../src/redux/hooks'
 import { _saveNote } from '../src/controllers/firebase'
 import { getNoteIdFromDate } from '../src/utils/dateFormatter'
-import { makeNoteEditable } from '../src/redux/actions'
+import { makeNoteEditable, cleanupEditableNote } from '../src/redux/actions'
 
 type Props = {}
 
@@ -35,7 +35,9 @@ function EditableNote({ noteId }: EditableNoteProps) {
 			.then(() => setIsLoading(false))
 			.catch(() => setDisplayError(true))
 
-		return () => console.log('make view only')
+		return () => {
+			dispatch(cleanupEditableNote())
+		}
 	}, [noteId, dispatch])
 
 	function saveNote() {
