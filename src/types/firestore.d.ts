@@ -3,7 +3,7 @@ interface User {
 }
 
 interface Note {
-	readonly id: string // YYYY-MM-DD
+	readonly id: `20${number}${number}-${number}${number}-${number}${number}` // YYYY-MM-DD
 	readonly dateCreated: string
 	lastModified: string
 	// title?: string

@@ -8,6 +8,7 @@ type Props = {
 }
 
 const Navigator = (props: Props) => {
+	const today = getNoteIdFromDate()
 	// useEffect(() => {
 	// 	console.log('navigator render')
 
@@ -19,7 +20,10 @@ const Navigator = (props: Props) => {
 			<div className='absolute z-10 top-0 left-0 w-56 bg-white dark:bg-gray-900 h-screen shadow-lg hidden group-hover:block opacity-0 hover:opacity-100 transition-opacity duration-500'>
 				<div className='flex flex-col'>
 					{props.notesIdList.map((noteId) => (
-						<NoteItem key={'note-item-' + noteId} noteId={noteId} />
+						<NoteItem
+							key={'note-item-' + noteId}
+							noteId={noteId === today ? 'today' : noteId}
+						/>
 					))}
 				</div>
 			</div>
@@ -28,7 +32,7 @@ const Navigator = (props: Props) => {
 }
 
 type NoteItemProps = {
-	noteId: Note['id']
+	noteId: Note['id'] | 'today'
 }
 
 const NoteItem = (props: NoteItemProps) => {
