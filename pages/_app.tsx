@@ -38,7 +38,9 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 
 	return (
 		<div className='h-screen flex'>
-			<Navigator notesIdList={Object.keys(allNotes).sort().reverse()} />
+			<Navigator
+				notesIdList={Object.keys(allNotes).sort().reverse() as Note['id'][]}
+			/>
 			{props.children}
 		</div>
 	)
