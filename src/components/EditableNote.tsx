@@ -76,7 +76,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 					</div>
 					<div className='grow p-4 pb-20'>
 						<Editor
-							namespace={note.id}
+							key={`${note.id}-editor`}
 							onChange={updateSavingIndicator}
 							initialText={note.content && JSON.stringify(note.content)}
 							placeholder='What you are you thinking?'

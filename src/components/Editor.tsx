@@ -48,14 +48,14 @@ type Props = {
 	initialText?: string
 	placeholder?: string
 	editable?: boolean
-	namespace: string
+	key: string
 }
 
 type InitialConfig = Parameters<typeof LexicalComposer>[0]['initialConfig']
 
 export default function Editor({ editable = true, ...props }: Props) {
 	const initialConfig: InitialConfig = {
-		namespace: props.namespace,
+		namespace: props.key,
 		theme: defaulTheme,
 		onError,
 		editable,
@@ -92,7 +92,7 @@ export default function Editor({ editable = true, ...props }: Props) {
 				<HistoryPlugin />
 				<MyCustomAutoFocusPlugin />
 				<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-				<UpdateInitialTextOnChangePlugin initialText={props.initialText} />
+				{/* <UpdateInitialTextOnChangePlugin initialText={props.initialText} /> */}
 			</div>
 		</LexicalComposer>
 	)
@@ -117,30 +117,32 @@ function onChange(
 	}
 }
 
-function UpdateInitialTextOnChangePlugin(props: { initialText?: string }) {
-	const [editor] = useLexicalComposerContext()
+// function UpdateInitialTextOnChangePlugin(props: { initialText?: string }) {
+// 	const [editor] = useLexicalComposerContext()
 
-	useEffect(() => {
-		const { editorState } = editor.toJSON()
+// 	useEffect(() => {
+// 		const { editorState } = editor.toJSON()
 
-		if (props.initialText) {
-			const parsedNewInitialState = JSON.parse(props.initialText)
+// 		if (props.initialText) {
+// 			const parsedNewInitialState = JSON.parse(props.initialText)
 
-			// check if new state passed is supposed to override current state
-			// (i.e. if the two are different). This is important as otherwise
-			// the new initial state is set everytime there's an update
-			// with redux (meaning every time the note is saved).
-			if (!isEqual(editorState, parsedNewInitialState)) {
-				const newEditorState = editor.parseEditorState(props.initialText)
-				editor.setEditorState(newEditorState)
-			} // else do nothing
-		} else {
-			// new initial state is blank, therefore clear the editor
-			editor.update(() => {
-				$getRoot().clear()
-			})
-		}
-	}, [editor, props.initialText])
+// 			// check if new state passed is supposed to override current state
+// 			// (i.e. if the two are different). This is important as otherwise
+// 			// the new initial state is set everytime there's an update
+// 			// with redux (meaning every time the note is saved).
+// 			if (!isEqual(editorState, parsedNewInitialState)) {
+// 				console.log({ editorState, parsedNewInitialState })
 
-	return null
-}
+// 				const newEditorState = editor.parseEditorState(props.initialText)
+// 				editor.setEditorState(newEditorState)
+// 			} // else do nothing
+// 		} else {
+// 			// new initial state is blank, therefore clear the editor
+// 			editor.update(() => {
+// 				$getRoot().clear()
+// 			})
+// 		}
+// 	}, [editor, props.initialText])
+
+// 	return null
+// }

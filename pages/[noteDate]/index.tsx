@@ -65,8 +65,8 @@ function RenderNote({ note }: NoteProps) {
 			</div>
 			<div className='grow p-4 pb-20'>
 				<Editor
-					namespace={note.id}
-					setText={() => {}}
+					key={`${note.id}-editor`}
+					onChange={() => {}}
 					initialText={JSON.stringify(note.content)}
 					editable={false}
 				/>
