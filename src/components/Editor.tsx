@@ -60,13 +60,14 @@ type Props = {
 	initialText?: string
 	placeholder?: string
 	editable?: boolean
+	namespace: string
 }
 
 type InitialConfig = Parameters<typeof LexicalComposer>[0]['initialConfig']
 
 export default function Editor({ editable = true, ...props }: Props) {
 	const initialConfig: InitialConfig = {
-		namespace: 'MyEditor',
+		namespace: props.namespace,
 		theme: defaulTheme,
 		onError,
 		editable,
@@ -100,7 +101,25 @@ export default function Editor({ editable = true, ...props }: Props) {
 				<HistoryPlugin />
 				<MyCustomAutoFocusPlugin />
 				<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+				<UpdateInitialTextOnChangePlugin initialText={props.initialText} />
 			</div>
 		</LexicalComposer>
 	)
+}
+
+function UpdateInitialTextOnChangePlugin(props: { initialText?: string }) {
+	const [editor] = useLexicalComposerContext()
+
+	useEffect(() => {
+		if (props.initialText) {
+			const editorState = editor.parseEditorState(props.initialText)
+			editor.setEditorState(editorState)
+		} else {
+			editor.update(() => {
+				$getRoot().clear()
+			})
+		}
+	}, [editor, props.initialText])
+
+	return null
 }

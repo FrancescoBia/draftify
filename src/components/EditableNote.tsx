@@ -62,6 +62,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 					</div>
 					<div className='grow p-4 pb-20'>
 						<Editor
+							namespace={note.id}
 							setText={setNoteContent}
 							initialText={JSON.stringify(note.content)}
 							placeholder='What you are you thinking?'
