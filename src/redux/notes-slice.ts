@@ -40,7 +40,7 @@ export default createReducer({} as NoteListState, (builder) => {
 		})
 		// ------------------------------------
 		// Actions from other slices
-		.addCase('editableNote/save', (state, action) => {
+		.addCase('editableNote/save/fulfilled', (state, action) => {
 			const note = (action as any).payload
 			return { ...state, [note.id]: note }
 		})
