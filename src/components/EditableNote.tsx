@@ -17,7 +17,6 @@ type NoteProps = {
 export default function EditableNote({ noteId }: NoteProps) {
 	const dispatch = useAppDispatch()
 	const { editableNote: note } = useAppSelector((s) => s)
-	const [noteContent, setNoteContent] = useState('{}')
 	const [isLoading, setIsLoading] = useState(true)
 	const [displayError, setDisplayError] = useState(false)
 	const [progressSaved, setProgressSaved] = useState(true)
@@ -25,10 +24,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 	useEffect(() => {
 		dispatch(makeNoteEditable(noteId))
 			.unwrap()
-			.then((note) => {
-				setNoteContent(JSON.stringify(note.content))
-				setIsLoading(false)
-			})
+			.then(() => setIsLoading(false))
 			.catch(() => setDisplayError(true))
 
 		return () => {
@@ -44,11 +40,18 @@ export default function EditableNote({ noteId }: NoteProps) {
 				...note!,
 				content: JSON.parse(stringifiedContent),
 			}
-			dispatch(saveNote({ updatedNote: myNote }))
+			dispatch(saveNote({ updatedNote: myNote })).then((_) =>
+				setProgressSaved(true)
+			)
 		}
 	}
 
 	const debounced = useDebouncedCallback(handleSaveNote, 1000)
+
+	function updateSavingIndicator(v: string) {
+		setProgressSaved(false)
+		debounced(v)
+	}
 
 	return (
 		<div className='grow flex h-full overflow-y-scroll justify-center'>
@@ -60,6 +63,9 @@ export default function EditableNote({ noteId }: NoteProps) {
 				<div className='max-w-2xl grow flex flex-col'>
 					<div className='p-4 flex justify-between items-center'>
 						<p className='text-gray-500'>{note!.id}</p>
+						<p className='text-gray-500'>
+							{progressSaved ? 'saved' : 'saving...'}
+						</p>
 						{/* <button
 							onClick={handleSaveNote}
 							type='button'
@@ -71,7 +77,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 					<div className='grow p-4 pb-20'>
 						<Editor
 							namespace={note.id}
-							onChange={(v) => debounced(v)}
+							onChange={updateSavingIndicator}
 							initialText={note.content && JSON.stringify(note.content)}
 							placeholder='What you are you thinking?'
 						/>
