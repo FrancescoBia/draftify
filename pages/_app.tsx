@@ -25,6 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
 import { useAppDispatch, useAppSelector } from '../src/redux/hooks'
 import { fetchAllNotes } from '../src/redux/notes-slice'
 import { Navigator } from '../src/components/Navigator'
+import { Spinner } from '../src/components/Spinner'
 type WorkspaceLayoutProps = {
 	children: React.ReactNode
 }
@@ -38,10 +39,19 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 
 	return (
 		<div className='h-screen flex'>
-			<Navigator
-				notesIdList={Object.keys(allNotes).sort().reverse() as Note['id'][]}
-			/>
-			{props.children}
+			{/* check that initial data has been fetched */}
+			{Object.keys(allNotes).length > 0 ? (
+				<>
+					<Navigator
+						notesIdList={Object.keys(allNotes).sort().reverse() as Note['id'][]}
+					/>
+					{props.children}
+				</>
+			) : (
+				<div className='h-full w-full flex items-center justify-center'>
+					<Spinner />
+				</div>
+			)}
 		</div>
 	)
 }
