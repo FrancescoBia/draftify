@@ -11,6 +11,7 @@ const Editor = dynamic(() => import('./Editor'), {
 })
 import { useDebouncedCallback } from 'use-debounce'
 import { prettyFormatDate } from '../utils/dateFormatter'
+import { useRouter } from 'next/router'
 
 type NoteProps = {
 	noteId: Note['id']
@@ -21,6 +22,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 	const [isLoading, setIsLoading] = useState(true)
 	const [displayError, setDisplayError] = useState(false)
 	const [progressSaved, setProgressSaved] = useState(true)
+	const router = useRouter()
 
 	useEffect(() => {
 		dispatch(makeNoteEditable(noteId))
@@ -64,23 +66,25 @@ export default function EditableNote({ noteId }: NoteProps) {
 				<div className='max-w-2xl grow flex flex-col'>
 					<div className='p-4 flex justify-between items-center'>
 						<p className='text-gray-500'>{prettyFormatDate(note.id)}</p>
-						<p className='text-gray-500'>
-							{progressSaved ? '✔︎ saved' : 'saving...'}
-						</p>
-						{/* <button
-							onClick={handleSaveNote}
-							type='button'
-							className='text-gray-900 bg-white focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'
-						>
-							Save
-						</button> */}
+						<div className='flex items-center gap-4'>
+							<p className='text-gray-500'>
+								{progressSaved ? '✔︎ saved' : 'saving...'}
+							</p>
+							<button
+								onClick={() => router.push(`/${noteId}`)}
+								type='button'
+								className='text-gray-900 bg-white focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'
+							>
+								Lock
+							</button>
+						</div>
 					</div>
 					<div className='grow p-4 pb-20'>
 						<Editor
 							key={`${note.id}-editor`}
 							onChange={updateSavingIndicator}
 							initialText={note.content && JSON.stringify(note.content)}
-							placeholder='What you are you thinking?'
+							placeholder='What are you thinking?'
 						/>
 					</div>
 				</div>
