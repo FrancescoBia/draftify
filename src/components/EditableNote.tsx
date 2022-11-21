@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic'
 const Editor = dynamic(() => import('./Editor'), {
 	ssr: false,
 })
+import { useDebouncedCallback } from 'use-debounce'
 
 type NoteProps = {
 	noteId: Note['id']
@@ -19,6 +20,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 	const [noteContent, setNoteContent] = useState('{}')
 	const [isLoading, setIsLoading] = useState(true)
 	const [displayError, setDisplayError] = useState(false)
+	const [progressSaved, setProgressSaved] = useState(true)
 
 	useEffect(() => {
 		dispatch(makeNoteEditable(noteId))
@@ -34,13 +36,19 @@ export default function EditableNote({ noteId }: NoteProps) {
 		}
 	}, [noteId, dispatch])
 
-	function handleSaveNote() {
-		const myNote: Note = {
-			...note!,
-			content: JSON.parse(noteContent),
+	function handleSaveNote(stringifiedContent: string) {
+		if (!isLoading && !displayError && note?.id) {
+			console.log('saving note')
+
+			const myNote: Note = {
+				...note!,
+				content: JSON.parse(stringifiedContent),
+			}
+			dispatch(saveNote({ updatedNote: myNote }))
 		}
-		dispatch(saveNote({ updatedNote: myNote }))
 	}
+
+	const debounced = useDebouncedCallback(handleSaveNote, 1000)
 
 	return (
 		<div className='grow flex h-full overflow-y-scroll justify-center'>
@@ -49,22 +57,22 @@ export default function EditableNote({ noteId }: NoteProps) {
 			) : displayError || !note ? (
 				'error'
 			) : (
-				<div className='max-w-2xl grow'>
+				<div className='max-w-2xl grow flex flex-col'>
 					<div className='p-4 flex justify-between items-center'>
 						<p className='text-gray-500'>{note!.id}</p>
-						<button
+						{/* <button
 							onClick={handleSaveNote}
 							type='button'
 							className='text-gray-900 bg-white focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'
 						>
 							Save
-						</button>
+						</button> */}
 					</div>
 					<div className='grow p-4 pb-20'>
 						<Editor
 							namespace={note.id}
-							setText={setNoteContent}
-							initialText={JSON.stringify(note.content)}
+							onChange={(v) => debounced(v)}
+							initialText={note.content && JSON.stringify(note.content)}
 							placeholder='What you are you thinking?'
 						/>
 					</div>

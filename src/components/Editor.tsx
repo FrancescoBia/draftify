@@ -18,19 +18,24 @@ import { ListItemNode, ListNode } from '@lexical/list'
 import { CodeHighlightNode, CodeNode } from '@lexical/code'
 import { AutoLinkNode, LinkNode } from '@lexical/link'
 
+import { isEqual } from 'lodash'
+
 // When the editor changes, you can get notified via the
 // LexicalOnChangePlugin!
-function onChange(editorState: EditorState, setText: Function) {
-	editorState.read(() => {
-		// Read the contents of the EditorState here.
-		const root = $getRoot()
-		const selection = $getSelection()
+function onChange(
+	editorState: EditorState,
+	handleChange: Function,
+	initialText?: string
+) {
+	const jsonData = editorState.toJSON()
+	const parsedInitialState = JSON.parse(
+		initialText ||
+			'{"root":{"children":[],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+	)
 
-		// console.log(root, selection)
-		// setText(editorState.)
-		const jsonData = editorState.toJSON()
-		setText(JSON.stringify(jsonData))
-	})
+	if (!isEqual(jsonData, parsedInitialState)) {
+		handleChange(JSON.stringify(jsonData))
+	}
 }
 
 // Lexical React plugins are React components, which makes them
@@ -56,7 +61,7 @@ function onError(error: any) {
 }
 
 type Props = {
-	setText: (value: string) => any
+	onChange: (value: string) => any
 	initialText?: string
 	placeholder?: string
 	editable?: boolean
@@ -97,7 +102,9 @@ export default function Editor({ editable = true, ...props }: Props) {
 					}
 					ErrorBoundary={LexicalErrorBoundary}
 				/>
-				<OnChangePlugin onChange={(es) => onChange(es, props.setText)} />
+				<OnChangePlugin
+					onChange={(es) => onChange(es, props.onChange, props.initialText)}
+				/>
 				<HistoryPlugin />
 				<MyCustomAutoFocusPlugin />
 				<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
