@@ -1,5 +1,5 @@
 {
-  "projects": {
-    "default": "journal-prod-2"
-  }
+	"projects": {
+		"default": "journal-prod-2"
+	}
 }
