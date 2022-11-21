@@ -35,7 +35,7 @@ const NoteItem = (props: NoteItemProps) => {
 	return (
 		<button
 			className={`px-6 py-2 text-left ${
-				isSelected ? 'bg-gray-100 font-bold' : ''
+				isSelected ? 'bg-gray-100 dark:bg-gray-800 font-bold' : ''
 			}`}
 			onClick={() => router.push(`/${props.noteId}`)}
 		>
