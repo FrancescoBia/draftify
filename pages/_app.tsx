@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 import { useAppDispatch, useAppSelector } from '../src/redux/hooks'
-import { fetchAllNotes } from '../src/redux/actions'
+import { fetchAllNotes } from '../src/redux/notes-slice'
 import { Navigator } from '../src/components/Navigator'
 type WorkspaceLayoutProps = {
 	children: React.ReactNode

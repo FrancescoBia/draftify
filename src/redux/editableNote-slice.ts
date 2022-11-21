@@ -1,5 +1,5 @@
 import { createReducer, createAsyncThunk, createAction } from '@reduxjs/toolkit'
-import { _fetchNote } from '../controllers/firebase'
+import { _fetchNote, _saveNote } from '../controllers/firebase'
 import { fetchNote } from './notes-slice'
 
 type NoteState = Note | null
@@ -13,12 +13,22 @@ export const makeNoteEditable = createAsyncThunk(
 	}
 )
 
+export const saveNote = createAsyncThunk(
+	'editableNote/save',
+	async ({ updatedNote }: { updatedNote: Note }) => {
+		const notePromise = await _saveNote({ note: updatedNote }).then(
+			() => updatedNote
+		)
+
+		return notePromise
+	}
+)
+
 export const cleanupEditableNote = createAction('editableNote/cleanup')
 
 export default createReducer(null as NoteState, (builder) => {
 	builder
-		.addCase(makeNoteEditable.fulfilled, (_, action) => {
-			return action.payload
-		})
+		.addCase(makeNoteEditable.fulfilled, (_, action) => action.payload)
+		.addCase(saveNote.fulfilled, (_, action) => action.payload)
 		.addCase(cleanupEditableNote, () => null)
 })

@@ -1,6 +1,11 @@
-import { createReducer, createAsyncThunk } from '@reduxjs/toolkit'
+import {
+	createReducer,
+	createAsyncThunk,
+	PayloadAction,
+} from '@reduxjs/toolkit'
 import { _fetchNote, _fetchAllNotes } from '../controllers/firebase'
 import { getNoteIdFromDate } from '../utils/dateFormatter'
+import { saveNote } from './editableNote-slice'
 
 export type NoteListState = {
 	[noteId: Note['id']]: Note
@@ -34,6 +39,12 @@ export default createReducer({} as NoteListState, (builder) => {
 		})
 		.addCase(fetchNote.fulfilled, (state, action) => {
 			const note = action.payload
+			return { ...state, [note.id]: note }
+		})
+		// ------------------------------------
+		// Actions from other slices
+		.addCase('editableNote/save', (state, action) => {
+			const note = (action as any).payload
 			return { ...state, [note.id]: note }
 		})
 })

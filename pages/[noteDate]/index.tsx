@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../src/redux/hooks'
 import { useRouter } from 'next/router'
-import { fetchNote } from '../../src/redux/actions'
+import { fetchNote } from '../../src/redux/notes-slice'
 import Editor from '../../src/components/Editor'
 import Link from 'next/link'
 
@@ -27,7 +27,6 @@ export default function PastDate(props: Props) {
 				//	2. if note does not exist, set displayError to true
 				.catch((err) => {
 					console.log({ err })
-
 					setDisplayError(true)
 				})
 		} else {

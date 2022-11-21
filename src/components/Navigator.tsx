@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-import { fetchNote } from '../redux/actions'
 import { useRouter } from 'next/router'
 import { getNoteIdFromDate } from '../utils/dateFormatter'
 

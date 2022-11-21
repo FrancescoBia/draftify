@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { makeNoteEditable, cleanupEditableNote } from '../redux/actions'
+import {
+	makeNoteEditable,
+	cleanupEditableNote,
+	saveNote,
+} from '../redux/editableNote-slice'
 import dynamic from 'next/dynamic'
 const Editor = dynamic(() => import('./Editor'), {
 	ssr: false,
 })
-import { _saveNote } from '../controllers/firebase'
 
 type NoteProps = {
 	noteId: Note['id']
@@ -31,14 +34,12 @@ export default function EditableNote({ noteId }: NoteProps) {
 		}
 	}, [noteId, dispatch])
 
-	function saveNote() {
+	function handleSaveNote() {
 		const myNote: Note = {
 			...note!,
 			content: JSON.parse(noteContent),
 		}
-		_saveNote({ note: myNote }).then(() => {
-			console.log('note saved')
-		})
+		dispatch(saveNote({ updatedNote: myNote }))
 	}
 
 	return (
@@ -52,7 +53,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 					<div className='p-4 flex justify-between items-center'>
 						<p className='text-gray-500'>{note!.id}</p>
 						<button
-							onClick={saveNote}
+							onClick={handleSaveNote}
 							type='button'
 							className='text-gray-900 bg-white focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'
 						>
