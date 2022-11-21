@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { getNoteIdFromDate } from '../utils/dateFormatter'
+import { getNoteIdFromDate, prettyFormatDate } from '../utils/dateFormatter'
 
 type Props = {
 	notesIdList: Array<Note['id']>
@@ -44,7 +44,7 @@ const NoteItem = (props: NoteItemProps) => {
 				router.push(`/${props.noteId}`)
 			}}
 		>
-			{props.noteId}
+			{props.noteId === 'today' ? 'today' : prettyFormatDate(props.noteId)}
 		</button>
 	)
 }

@@ -10,6 +10,7 @@ const Editor = dynamic(() => import('./Editor'), {
 	ssr: false,
 })
 import { useDebouncedCallback } from 'use-debounce'
+import { prettyFormatDate } from '../utils/dateFormatter'
 
 type NoteProps = {
 	noteId: Note['id']
@@ -62,9 +63,9 @@ export default function EditableNote({ noteId }: NoteProps) {
 			) : (
 				<div className='max-w-2xl grow flex flex-col'>
 					<div className='p-4 flex justify-between items-center'>
-						<p className='text-gray-500'>{note!.id}</p>
+						<p className='text-gray-500'>{prettyFormatDate(note.id)}</p>
 						<p className='text-gray-500'>
-							{progressSaved ? 'saved' : 'saving...'}
+							{progressSaved ? '✔︎ saved' : 'saving...'}
 						</p>
 						{/* <button
 							onClick={handleSaveNote}
