@@ -20,24 +20,6 @@ import { AutoLinkNode, LinkNode } from '@lexical/link'
 
 import { isEqual } from 'lodash'
 
-// When the editor changes, you can get notified via the
-// LexicalOnChangePlugin!
-function onChange(
-	editorState: EditorState,
-	handleChange: Function,
-	initialText?: string
-) {
-	const jsonData = editorState.toJSON()
-	const parsedInitialState = JSON.parse(
-		initialText ||
-			'{"root":{"children":[],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
-	)
-
-	if (!isEqual(jsonData, parsedInitialState)) {
-		handleChange(JSON.stringify(jsonData))
-	}
-}
-
 // Lexical React plugins are React components, which makes them
 // highly composable. Furthermore, you can lazy load plugins if
 // desired, so you don't pay the cost for plugins until you
@@ -114,14 +96,44 @@ export default function Editor({ editable = true, ...props }: Props) {
 	)
 }
 
+// When the editor changes, you can get notified via the
+// LexicalOnChangePlugin!
+function onChange(
+	editorState: EditorState,
+	handleChange: Function,
+	initialText?: string
+) {
+	const jsonData = editorState.toJSON()
+	const parsedInitialState = JSON.parse(
+		initialText ||
+			'{"root":{"children":[],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+	)
+
+	// this is important to avoid saving an initial state (that might be empty or not fully loaded).
+	if (!isEqual(jsonData, parsedInitialState)) {
+		handleChange(JSON.stringify(jsonData))
+	}
+}
+
 function UpdateInitialTextOnChangePlugin(props: { initialText?: string }) {
 	const [editor] = useLexicalComposerContext()
 
 	useEffect(() => {
+		const { editorState } = editor.toJSON()
+
 		if (props.initialText) {
-			const editorState = editor.parseEditorState(props.initialText)
-			editor.setEditorState(editorState)
+			const parsedNewInitialState = JSON.parse(props.initialText)
+
+			// check if new state passed is supposed to override current state
+			// (i.e. if the two are different). This is important as otherwise
+			// the new initial state is set everytime there's an update
+			// with redux (meaning every time the note is saved).
+			if (!isEqual(editorState, parsedNewInitialState)) {
+				const newEditorState = editor.parseEditorState(props.initialText)
+				editor.setEditorState(newEditorState)
+			} // else do nothing
 		} else {
+			// new initial state is blank, therefore clear the editor
 			editor.update(() => {
 				$getRoot().clear()
 			})
