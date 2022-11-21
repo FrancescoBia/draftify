@@ -1,21 +1,18 @@
-import {
-	createReducer,
-	createAsyncThunk,
-	PayloadAction,
-} from '@reduxjs/toolkit'
+import { createReducer, createAsyncThunk } from '@reduxjs/toolkit'
 import { _fetchNote, _fetchAllNotes } from '../controllers/firebase'
 import { getNoteIdFromDate } from '../utils/dateFormatter'
-import { saveNote } from './editableNote-slice'
+import { getFormattedDate } from '../utils/dateFormatter'
 
 export type NoteListState = {
 	[noteId: Note['id']]: Note
 }
 
 const noteId: Note['id'] = getNoteIdFromDate()
+const currentDate = getFormattedDate()
 const todaysNote: Note = {
 	id: noteId,
-	dateCreated: noteId,
-	lastModified: noteId,
+	dateCreated: currentDate,
+	lastModified: currentDate,
 	content: undefined,
 }
 

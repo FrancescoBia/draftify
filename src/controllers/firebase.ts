@@ -1,11 +1,13 @@
 import { doc, setDoc, getDoc, collection, getDocs } from 'firebase/firestore'
 import { database } from '../config/firebase.config'
+import { getFormattedDate } from '../utils/dateFormatter'
 
 const workspaceId = 'my-workspace'
 
 export async function _saveNote({ note }: { note: Note }) {
 	const noteRef = doc(database, 'workspaces', workspaceId, 'notes', note.id)
-
+	// update lastModified time
+	note.lastModified = getFormattedDate()
 	return setDoc(noteRef, note)
 }
 

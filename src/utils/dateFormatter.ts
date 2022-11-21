@@ -6,3 +6,7 @@ export function getNoteIdFromDate(
 
 	return dateKey as Note['id']
 }
+
+export function getFormattedDate(date: string = new Date().toString()) {
+	return new Date(date).toISOString()
+}
