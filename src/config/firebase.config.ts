@@ -13,11 +13,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const database = getFirestore(app)
 
+console.log(process.env.NODE_ENV)
+
 // connect to emulators
-if (
-	location.hostname === 'localhost' ||
-	process.env.NODE_ENV === 'development'
-) {
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 	connectFirestoreEmulator(database, 'localhost', 8080)
 }
 
