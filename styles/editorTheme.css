@@ -50,3 +50,17 @@ https://codesandbox.io/s/lexical-rich-text-example-5tncvy?file=/src/styles.css
 .editor-heading-h3 {
 	@apply text-lg font-bold mb-1;
 }
+
+/* .editor-list-ol {
+} */
+
+/* .editor-list-ul {
+} */
+
+.editor-listitem {
+	@apply ml-4 my-1;
+}
+
+.editor-nested-listitem {
+	list-style-type: none;
+}

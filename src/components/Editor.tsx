@@ -10,6 +10,7 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
+import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { TRANSFORMERS } from '@lexical/markdown'
 import { defaulTheme } from './theme'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
@@ -87,6 +88,7 @@ export default function Editor({ editable = true, ...props }: Props) {
 				<OnChangePlugin
 					onChange={(es) => onChange(es, props.onChange, props.initialText)}
 				/>
+				<ListPlugin />
 				<HistoryPlugin />
 				<MyCustomAutoFocusPlugin />
 				<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
