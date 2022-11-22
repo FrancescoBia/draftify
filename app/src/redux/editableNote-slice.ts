@@ -38,9 +38,15 @@ export const saveNote = createAsyncThunk(
 			.then(() => console.log('notesaved on localstorage'))
 			.catch((err) => console.log(err))
 
-		const notePromise = await _saveNote({ note: updatedNote }).then(
-			() => updatedNote
-		)
+		// const notePromise = await _saveNote({ note: updatedNote }).then(
+		// 	() => updatedNote
+		// )
+
+		const notePromise = window.electronAPI
+			?.saveNote({ note: updatedNote })
+			// .then(() => console.log('notesaved on localstorage'))
+			// .catch((err) => console.log(err))
+			.then(() => updatedNote)
 
 		return notePromise
 	}

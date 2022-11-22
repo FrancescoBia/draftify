@@ -18,14 +18,18 @@ const todaysNote: Note = {
 
 export const fetchNote = createAsyncThunk(
 	'note/fetch',
-	async ({ noteId }: { noteId: string }) => {
-		const note = await _fetchNote({ noteId })
-		return note
+	async ({ noteId }: { noteId: Note['id'] }) => {
+		// const note = await _fetchNote({ noteId })
+		const note = await window.electronAPI?.getNote({ noteId })
+		return note || Promise.reject()
 	}
 )
 
 export const fetchAllNotes = createAsyncThunk('noteList/fetch', async () => {
-	const allNotes = await _fetchAllNotes()
+	// const allNotes = await _fetchAllNotes()
+	const allNotes = await window.electronAPI?.getAllNotes().catch(() => {
+		return {}
+	})
 	return { [todaysNote.id]: todaysNote, ...allNotes } as NoteListState
 })
 
