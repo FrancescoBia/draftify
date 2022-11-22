@@ -1,0 +1,19 @@
+{
+	"name": "journal",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "npm --prefix app run dev & npm --prefix electron start"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/FrancescoBia/journal.git"
+	},
+	"author": "Francesco Bianchi <9106253+FrancescoBia@users.noreply.github.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/FrancescoBia/journal/issues"
+	},
+	"homepage": "https://github.com/FrancescoBia/journal#readme"
+}
