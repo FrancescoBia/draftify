@@ -12,11 +12,12 @@ console.log({ NODE_ENV: process.env.NODE_ENV })
 function createWindow() {
 	// Create the browser window.
 	const mainWindow = new BrowserWindow({
-		height: 600,
+		height: 800,
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
 		},
-		width: 800,
+		width: 1000,
+		titleBarStyle: 'hidden',
 	})
 
 	// and load the index.html of the app.

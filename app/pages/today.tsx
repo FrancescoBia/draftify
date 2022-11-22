@@ -8,5 +8,14 @@ type Props = {}
 export default function Today(props: Props) {
 	const [today] = useState(getNoteIdFromDate())
 
-	return <EditableNote noteId={today} />
+	return (
+		<>
+			{window?.electronAPI ? (
+				<div className='webkit-app-drag fixed h-7 w-full' />
+			) : (
+				<></>
+			)}
+			<EditableNote noteId={today} />
+		</>
+	)
 }

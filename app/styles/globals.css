@@ -29,6 +29,11 @@ a {
 	}
 }
 
+/* Used for the Electron title bar */
+.webkit-app-drag {
+	-webkit-app-region: drag;
+}
+
 /* Lists setting */
 
 ol {
