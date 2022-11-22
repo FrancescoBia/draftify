@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import * as path from 'path'
+import { saveNote } from './handleLocalDatabase'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
@@ -48,3 +49,8 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
+
+ipcMain.on('note/save', (_, data) => {
+	const { note } = data
+	saveNote({ note })
+})
