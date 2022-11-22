@@ -8,7 +8,7 @@ const electronAPI: ElectronAPI = {
 
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
-contextBridge.exposeInMainWorld('electron', electronAPI)
+contextBridge.exposeInMainWorld('electronAPI', electronAPI)
 
 // NB! the stuff below was already included in the template - not sure if to keep
 // All of the Node.js APIs are available in the preload process.
