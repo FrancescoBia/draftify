@@ -4,9 +4,8 @@
 	"description": "A minimal Electron application written with Typescript",
 	"scripts": {
 		"build": "tsc",
-		"watch": "tsc -w",
 		"lint": "eslint -c .eslintrc --ext .ts ./src",
-		"start": "npm run build && electron ./dist/main.js"
+		"dev": "tsc && electron ./dist/main.js"
 	},
 	"repository": "https://github.com/electron/electron-quick-start-typescript",
 	"keywords": [

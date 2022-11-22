@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"dev": "npm --prefix app run dev & npm --prefix electron start"
+		"dev": "npm --prefix app run dev & npm --prefix electron run dev"
 	},
 	"repository": {
 		"type": "git",
