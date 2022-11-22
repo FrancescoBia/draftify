@@ -33,7 +33,7 @@ export const makeNoteEditable = createAsyncThunk(
 export const saveNote = createAsyncThunk(
 	'editableNote/save',
 	async ({ updatedNote }: { updatedNote: Note }) => {
-		window.electron?.saveNote({ note: updatedNote })
+		window.electronAPI?.saveNote({ note: updatedNote })
 		const notePromise = await _saveNote({ note: updatedNote }).then(
 			() => updatedNote
 		)

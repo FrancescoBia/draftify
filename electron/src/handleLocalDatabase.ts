@@ -1,5 +1,10 @@
 import * as Store from 'electron-store'
 
+type ElectronAPIHandle<Method extends keyof ElectronAPI> = (
+	event: Electron.IpcMainInvokeEvent,
+	...arg: Parameters<ElectronAPI[Method]>
+) => ReturnType<ElectronAPI[Method]>
+
 const schema = {
 	notes: {
 		type: 'number',
@@ -8,6 +13,6 @@ const schema = {
 
 const store = new Store()
 
-export function saveNote({ note }: { note: Note }) {
-	store.set(`notes.${note.id}`, note)
+export const saveNote: ElectronAPIHandle<'saveNote'> = async (_, { note }) => {
+	return store.set(`notes.${note.id}`, note)
 }
