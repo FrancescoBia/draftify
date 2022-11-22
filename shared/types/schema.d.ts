@@ -10,6 +10,10 @@ interface Note {
 	content: string | any
 }
 
+interface NoteList {
+	[id: Note['id']]: Note
+}
+
 interface Workspace {
 	notes: {
 		[noteId: string]: Note

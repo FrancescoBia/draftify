@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import * as path from 'path'
-import { saveNote } from './handleLocalDatabase'
+import { getAllNotes, getNote, saveNote } from './handleLocalDatabase'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
@@ -51,3 +51,5 @@ app.on('window-all-closed', () => {
 // code. You can also put them in separate files and require them here.
 
 ipcMain.handle('note/save', saveNote)
+ipcMain.handle('note/get', getNote)
+ipcMain.handle('note/getAll', getAllNotes)

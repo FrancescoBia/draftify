@@ -4,4 +4,5 @@ type ElectronAPI = {
 	 */
 	saveNote: (d: { note: Note }) => Promise<void>
 	getNote: (d: { noteId: Note['id'] }) => Promise<Note>
+	getAllNotes: () => Promise<NoteList>
 }

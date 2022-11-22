@@ -16,3 +16,11 @@ const store = new Store()
 export const saveNote: ElectronAPIHandle<'saveNote'> = async (_, { note }) => {
 	return store.set(`notes.${note.id}`, note)
 }
+
+export const getNote: ElectronAPIHandle<'getNote'> = async (_, { noteId }) => {
+	return store.get(`notes.${noteId}`) as Note
+}
+
+export const getAllNotes: ElectronAPIHandle<'getAllNotes'> = async (_) => {
+	return store.get(`notes`) as NoteList
+}

@@ -3,6 +3,7 @@ import { contextBridge, ipcRenderer } from 'electron'
 const electronAPI: ElectronAPI = {
 	saveNote: (data) => ipcRenderer.invoke('note/save', data),
 	getNote: (data) => ipcRenderer.invoke('note/get', data),
+	getAllNotes: () => ipcRenderer.invoke('note/getAll'),
 }
 
 // Expose protected methods that allow the renderer process to use
