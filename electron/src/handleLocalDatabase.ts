@@ -10,6 +10,8 @@ type MySchema = {
 	notes: {
 		[noteId: Note['id']]: Note
 	}
+	workspaceId: string
+	lastBackup: string
 }
 
 const schema: ElectronStore.Schema<MySchema> = {
@@ -25,6 +27,12 @@ const schema: ElectronStore.Schema<MySchema> = {
 			},
 			required: ['id', 'dateCreated', 'lastModified'],
 		},
+	},
+	workspaceId: {
+		type: 'string',
+	},
+	lastBackup: {
+		type: 'string',
 	},
 }
 
@@ -62,7 +70,21 @@ const createWorkspace = () => {
 	return store.set(`workspaceId`, newWorkspaceId)
 }
 
+const getWorkspaceId = () => {
+	const workspaceId = store.get('workspaceId')
+	return workspaceId
+}
+
 export const checkIfWorkspaceIdIsSet = () => {
-	const workspace = store.get('workspaceId')
-	if (!workspace) createWorkspace()
+	const workspaceId = getWorkspaceId()
+	if (!workspaceId) createWorkspace()
+}
+
+// -------------------------------------
+// BACKUP
+
+const backupNotes = () => {
+	const lastBackup = store.get('lastBackup')
+	if (lastBackup < '') {
+	}
 }

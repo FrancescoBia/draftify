@@ -11,21 +11,21 @@ const electronAPI: ElectronAPI = {
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld('electronAPI', electronAPI)
 
-// NB! the stuff below was already included in the template - not sure if to keep
-// All of the Node.js APIs are available in the preload process.
-// It has the same sandbox as a Chrome extension.
-window.addEventListener('DOMContentLoaded', () => {
-	const replaceText = (selector: string, text: string) => {
-		const element = document.getElementById(selector)
-		if (element) {
-			element.innerText = text
-		}
-	}
+// // NB! the stuff below was already included in the template - not sure if to keep
+// // All of the Node.js APIs are available in the preload process.
+// // It has the same sandbox as a Chrome extension.
+// window.addEventListener('DOMContentLoaded', () => {
+// 	const replaceText = (selector: string, text: string) => {
+// 		const element = document.getElementById(selector)
+// 		if (element) {
+// 			element.innerText = text
+// 		}
+// 	}
 
-	for (const type of ['chrome', 'node', 'electron']) {
-		replaceText(
-			`${type}-version`,
-			process.versions[type as keyof NodeJS.ProcessVersions]
-		)
-	}
-})
+// 	for (const type of ['chrome', 'node', 'electron']) {
+// 		replaceText(
+// 			`${type}-version`,
+// 			process.versions[type as keyof NodeJS.ProcessVersions]
+// 		)
+// 	}
+// })
