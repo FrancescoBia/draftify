@@ -6,7 +6,7 @@ console.log({ NODE_ENV: process.env.NODE_ENV })
 function createWindow() {
 	// Create the browser window.
 	const mainWindow = new BrowserWindow({
-		height: 1000,
+		height: 600,
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
 		},
