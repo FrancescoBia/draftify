@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import * as path from 'path'
 import {
+	checkIfWorkspaceIdIsSet,
 	deleteNote,
 	getAllNotes,
 	getNote,
@@ -42,6 +43,8 @@ app.whenReady().then(() => {
 		// dock icon is clicked and there are no other windows open.
 		if (BrowserWindow.getAllWindows().length === 0) createWindow()
 	})
+
+	checkIfWorkspaceIdIsSet()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
