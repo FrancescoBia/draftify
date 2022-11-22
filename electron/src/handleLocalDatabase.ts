@@ -24,3 +24,10 @@ export const getNote: ElectronAPIHandle<'getNote'> = async (_, { noteId }) => {
 export const getAllNotes: ElectronAPIHandle<'getAllNotes'> = async (_) => {
 	return store.get(`notes`) as NoteList
 }
+
+export const deleteNote: ElectronAPIHandle<'deleteNote'> = async (
+	_,
+	{ noteId }
+) => {
+	return store.delete(`notes.${noteId}`)
+}

@@ -1,6 +1,11 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import * as path from 'path'
-import { getAllNotes, getNote, saveNote } from './handleLocalDatabase'
+import {
+	deleteNote,
+	getAllNotes,
+	getNote,
+	saveNote,
+} from './handleLocalDatabase'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
@@ -53,3 +58,4 @@ app.on('window-all-closed', () => {
 ipcMain.handle('note/save', saveNote)
 ipcMain.handle('note/get', getNote)
 ipcMain.handle('note/getAll', getAllNotes)
+ipcMain.handle('note/delete', deleteNote)
