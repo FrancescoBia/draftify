@@ -9,5 +9,5 @@ const schema = {
 const store = new Store()
 
 export function saveNote({ note }: { note: Note }) {
-	store.set('notes.testNote', note)
+	store.set(`notes.${note.id}`, note)
 }

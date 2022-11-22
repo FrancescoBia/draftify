@@ -3,7 +3,6 @@ import { _fetchNote, _saveNote } from '../controllers/firebase'
 import { fetchNote } from './notes-slice'
 import { getNoteIdFromDate } from '../utils/dateFormatter'
 import { RootState } from './store'
-import { _saveNoteToLocalStorage } from '../controllers/electron'
 
 type NoteState = Note | null
 
@@ -34,7 +33,7 @@ export const makeNoteEditable = createAsyncThunk(
 export const saveNote = createAsyncThunk(
 	'editableNote/save',
 	async ({ updatedNote }: { updatedNote: Note }) => {
-		_saveNoteToLocalStorage({ note: updatedNote })
+		window.electron?.saveNote({ note: updatedNote })
 		const notePromise = await _saveNote({ note: updatedNote }).then(
 			() => updatedNote
 		)
