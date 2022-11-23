@@ -19,6 +19,7 @@ function createWindow() {
 		},
 		width: 1000,
 		titleBarStyle: 'hidden',
+		// frame: false, // this hides the close/minimze controls as well
 	})
 
 	// and load the index.html of the app.
