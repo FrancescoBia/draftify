@@ -5,7 +5,7 @@
 	"scripts": {
 		"build:dev": "NODE_ENV=development webpack",
 		"lint": "eslint -c .eslintrc --ext .ts ./src",
-		"dev": "NODE_ENV=development npm run build && electron ./build/dev/main.js"
+		"dev": "NODE_ENV=development npm run build:dev && electron ./build/dev/main.js"
 	},
 	"repository": "https://github.com/electron/electron-quick-start-typescript",
 	"keywords": [],
