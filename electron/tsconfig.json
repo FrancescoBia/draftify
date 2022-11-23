@@ -9,7 +9,15 @@
 		"paths": {
 			"*": ["node_modules/*"]
 		},
-		"rootDirs": ["./src", "../shared"]
+		"jsx": "react",
+		"allowJs": true,
+		"rootDirs": ["./src", "../shared"],
+		"types": ["node"]
 	},
-	"include": ["src/**/*", "../shared/types/**/*"]
+	"include": ["src/**/*", "webpack.config.ts", "../shared/types/**/*"],
+	"ts-node": {
+		"compilerOptions": {
+			"module": "CommonJS"
+		}
+	}
 }
