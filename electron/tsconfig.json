@@ -8,7 +8,8 @@
 		"baseUrl": ".",
 		"paths": {
 			"*": ["node_modules/*"]
-		}
+		},
+		"rootDirs": ["./src", "../shared"]
 	},
 	"include": ["src/**/*", "../shared/types/**/*"]
 }
