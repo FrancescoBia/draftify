@@ -64,3 +64,7 @@ https://codesandbox.io/s/lexical-rich-text-example-5tncvy?file=/src/styles.css
 .editor-nested-listitem {
 	list-style-type: none;
 }
+
+.editor-link {
+	@apply text-blue-600 underline underline-offset-4 cursor-pointer;
+}

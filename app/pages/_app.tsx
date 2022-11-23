@@ -48,7 +48,7 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 	const { allNotes } = useAppSelector((s) => s)
 
 	useEffect(() => {
-		dispatch(fetchAllNotes())
+		// dispatch(fetchAllNotes())
 	}, [dispatch])
 
 	return (
@@ -58,9 +58,9 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 			{/* check that initial data has been fetched */}
 			{Object.keys(allNotes) && Object.keys(allNotes).length > 0 ? (
 				<>
-					<Navigator
+					{/* <Navigator
 						notesIdList={Object.keys(allNotes).sort().reverse() as Note['id'][]}
-					/>
+					/> */}
 					{props.children}
 				</>
 			) : (

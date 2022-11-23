@@ -36,25 +36,25 @@ export default function EditableNote({ noteId }: NoteProps) {
 		}
 	}, [noteId, dispatch])
 
-	function handleSaveNote(stringifiedContent: string) {
-		if (!isLoading && !displayError && note?.id) {
-			console.log('saving note')
+	// function handleSaveNote(stringifiedContent: string) {
+	// 	if (!isLoading && !displayError && note?.id) {
+	// 		console.log('saving note')
 
-			const myNote: Note = {
-				...note!,
-				content: JSON.parse(stringifiedContent),
-			}
-			dispatch(saveNote({ updatedNote: myNote })).then((_) =>
-				setProgressSaved(true)
-			)
-		}
-	}
+	// 		const myNote: Note = {
+	// 			...note!,
+	// 			content: JSON.parse(stringifiedContent),
+	// 		}
+	// 		dispatch(saveNote({ updatedNote: myNote })).then((_) =>
+	// 			setProgressSaved(true)
+	// 		)
+	// 	}
+	// }
 
-	const debounced = useDebouncedCallback(handleSaveNote, 1000)
+	// const debounced = useDebouncedCallback(handleSaveNote, 1000)
 
 	function updateSavingIndicator(v: string) {
 		setProgressSaved(false)
-		debounced(v)
+		// debounced(v)
 	}
 
 	return (
@@ -84,9 +84,9 @@ export default function EditableNote({ noteId }: NoteProps) {
 					<div className='grow p-4 pb-20'>
 						<Editor
 							key={`${note.id}-editor`}
-							onChange={updateSavingIndicator}
-							initialText={note.content && JSON.stringify(note.content)}
-							placeholder='What are you thinking?'
+							// onChange={updateSavingIndicator}
+							// initialText={note.content && JSON.stringify(note.content)}
+							// placeholder='What are you thinking?'
 						/>
 					</div>
 				</div>

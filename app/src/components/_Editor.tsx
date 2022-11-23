@@ -12,7 +12,7 @@ import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
 import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { TRANSFORMERS } from '@lexical/markdown'
-import { defaulTheme } from './theme'
+import { defaulTheme } from './Editor/theme'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table'
 import { ListItemNode, ListNode } from '@lexical/list'
@@ -116,33 +116,3 @@ function onChange(
 		handleChange(JSON.stringify(jsonData))
 	}
 }
-
-// function UpdateInitialTextOnChangePlugin(props: { initialText?: string }) {
-// 	const [editor] = useLexicalComposerContext()
-
-// 	useEffect(() => {
-// 		const { editorState } = editor.toJSON()
-
-// 		if (props.initialText) {
-// 			const parsedNewInitialState = JSON.parse(props.initialText)
-
-// 			// check if new state passed is supposed to override current state
-// 			// (i.e. if the two are different). This is important as otherwise
-// 			// the new initial state is set everytime there's an update
-// 			// with redux (meaning every time the note is saved).
-// 			if (!isEqual(editorState, parsedNewInitialState)) {
-// 				console.log({ editorState, parsedNewInitialState })
-
-// 				const newEditorState = editor.parseEditorState(props.initialText)
-// 				editor.setEditorState(newEditorState)
-// 			} // else do nothing
-// 		} else {
-// 			// new initial state is blank, therefore clear the editor
-// 			editor.update(() => {
-// 				$getRoot().clear()
-// 			})
-// 		}
-// 	}, [editor, props.initialText])
-
-// 	return null
-// }
