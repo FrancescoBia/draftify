@@ -88,3 +88,17 @@ const backupNotes = () => {
 	if (lastBackup < '') {
 	}
 }
+
+// -------------------------------------
+// DEV only methods!
+
+export function _deleteAllNotes() {
+	if (process.env.NODE_ENV === 'development') {
+		store.delete('notes')
+	} else {
+		console.log(
+			'Error: tried calling a dev-only method while NODE_ENV is:',
+			process.env.NODE_ENV
+		)
+	}
+}

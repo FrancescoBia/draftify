@@ -11,21 +11,14 @@ import {
 } from '../utils/dateFormatter'
 import { useRouter } from 'next/router'
 import Lock from '../assets/Lock.svg'
-import { SerializedEditorState } from 'lexical'
+import {
+	SerializedEditorState,
+	SerializedElementNode,
+	SerializedLexicalNode,
+} from 'lexical'
 
 type NoteProps = {
 	noteId: Note['id']
-}
-
-const emptyNoteContent: SerializedEditorState = {
-	root: {
-		children: [],
-		direction: null,
-		format: '',
-		indent: 0,
-		type: 'root',
-		version: 1,
-	},
 }
 
 export default function EditableNote({ noteId }: NoteProps) {
@@ -44,12 +37,13 @@ export default function EditableNote({ noteId }: NoteProps) {
 				// create a new note with the given Id
 				// TODO! This is not great as it might override a note not correctly fetched
 				else {
+					console.log('creating new note')
 					const currentTimestamp = getFormattedDate()
 					const newNote: Note = {
 						id: getNoteIdFromDate(),
 						lastModified: currentTimestamp,
 						dateCreated: currentTimestamp,
-						content: emptyNoteContent,
+						content: undefined,
 					}
 					setInitialNoteState(newNote)
 				}

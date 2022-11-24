@@ -5,6 +5,8 @@ const electronAPI: ElectronAPI = {
 	getNote: (data) => ipcRenderer.invoke('note/get', data),
 	getAllNotes: () => ipcRenderer.invoke('note/getAll'),
 	deleteNote: (data) => ipcRenderer.invoke('note/delete', data),
+	//
+	_deleteAllNotes: () => ipcRenderer.invoke('_note/deleteAll'),
 }
 
 // Expose protected methods that allow the renderer process to use

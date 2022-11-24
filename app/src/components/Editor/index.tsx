@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { EditorState, LexicalEditor, SerializedEditorState } from 'lexical'
+import { EditorState, SerializedEditorState } from 'lexical'
 import { defaulTheme } from './theme'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
@@ -21,8 +20,9 @@ import { TRANSFORMERS } from '@lexical/markdown'
 import ListMaxIndentLevelPlugin from './plugins/ListMaxIndentLevelPlugin'
 // import CodeHighlightPlugin from './plugins/CodeHighlightPlugin'
 import AutoLinkPlugin from './plugins/AutoLinkPlugin'
-import { $generateHtmlFromNodes } from '@lexical/html'
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+// import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { $getRoot, $getTextContent, LexicalEditor } from 'lexical'
+import { $rootTextContent } from '@lexical/text'
 
 type InitialConfig = Parameters<typeof LexicalComposer>[0]['initialConfig']
 
@@ -62,13 +62,13 @@ export default function Editor({ editable = true, ...props }: Props) {
 		],
 	}
 
-	function onChange(
-		editorState: EditorState
-		// editor: LexicalEditor
-	) {
+	function onChange(editorState: EditorState, editor: LexicalEditor) {
 		// transform to HTML (not in use)
 		// editor.update(() => {
 		// 	const htmlString = $generateHtmlFromNodes(editor)
+		// })
+		// editor.update(() => {
+		// 	console.log($rootTextContent())
 		// })
 
 		//

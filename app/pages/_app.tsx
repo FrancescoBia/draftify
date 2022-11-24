@@ -44,15 +44,11 @@ type WorkspaceLayoutProps = {
 }
 
 function WorkspaceLayout(props: WorkspaceLayoutProps) {
-	// const dispatch = useAppDispatch()
-	// const { allNotes } = useAppSelector((s) => s)
 	const [allNotes, setAllNotes] = useState<NoteList>()
 
 	useEffect(() => {
-		// dispatch(fetchAllNotes())
 		window.electronAPI!.getAllNotes().then((allNotes) => {
-			console.log(allNotes)
-
+			console.log({ notes: allNotes })
 			setAllNotes(allNotes)
 		})
 	}, [])
@@ -62,18 +58,21 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 			<div className='webkit-app-drag fixed h-7 w-full' />
 
 			{/* check that initial data has been fetched */}
-			{allNotes && Object.keys(allNotes) && Object.keys(allNotes).length > 0 ? (
+			{allNotes && Object.keys(allNotes) && Object.keys(allNotes).length > 0 && (
 				<>
 					<Navigator
 						notesIdList={Object.keys(allNotes).sort().reverse() as Note['id'][]}
 					/>
-					{props.children}
 				</>
-			) : (
-				<div className='h-full w-full flex items-center justify-center'>
-					<Spinner />
-				</div>
 			)}
+			{props.children}
+			{
+				//  (
+				// 	<div className='h-full w-full flex items-center justify-center'>
+				// 		<Spinner />
+				// 	</div>
+				// )
+			}
 		</div>
 	)
 }

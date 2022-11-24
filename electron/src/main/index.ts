@@ -6,6 +6,7 @@ import {
 	getAllNotes,
 	getNote,
 	saveNote,
+	_deleteAllNotes,
 } from './handleLocalDatabase'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
@@ -46,6 +47,12 @@ app.whenReady().then(() => {
 	})
 
 	checkIfWorkspaceIdIsSet()
+	ipcMain.handle('note/save', saveNote)
+	ipcMain.handle('note/get', getNote)
+	ipcMain.handle('note/getAll', getAllNotes)
+	ipcMain.handle('note/delete', deleteNote)
+	// these methods should not be exposed if node_env != development
+	ipcMain.handle('_note/deleteAll', _deleteAllNotes)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -59,8 +66,3 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
-
-ipcMain.handle('note/save', saveNote)
-ipcMain.handle('note/get', getNote)
-ipcMain.handle('note/getAll', getAllNotes)
-ipcMain.handle('note/delete', deleteNote)

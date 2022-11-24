@@ -2,11 +2,16 @@ type ElectronAPI = {
 	/**
 	 * returns promise with status of the save operation
 	 */
-	saveNote: (d: { note: Note }) => Promise<void>
+	saveNote: (data: { note: Note }) => Promise<void>
 	/**
 	 * This might return undefined if the note does not exist in the database
 	 */
-	getNote: (d: { noteId: Note['id'] }) => Promise<Note | undefined>
+	getNote: (data: { noteId: Note['id'] }) => Promise<Note | undefined>
 	getAllNotes: () => Promise<NoteList>
-	deleteNote: (d: { noteId: Note['id'] }) => Promise<void>
+	deleteNote: (data: { noteId: Note['id'] }) => Promise<void>
+	/**
+	 * IMPORTANT!
+	 * This is to be used only for testing purposes
+	 */
+	_deleteAllNotes?: (data: 'delete-all-notes' | undefined) => Promise<void>
 }
