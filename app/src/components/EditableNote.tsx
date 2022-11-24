@@ -13,8 +13,7 @@ import { useDebouncedCallback } from 'use-debounce'
 import { prettyFormatDate } from '../utils/dateFormatter'
 import { useRouter } from 'next/router'
 import Lock from '../assets/Lock.svg'
-import { EditorState, LexicalEditor } from 'lexical'
-import { $generateHtmlFromNodes } from '@lexical/html'
+import { SerializedEditorState } from 'lexical'
 
 type NoteProps = {
 	noteId: Note['id']
@@ -54,16 +53,16 @@ export default function EditableNote({ noteId }: NoteProps) {
 
 	// const debounced = useDebouncedCallback(handleSaveNote, 1000)
 
-	function updateSavingIndicator(v: string) {
+	async function saveData(jsonData: SerializedEditorState) {
+		console.log('data saved')
+		setProgressSaved(true)
+	}
+	const debounceSaveData = useDebouncedCallback(saveData, 1000)
+
+	function handleEditorContentChange(jsonData: SerializedEditorState) {
 		setProgressSaved(false)
-		// debounced(v)
+		debounceSaveData(jsonData)
 	}
-
-	function handleChange(htmlString: string) {
-		console.log(htmlString)
-	}
-
-	const debounceHandleChange = useDebouncedCallback(handleChange, 1000)
 
 	return (
 		<div className='grow flex h-full overflow-y-scroll justify-center'>
@@ -92,7 +91,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 					<div className='grow p-4 pb-20'>
 						<Editor
 							key={`${note.id}-editor`}
-							onChange={debounceHandleChange}
+							onChange={handleEditorContentChange}
 							// onChange={updateSavingIndicator}
 							// initialText={note.content && JSON.stringify(note.content)}
 							// placeholder='What are you thinking?'

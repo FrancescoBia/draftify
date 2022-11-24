@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { EditorState, LexicalEditor } from 'lexical'
+import { EditorState, LexicalEditor, SerializedEditorState } from 'lexical'
 import { defaulTheme } from './theme'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
@@ -27,7 +27,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 type InitialConfig = Parameters<typeof LexicalComposer>[0]['initialConfig']
 
 type Props = {
-	onChange: (htmlString: string) => any
+	onChange: (jsonData: SerializedEditorState) => any
 	initialText?: string
 	editable?: boolean
 	key: string
@@ -62,31 +62,18 @@ export default function Editor({ editable = true, ...props }: Props) {
 		],
 	}
 
-	// function _onChange(
-	// 	editorState: EditorState,
-	// 	handleChange: Function,
-	// 	initialText?: string
-	// ) {
-	// 	console.log('text has changed')
+	function onChange(
+		editorState: EditorState
+		// editor: LexicalEditor
+	) {
+		// transform to HTML (not in use)
+		// editor.update(() => {
+		// 	const htmlString = $generateHtmlFromNodes(editor)
+		// })
 
-	// 	// const jsonData = editorState.toJSON()
-	// 	// const parsedInitialState = JSON.parse(
-	// 	// 	initialText ||
-	// 	// 		'{"root":{"children":[],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
-	// 	// )
-
-	// 	// // this is important to avoid saving an initial state (that might be empty or not fully loaded).
-	// 	// if (!isEqual(jsonData, parsedInitialState)) {
-	// 	// 	handleChange(JSON.stringify(jsonData))
-	// 	// }
-	// }
-
-	function onChange(editorState: EditorState, editor: LexicalEditor) {
 		//
-		editor.update(() => {
-			const htmlString = $generateHtmlFromNodes(editor)
-			props.onChange(htmlString)
-		})
+		const jsonData = editorState.toJSON()
+		props.onChange(jsonData)
 	}
 
 	return (
