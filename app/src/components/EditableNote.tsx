@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import {
-	makeNoteEditable,
-	cleanupEditableNote,
-	saveNote,
-} from '../redux/editableNote-slice'
 import dynamic from 'next/dynamic'
 const Editor = dynamic(() => import('./Editor'), {
 	ssr: false,
 })
 import { useDebouncedCallback } from 'use-debounce'
-import { prettyFormatDate } from '../utils/dateFormatter'
+import {
+	prettyFormatDate,
+	getNoteIdFromDate,
+	getFormattedDate,
+} from '../utils/dateFormatter'
 import { useRouter } from 'next/router'
 import Lock from '../assets/Lock.svg'
 import { SerializedEditorState } from 'lexical'
@@ -18,48 +16,68 @@ import { SerializedEditorState } from 'lexical'
 type NoteProps = {
 	noteId: Note['id']
 }
+
+const emptyNoteContent: SerializedEditorState = {
+	root: {
+		children: [],
+		direction: null,
+		format: '',
+		indent: 0,
+		type: 'root',
+		version: 1,
+	},
+}
+
 export default function EditableNote({ noteId }: NoteProps) {
-	const dispatch = useAppDispatch()
-	const { editableNote: note } = useAppSelector((s) => s)
+	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(true)
 	const [displayError, setDisplayError] = useState(false)
 	const [progressSaved, setProgressSaved] = useState(true)
-	const router = useRouter()
+	const [initialNoteState, setInitialNoteState] = useState<Note>()
 
 	useEffect(() => {
-		dispatch(makeNoteEditable(noteId))
-			.unwrap()
-			.then(() => setIsLoading(false))
-			.catch(() => setDisplayError(true))
-
-		return () => {
-			dispatch(cleanupEditableNote())
-		}
-	}, [noteId, dispatch])
-
-	// function handleSaveNote(stringifiedContent: string) {
-	// 	if (!isLoading && !displayError && note?.id) {
-	// 		console.log('saving note')
-
-	// 		const myNote: Note = {
-	// 			...note!,
-	// 			content: JSON.parse(stringifiedContent),
-	// 		}
-	// 		dispatch(saveNote({ updatedNote: myNote })).then((_) =>
-	// 			setProgressSaved(true)
-	// 		)
-	// 	}
-	// }
-
-	// const debounced = useDebouncedCallback(handleSaveNote, 1000)
+		window
+			.electronAPI!.getNote({ noteId })
+			.then((note) => {
+				// load the note
+				if (note) setInitialNoteState(note)
+				// create a new note with the given Id
+				// TODO! This is not great as it might override a note not correctly fetched
+				else {
+					const currentTimestamp = getFormattedDate()
+					const newNote: Note = {
+						id: getNoteIdFromDate(),
+						lastModified: currentTimestamp,
+						dateCreated: currentTimestamp,
+						content: emptyNoteContent,
+					}
+					setInitialNoteState(newNote)
+				}
+				setIsLoading(false)
+			})
+			.catch((err) => {
+				setDisplayError(true)
+				throw new Error(err)
+			})
+	}, [noteId])
 
 	async function saveData(jsonData: SerializedEditorState) {
-		console.log('data saved')
-		setProgressSaved(true)
+		// makes sure that the note is loaded
+		if (!initialNoteState) throw new Error('Tried saving empty note')
+
+		return window
+			.electronAPI!.saveNote({
+				note: { ...initialNoteState, content: jsonData },
+			})
+			.then(() => {
+				console.log('data saved')
+				setProgressSaved(true)
+			})
 	}
 	const debounceSaveData = useDebouncedCallback(saveData, 1000)
 
 	function handleEditorContentChange(jsonData: SerializedEditorState) {
+		if (!initialNoteState) return
 		setProgressSaved(false)
 		debounceSaveData(jsonData)
 	}
@@ -68,12 +86,12 @@ export default function EditableNote({ noteId }: NoteProps) {
 		<div className='grow flex h-full overflow-y-scroll justify-center'>
 			{isLoading ? (
 				'Loading'
-			) : displayError || !note ? (
+			) : displayError || !initialNoteState ? (
 				'error'
 			) : (
 				<div className='max-w-2xl grow flex flex-col'>
 					<div className='p-4 flex justify-between items-center'>
-						<p className='text-gray-500'>{prettyFormatDate(note.id)}</p>
+						<p className='text-gray-500'>{prettyFormatDate(noteId)}</p>
 						<div className='flex items-center gap-6'>
 							<p className='text-gray-500'>
 								{progressSaved ? '✔︎ saved' : 'saving...'}
@@ -90,11 +108,9 @@ export default function EditableNote({ noteId }: NoteProps) {
 					</div>
 					<div className='grow p-4 pb-20'>
 						<Editor
-							key={`${note.id}-editor`}
+							key={`${noteId}-editor`}
 							onChange={handleEditorContentChange}
-							// onChange={updateSavingIndicator}
-							// initialText={note.content && JSON.stringify(note.content)}
-							// placeholder='What are you thinking?'
+							initialText={JSON.stringify(initialNoteState.content)}
 						/>
 					</div>
 				</div>

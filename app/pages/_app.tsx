@@ -48,7 +48,7 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 	const { allNotes } = useAppSelector((s) => s)
 
 	useEffect(() => {
-		dispatch(fetchAllNotes())
+		// dispatch(fetchAllNotes())
 	}, [dispatch])
 
 	return (
@@ -56,18 +56,18 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 			<div className='webkit-app-drag fixed h-7 w-full' />
 
 			{/* check that initial data has been fetched */}
-			{Object.keys(allNotes) && Object.keys(allNotes).length > 0 ? (
-				<>
-					{/* <Navigator
+			{/* {Object.keys(allNotes) && Object.keys(allNotes).length > 0 ? ( */}
+			<>
+				{/* <Navigator
 						notesIdList={Object.keys(allNotes).sort().reverse() as Note['id'][]}
 					/> */}
-					{props.children}
-				</>
-			) : (
+				{props.children}
+			</>
+			{/* ) : (
 				<div className='h-full w-full flex items-center justify-center'>
 					<Spinner />
 				</div>
-			)}
+			)} */}
 		</div>
 	)
 }
