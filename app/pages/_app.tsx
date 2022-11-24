@@ -1,3 +1,4 @@
+import { createContext } from 'react'
 import '../styles/globals.css'
 import '../styles/editorTheme.css'
 import type { AppProps } from 'next/app'
@@ -43,6 +44,8 @@ type WorkspaceLayoutProps = {
 	children: React.ReactNode
 }
 
+export const NotesContext = createContext<NoteList | undefined>(undefined)
+
 function WorkspaceLayout(props: WorkspaceLayoutProps) {
 	const [allNotes, setAllNotes] = useState<NoteList>()
 
@@ -68,7 +71,9 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 							}
 						/>
 					)}
-				{props.children}
+				<NotesContext.Provider value={allNotes}>
+					{props.children}
+				</NotesContext.Provider>
 			</div>
 			{
 				//  (
