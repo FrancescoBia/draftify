@@ -54,18 +54,22 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 	}, [])
 
 	return (
-		<div className='h-screen flex'>
-			<div className='webkit-app-drag fixed h-7 w-full' />
+		<div className='h-screen flex flex-col'>
+			<div className='webkit-app-drag h-7 w-full' />
 
-			{/* check that initial data has been fetched */}
-			{allNotes && Object.keys(allNotes) && Object.keys(allNotes).length > 0 && (
-				<>
-					<Navigator
-						notesIdList={Object.keys(allNotes).sort().reverse() as Note['id'][]}
-					/>
-				</>
-			)}
-			{props.children}
+			<div className='flex grow'>
+				{/* check that initial data has been fetched */}
+				{allNotes &&
+					Object.keys(allNotes) &&
+					Object.keys(allNotes).length > 0 && (
+						<Navigator
+							notesIdList={
+								Object.keys(allNotes).sort().reverse() as Note['id'][]
+							}
+						/>
+					)}
+				{props.children}
+			</div>
 			{
 				//  (
 				// 	<div className='h-full w-full flex items-center justify-center'>

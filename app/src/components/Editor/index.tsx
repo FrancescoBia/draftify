@@ -80,26 +80,22 @@ export default function Editor({ editable = true, ...props }: Props) {
 		<LexicalComposer initialConfig={editorConfig}>
 			<div className='editor-container'>
 				{/* <ToolbarPlugin /> */}
-				<div className='editor-inner'>
-					<RichTextPlugin
-						contentEditable={<ContentEditable className='editor-input' />}
-						placeholder={
-							<div className='editor-placeholder'>
-								What&apos;s on your mind?
-							</div>
-						}
-						ErrorBoundary={LexicalErrorBoundary}
-					/>
-					<HistoryPlugin />
-					<AutoFocusPlugin />
-					{/* <CodeHighlightPlugin /> */}
-					<ListPlugin />
-					<LinkPlugin />
-					<AutoLinkPlugin />
-					<OnChangePlugin onChange={onChange} />
-					<ListMaxIndentLevelPlugin maxDepth={7} />
-					<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-				</div>
+				<RichTextPlugin
+					contentEditable={<ContentEditable className='editor-input' />}
+					placeholder={
+						<div className='editor-placeholder'>What&apos;s on your mind?</div>
+					}
+					ErrorBoundary={LexicalErrorBoundary}
+				/>
+				<HistoryPlugin />
+				<AutoFocusPlugin />
+				{/* <CodeHighlightPlugin /> */}
+				<ListPlugin />
+				<LinkPlugin />
+				<AutoLinkPlugin />
+				<OnChangePlugin onChange={onChange} />
+				<ListMaxIndentLevelPlugin maxDepth={7} />
+				<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
 			</div>
 		</LexicalComposer>
 	)

@@ -9,8 +9,8 @@ const Navigator = (props: Props) => {
 	const today = getNoteIdFromDate()
 
 	return (
-		<div className='h-full w-12 bg-gray-100 dark:bg-gray-900 group'>
-			<div className='absolute z-10 top-0 left-0 w-56 bg-white dark:bg-gray-900 h-screen shadow-lg hidden group-hover:block opacity-0 hover:opacity-100 transition-opacity duration-500 pt-4'>
+		<div className='w-28'>
+			{/* <div className='absolute z-10 top-0 left-0 w-56 bg-white dark:bg-gray-900 h-screen shadow-lg hidden group-hover:block opacity-0 hover:opacity-100 transition-opacity duration-500 pt-4'>
 				<div className='flex flex-col'>
 					{props.notesIdList.map((noteId) => (
 						<NoteItem
@@ -19,6 +19,10 @@ const Navigator = (props: Props) => {
 						/>
 					))}
 				</div>
+			</div> */}
+			<div className='bg-gray-100 dark:bg-gray-900 flex flex-col gap-4'>
+				<button>Today</button>
+				<button>All notes</button>
 			</div>
 		</div>
 	)

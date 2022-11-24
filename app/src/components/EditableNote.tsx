@@ -84,7 +84,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 				'error'
 			) : (
 				<div className='max-w-2xl grow flex flex-col'>
-					<div className='p-4 flex justify-between items-center'>
+					{/* <div className='p-4 flex justify-between items-center'>
 						<p className='text-gray-500'>{prettyFormatDate(noteId)}</p>
 						<div className='flex items-center gap-6'>
 							<p className='text-gray-500'>
@@ -99,8 +99,8 @@ export default function EditableNote({ noteId }: NoteProps) {
 								<p className=''>Lock</p>
 							</button>
 						</div>
-					</div>
-					<div className='grow p-4 pb-20'>
+					</div> */}
+					<div className='grow p-4'>
 						<Editor
 							key={`${noteId}-editor`}
 							onChange={handleEditorContentChange}
