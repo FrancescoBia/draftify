@@ -8,5 +8,5 @@ export default function Home() {
 		router.push('/today')
 	}, [router])
 
-	return <></>
+	return <>index</>
 }

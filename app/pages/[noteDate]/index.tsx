@@ -37,22 +37,15 @@ export default function PastDate(props: Props) {
 	}, [allNotes, noteDate, displayError, dispatch])
 
 	return (
-		<>
-			{window?.electronAPI ? (
-				<div className='webkit-app-drag fixed h-7 w-full' />
+		<div className='grow flex h-full overflow-y-scroll justify-center'>
+			{isLoading ? (
+				'Loading...'
+			) : displayError ? (
+				'Note not found'
 			) : (
-				<></>
+				<RenderNote note={allNotes[noteDate!]} />
 			)}
-			<div className='grow flex h-full overflow-y-scroll justify-center'>
-				{isLoading ? (
-					'Loading...'
-				) : displayError ? (
-					'Note not found'
-				) : (
-					<RenderNote note={allNotes[noteDate!]} />
-				)}
-			</div>
-		</>
+		</div>
 	)
 }
 

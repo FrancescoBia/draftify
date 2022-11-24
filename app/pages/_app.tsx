@@ -48,7 +48,7 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 	const { allNotes } = useAppSelector((s) => s)
 
 	useEffect(() => {
-		// dispatch(fetchAllNotes())
+		dispatch(fetchAllNotes())
 	}, [dispatch])
 
 	return (

@@ -13,6 +13,8 @@ import { useDebouncedCallback } from 'use-debounce'
 import { prettyFormatDate } from '../utils/dateFormatter'
 import { useRouter } from 'next/router'
 import Lock from '../assets/Lock.svg'
+import { EditorState, LexicalEditor } from 'lexical'
+import { $generateHtmlFromNodes } from '@lexical/html'
 
 type NoteProps = {
 	noteId: Note['id']
@@ -57,6 +59,12 @@ export default function EditableNote({ noteId }: NoteProps) {
 		// debounced(v)
 	}
 
+	function handleChange(htmlString: string) {
+		console.log(htmlString)
+	}
+
+	const debounceHandleChange = useDebouncedCallback(handleChange, 1000)
+
 	return (
 		<div className='grow flex h-full overflow-y-scroll justify-center'>
 			{isLoading ? (
@@ -84,6 +92,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 					<div className='grow p-4 pb-20'>
 						<Editor
 							key={`${note.id}-editor`}
+							onChange={debounceHandleChange}
 							// onChange={updateSavingIndicator}
 							// initialText={note.content && JSON.stringify(note.content)}
 							// placeholder='What are you thinking?'
