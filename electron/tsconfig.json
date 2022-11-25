@@ -11,7 +11,7 @@
 		},
 		"jsx": "react",
 		"allowJs": true,
-		"rootDirs": ["./src", "../shared"],
+		// "rootDirs": ["./src", "../shared"],
 		"types": ["node"]
 	},
 	"include": [
