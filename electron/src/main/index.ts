@@ -30,7 +30,7 @@ function createWindow() {
 		mainWindow.loadURL('http://localhost:3000')
 		mainWindow.webContents.openDevTools()
 	} else {
-		mainWindow.loadURL('https://journal-ecru.vercel.app')
+		mainWindow.loadURL('https://draftify.vercel.app')
 	}
 
 	// Open the DevTools.
