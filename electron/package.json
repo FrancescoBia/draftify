@@ -16,6 +16,8 @@
 		"@typescript-eslint/eslint-plugin": "^4.33.0",
 		"@typescript-eslint/parser": "^4.33.0",
 		"electron": "^21.0.1",
+		"electron-builder": "^23.6.0",
+		"electron-notarize": "^1.2.2",
 		"eslint": "^7.32.0",
 		"ts-loader": "^9.4.1",
 		"ts-node": "^10.9.1",
