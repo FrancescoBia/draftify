@@ -24,10 +24,10 @@ export default function AllNotes(props: AllNotesProps) {
 						.map((noteId) => {
 							return (
 								<div
-									className='p-4 py-8 max-w-4xl mx-auto flex gap-x-6 gap-y-3 md:flex-row flex-col'
+									className='p-4 py-8 max-w-4xl mx-auto flex gap-x-6 gap-y-3 md:flex-row flex-col justify-between'
 									key={'key-' + noteId}
 								>
-									<div className='grow text-gray-400 mt-1 shrink-0 font-semibold'>
+									<div className='text-gray-400 mt-1 shrink-0 font-semibold'>
 										<p>{prettyFormatDate(noteId)}</p>
 									</div>
 									<div className='max-w-2xl grow'>
