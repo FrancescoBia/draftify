@@ -1,5 +1,5 @@
 import * as ElectronStore from 'electron-store'
-import generatePushId from '../../../shared/utils/generatePushId'
+import generatePushId from './utils/generatePushId'
 
 type ElectronAPIHandle<Method extends keyof ElectronAPI> = (
 	event: Electron.IpcMainInvokeEvent,
