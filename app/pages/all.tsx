@@ -1,5 +1,7 @@
 import { useContext } from 'react'
+import Note from '../src/components/EditableNote'
 import { NotesContext } from './_app'
+import Editor from '../src/components/Editor'
 
 interface AllNotesProps {}
 
@@ -15,7 +17,25 @@ export default function AllNotes(props: AllNotesProps) {
 					You don&apos;t have any older notes... Yet!
 				</div>
 			) : (
-				Object.values(allNotes)[0].id
+				<div className='grow flex h-full overflow-y-scroll justify-center'>
+					<div className='max-w-2xl grow flex flex-col'>
+						{(Object.keys(allNotes) as Note['id'][])
+							.sort()
+							.reverse()
+							.map((noteId) => {
+								return (
+									<div className='p-4' key={'key-' + noteId}>
+										<Editor
+											editable={false}
+											onChange={() => {}}
+											key={'key-' + noteId}
+											initialText={JSON.stringify(allNotes[noteId].content)}
+										/>
+									</div>
+								)
+							})}
+					</div>
+				</div>
 			)}
 		</>
 	)
