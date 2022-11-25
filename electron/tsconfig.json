@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "ES2015",
+		"noImplicitAny": true,
+		"sourceMap": true,
+		"outDir": "dist",
+		"baseUrl": ".",
+		"paths": {
+			"*": ["node_modules/*"]
+		},
+		"jsx": "react",
+		"allowJs": true,
+		"rootDirs": ["./src", "../shared"],
+		"types": ["node"]
+	},
+	"include": ["src/**/*", "webpack.config.ts", "../shared/types/**/*"],
+	"ts-node": {
+		"compilerOptions": {
+			"module": "CommonJS"
+		}
+	}
+}

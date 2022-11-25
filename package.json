@@ -1,37 +1,19 @@
 {
-	"name": "journal",
-	"version": "0.1.0",
-	"private": true,
+	"name": "draftify",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
 	"scripts": {
-		"dev": "npx firebase emulators:start --import=./.emulators & next dev",
-		"build": "next build",
-		"start": "next start",
-		"lint": "next lint"
+		"dev": "npm --prefix app run dev & npm --prefix electron run dev"
 	},
-	"dependencies": {
-		"@lexical/react": "^0.6.0",
-		"@reduxjs/toolkit": "^1.9.0",
-		"@types/node": "18.11.9",
-		"@types/react": "18.0.25",
-		"@types/react-dom": "18.0.9",
-		"eslint": "8.27.0",
-		"eslint-config-next": "13.0.3",
-		"firebase": "^9.14.0",
-		"lexical": "^0.6.0",
-		"lodash": "^4.17.21",
-		"next": "13.0.3",
-		"react": "18.2.0",
-		"react-dom": "18.2.0",
-		"react-redux": "^8.0.5",
-		"typescript": "4.9.3",
-		"use-debounce": "^8.0.4"
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/FrancescoBia/journal.git"
 	},
-	"devDependencies": {
-		"@svgr/webpack": "^6.5.1",
-		"@types/lodash": "^4.14.189",
-		"autoprefixer": "^10.4.13",
-		"firebase-tools": "^11.16.1",
-		"postcss": "^8.4.19",
-		"tailwindcss": "^3.2.4"
-	}
+	"author": "Francesco Bianchi <9106253+FrancescoBia@users.noreply.github.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/FrancescoBia/journal/issues"
+	},
+	"homepage": "https://github.com/FrancescoBia/journal#readme"
 }
