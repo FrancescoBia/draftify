@@ -5,7 +5,6 @@ interface AllNotesProps {}
 
 export default function AllNotes(props: AllNotesProps) {
 	const allNotes = useContext(NotesContext)
-	console.log('reading cotext', { allNotes })
 
 	return (
 		<div>

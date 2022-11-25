@@ -74,13 +74,7 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 				{/* check that initial data has been fetched */}
 				{allNotes ? (
 					<NotesContext.Provider value={allNotes}>
-						<Navigator
-							notesIdList={
-								Object.keys(allNotes || {})
-									.sort()
-									.reverse() as Note['id'][]
-							}
-						/>
+						<Navigator />
 						{props.children}
 					</NotesContext.Provider>
 				) : (
