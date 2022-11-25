@@ -8,7 +8,7 @@ export default function webpackConfig(env: any) {
 
 	return {
 		entry: {
-			main: path.resolve(__dirname, 'src', 'index.ts'),
+			index: path.resolve(__dirname, 'src', 'index.ts'),
 			preload: path.resolve(__dirname, 'src', 'preload.ts'),
 		},
 		target: 'electron-main',

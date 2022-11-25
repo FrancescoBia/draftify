@@ -14,7 +14,12 @@
 		"rootDirs": ["./src", "../shared"],
 		"types": ["node"]
 	},
-	"include": ["src/**/*", "webpack.config.ts", "../shared/types/**/*"],
+	"include": [
+		"src/**/*",
+		"../shared/types/**/*",
+		"webpack.config.ts"
+		// "electron-builder-config.js"
+	],
 	"ts-node": {
 		"compilerOptions": {
 			"module": "CommonJS"
