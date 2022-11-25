@@ -97,3 +97,9 @@ ul ul ul {
 		transform: rotate(359deg);
 	}
 }
+
+/* icon */
+
+.make-iso {
+	transform: skew(59deg, 334deg) scale(0.5);
+}
