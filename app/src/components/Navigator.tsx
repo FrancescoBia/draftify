@@ -13,8 +13,8 @@ const Navigator = (props: Props) => {
 	// const allNotes = useContext(NotesContext)
 
 	return (
-		<div className='p-4'>
-			<div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl '>
+		<div className='p-4 w-[104px]'>
+			<div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl fixed'>
 				<IconButton href='/today' />
 				<IconButton href='/all' />
 			</div>

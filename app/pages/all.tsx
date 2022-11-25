@@ -1,5 +1,4 @@
 import { useContext } from 'react'
-import Note from '../src/components/EditableNote'
 import { NotesContext } from './_app'
 import Editor from '../src/components/Editor'
 import { prettyFormatDate } from '../src/utils/dateFormatter'
@@ -18,17 +17,17 @@ export default function AllNotes(props: AllNotesProps) {
 					You don&apos;t have any older notes... Yet!
 				</div>
 			) : (
-				<div className='grow overflow-y-scroll divide-y '>
+				<div className='grow overflow-y-scroll divide-y mr-4'>
 					{(Object.keys(allNotes) as Note['id'][])
 						.sort()
 						.reverse()
 						.map((noteId) => {
 							return (
 								<div
-									className='p-4 py-8 max-w-4xl mx-auto flex gap-6 '
+									className='p-4 py-8 max-w-4xl mx-auto flex gap-x-6 gap-y-3 md:flex-row flex-col'
 									key={'key-' + noteId}
 								>
-									<div className='grow text-gray-500 max-w-xs'>
+									<div className='grow text-gray-400 mt-1 shrink-0 font-semibold'>
 										<p>{prettyFormatDate(noteId)}</p>
 									</div>
 									<div className='max-w-2xl grow'>
