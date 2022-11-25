@@ -1,7 +1,7 @@
 {
-	"name": "electron-quick-start-typescript",
+	"name": "draftify",
 	"version": "1.0.0",
-	"description": "A minimal Electron application written with Typescript",
+	"description": "",
 	"scripts": {
 		"build:dev": "NODE_ENV=development webpack",
 		"lint": "eslint -c .eslintrc --ext .ts ./src",
