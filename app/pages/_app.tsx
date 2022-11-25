@@ -35,10 +35,9 @@ export default function App({ Component, pageProps }: AppProps) {
 	)
 }
 
-import { useAppDispatch, useAppSelector } from '../src/redux/hooks'
-import { fetchAllNotes } from '../src/redux/notes-slice'
 import { Navigator } from '../src/components/Navigator'
 import { Spinner } from '../src/components/Spinner'
+import isNoteEmpty from '../src/utils/checkIfNoteIsEmpty'
 
 type WorkspaceLayoutProps = {
 	children: React.ReactNode
@@ -52,36 +51,44 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 	useEffect(() => {
 		window.electronAPI!.getAllNotes().then((allNotes) => {
 			console.log({ notes: allNotes })
-			setAllNotes(allNotes)
+			setAllNotes(() => {
+				return (
+					(Object.keys(allNotes) as Note['id'][])
+						// filter out empty notes
+						.filter((noteId) => !isNoteEmpty(allNotes[noteId].content!))
+						// recompose object
+						.reduce<NoteList>((acc, noteId) => {
+							return { ...acc, [noteId]: allNotes[noteId] }
+						}, {})
+				)
+			})
 		})
 	}, [])
 
 	return (
 		<div className='h-screen flex flex-col'>
+			{/* Electron window frame */}
 			<div className='webkit-app-drag h-7 w-full' />
-
+			{/* App  */}
 			<div className='flex grow'>
 				{/* check that initial data has been fetched */}
-				{allNotes &&
-					Object.keys(allNotes) &&
-					Object.keys(allNotes).length > 0 && (
+				{allNotes ? (
+					<NotesContext.Provider value={allNotes}>
 						<Navigator
 							notesIdList={
-								Object.keys(allNotes).sort().reverse() as Note['id'][]
+								Object.keys(allNotes || {})
+									.sort()
+									.reverse() as Note['id'][]
 							}
 						/>
-					)}
-				<NotesContext.Provider value={allNotes}>
-					{props.children}
-				</NotesContext.Provider>
+						{props.children}
+					</NotesContext.Provider>
+				) : (
+					<div className='h-full w-full flex items-center justify-center'>
+						<Spinner />
+					</div>
+				)}
 			</div>
-			{
-				//  (
-				// 	<div className='h-full w-full flex items-center justify-center'>
-				// 		<Spinner />
-				// 	</div>
-				// )
-			}
 		</div>
 	)
 }

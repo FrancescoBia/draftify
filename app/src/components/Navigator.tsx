@@ -38,7 +38,7 @@ const IconButton = (props: ButtonProps) => {
 	return (
 		<Link
 			href={props.href}
-			className='w-14 p-2 rounded-2xl dark:hover:bg-gray-800'
+			className='w-14 p-2 rounded-2xl dark:hover:bg-gray-800 hover:bg-gray-200'
 		>
 			<Image src={today_icon} alt='' />
 		</Link>
