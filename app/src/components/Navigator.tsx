@@ -49,7 +49,12 @@ const IconButton = (props: ButtonProps) => {
 				// </p>
 				<></>
 			)}
-			<Image src={props.image} alt={props.alt} className='drop-shadow-icon' />
+			<Image
+				src={props.image}
+				alt={props.alt}
+				className='drop-shadow-icon'
+				priority
+			/>
 		</Link>
 	)
 }

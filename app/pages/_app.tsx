@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
 	const [isElectron, setIsElectron] = useState(false)
 
 	useEffect(() => {
-		if (!window?.electronAPI) router.push('/404', undefined, { shallow: true })
+		// if (!window?.electronAPI) router.push('/404', undefined, { shallow: true })
 		setIsElectron(!!window?.electronAPI)
 	}, [router])
 
@@ -24,7 +24,10 @@ export default function App({ Component, pageProps }: AppProps) {
 					<Component {...pageProps} />
 				</WorkspaceLayout>
 			) : (
-				<Component {...pageProps} />
+				//  Not found
+				<div className='h-screen w-screen flex justify-center items-center'>
+					404
+				</div>
 			)}
 			<Head>
 				<title>Journal</title>
