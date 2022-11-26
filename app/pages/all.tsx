@@ -28,7 +28,7 @@ export default function AllNotes(props: AllNotesProps) {
 									className='p-4 py-8 max-w-4xl mx-auto flex gap-x-6 gap-y-3 md:flex-row flex-col justify-between group'
 									key={'key-' + noteId}
 								>
-									<div className='text-gray-400 mt-1 shrink-0 font-semibold flex md:flex-col flex-row gap-y-2 md:items-start justify-between md:justify-start'>
+									<div className='text-gray-400 mt-1 shrink-0 font-semibold flex md:flex-col flex-row gap-y-2 items-center md:items-start justify-between md:justify-start'>
 										<p>{prettyFormatDate(noteId)}</p>
 										<Link
 											href={`/${noteId}/edit`}
