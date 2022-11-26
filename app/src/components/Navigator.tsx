@@ -40,11 +40,14 @@ const IconButton = (props: ButtonProps) => {
 	return (
 		<Link
 			href={props.href}
-			className='w-14 p-2 rounded-lg dark:hover:bg-gray-800 hover:bg-gray-200 hover:bg-opacity-60 relative'
+			className='w-14 p-2 rounded-lg dark:hover:bg-gray-800 hover:bg-gray-200 hover:bg-opacity-60 relative group'
 		>
 			{isSelected && (
 				<div className='absolute bg-white w-1 h-1 rounded-full -left-[2px] top-[26px]' />
 			)}
+			<div className='absolute hidden group-hover:inline-block bg-gray-800 left-full ml-4 p-1 top-1/2 -translate-y-1/2 rounded border border-gray-700 px-2 whitespace-nowrap'>
+				{props.href == '/today' ? "Today's note" : 'All notes'}
+			</div>
 			{props.href == '/today' ? (
 				<p className='absolute z-10 top-6 left-3 w-8 text-center leading-none bg-white text-gray-900'>
 					{new Date().getDate()}
