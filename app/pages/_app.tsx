@@ -11,15 +11,18 @@ import { useRouter } from 'next/router'
 export default function App({ Component, pageProps }: AppProps) {
 	const router = useRouter()
 	const [isElectron, setIsElectron] = useState(false)
+	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		// if (!window?.electronAPI) router.push('/404', undefined, { shallow: true })
 		setIsElectron(!!window?.electronAPI)
+		setIsLoading(false)
 	}, [router])
 
 	return (
 		<Provider store={store}>
-			{isElectron ? (
+			{isLoading ? (
+				<></>
+			) : isElectron ? (
 				<WorkspaceLayout>
 					<Component {...pageProps} />
 				</WorkspaceLayout>
