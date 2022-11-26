@@ -34,11 +34,17 @@ type ButtonProps = {
 }
 
 const IconButton = (props: ButtonProps) => {
+	const { pathname } = useRouter()
+	const isSelected = pathname == props.href
+
 	return (
 		<Link
 			href={props.href}
 			className='w-14 p-2 rounded-lg dark:hover:bg-gray-800 hover:bg-gray-200 hover:bg-opacity-60 relative'
 		>
+			{isSelected && (
+				<div className='absolute bg-white w-1 h-1 rounded-full -left-[2px] top-[26px]' />
+			)}
 			{props.href == '/today' ? (
 				<p className='absolute z-10 top-6 left-3 w-8 text-center leading-none bg-white text-gray-900'>
 					{new Date().getDate()}
