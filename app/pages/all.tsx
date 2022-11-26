@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { NotesContext } from './_app'
 import Editor from '../src/components/Editor'
 import { prettyFormatDate } from '../src/utils/dateFormatter'
+import Link from 'next/link'
 
 interface AllNotesProps {}
 
@@ -29,9 +30,12 @@ export default function AllNotes(props: AllNotesProps) {
 								>
 									<div className='text-gray-400 mt-1 shrink-0 font-semibold flex md:flex-col flex-row gap-y-2 md:items-start justify-between md:justify-start'>
 										<p>{prettyFormatDate(noteId)}</p>
-										<button className='button-secondary  opacity-0 group-hover:opacity-100 transition-all'>
+										<Link
+											href={`/${noteId}/edit`}
+											className='button-secondary  opacity-0 group-hover:opacity-100 transition-all'
+										>
 											Edit
-										</button>
+										</Link>
 									</div>
 									<div className='max-w-2xl grow'>
 										<Editor
