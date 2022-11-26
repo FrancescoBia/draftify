@@ -6,6 +6,7 @@ exports.default = async (context) => {
 	if (electronPlatformName !== 'darwin') {
 		return
 	}
+	console.log('started notarization process')
 
 	const appName = context.packager.appInfo.productFilename
 

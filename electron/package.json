@@ -8,7 +8,8 @@
 		"build:prod": "NODE_ENV=production webpack",
 		"lint": "eslint -c .eslintrc --ext .ts ./src",
 		"dev": "NODE_ENV=development npm run build:dev && electron ./build/dev/index.js",
-		"pack": "NODE_ENV=production npm run build:prod && electron-builder --config ./electron-builder-config.js --dir -c.mac.identity=null"
+		"test:pack": "npm run build:prod && electron-builder --config ./electron-builder-config.js --dir -c.mac.identity=null",
+		"dist": "npm run build:prod && electron-builder --config ./electron-builder-config.js -c.afterSign=notarize.js"
 	},
 	"repository": "https://github.com/electron/electron-quick-start-typescript",
 	"keywords": [],

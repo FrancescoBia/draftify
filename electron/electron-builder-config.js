@@ -1,16 +1,10 @@
-const path = require('path')
-
-// require('dotenv').config()
-
 module.exports = () => {
-	const isProd = process.env.NODE_ENV === 'production'
-
-	return {
+	/**
+	 * @type {import('electron-builder').Configuration}
+	 * @see https://www.electron.build/configuration/configuration
+	 */
+	const options = {
 		appId: 'app.draftify.app',
-		mac: {
-			icon: './assets/app_icon.icns',
-			category: 'public.app-category.productivity',
-		},
 		files: [
 			'dist/**/*',
 			'package.json',
@@ -20,7 +14,23 @@ module.exports = () => {
 				filter: ['**/*'],
 			},
 		],
+		protocols: {
+			name: 'draftify',
+			schemes: ['draftify'],
+		},
+		mac: {
+			icon: './assets/app_icon.icns',
+			category: 'public.app-category.productivity',
+			hardenedRuntime: true,
+			darkModeSupport: true,
+		},
+		// beforeBuild: async (context) => {
+		// 	console.log({ context })
+		// },
 	}
+
+	// ----
+	return options
 }
 // return {
 // 	appId: 'app.draftify.app',
