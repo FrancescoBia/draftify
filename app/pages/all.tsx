@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { NotesContext } from './_app'
 import Editor from '../src/components/Editor'
-import { prettyFormatDate } from '../src/utils/dateFormatter'
+import { prettyFormatDate, getNoteIdFromDate } from '../src/utils/dateFormatter'
 import Link from 'next/link'
 
 interface AllNotesProps {}
@@ -20,6 +20,8 @@ export default function AllNotes(props: AllNotesProps) {
 			) : (
 				<div className='grow overflow-y-scroll divide-y mr-4 mb-12'>
 					{(Object.keys(allNotes) as Note['id'][])
+						// remove today's note from view
+						.filter((noteId) => noteId !== getNoteIdFromDate())
 						.sort()
 						.reverse()
 						.map((noteId) => {
