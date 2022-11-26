@@ -5,22 +5,50 @@ const Editor = dynamic(() => import('./Editor'), {
 })
 import { useDebouncedCallback } from 'use-debounce'
 import { getNoteIdFromDate, getFormattedDate } from '../utils/dateFormatter'
-import { useRouter } from 'next/router'
 import { SerializedEditorState } from 'lexical'
 import { NotesContext } from '../../pages/_app'
-import AllNotes from '../../pages/all'
 
 type NoteProps = {
 	noteId: Note['id']
 }
 
 export default function EditableNote({ noteId }: NoteProps) {
-	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(true)
 	const [displayError, setDisplayError] = useState(false)
+	// progressSaved currently not displayed, but useful to keep for eventual later use
 	const [progressSaved, setProgressSaved] = useState(true)
 	const [initialNoteState, setInitialNoteState] = useState<Note>()
 	const { setAllNotes } = useContext(NotesContext)
+
+	async function saveData(jsonData: SerializedEditorState) {
+		// makes sure that the note is loaded
+		if (!initialNoteState) throw new Error('Tried saving empty note')
+
+		const updatedNote: Note = { ...initialNoteState, content: jsonData }
+		return window
+			.electronAPI!.saveNote({
+				note: updatedNote,
+			})
+			.then(() => {
+				console.log('data saved')
+				// save the updated note back to the main context
+				setAllNotes &&
+					setAllNotes((allNotes) => {
+						return { ...allNotes, [updatedNote.id]: updatedNote }
+					})
+				setProgressSaved(true)
+			})
+	}
+
+	const debounceSaveData = useDebouncedCallback(saveData, 1000, {
+		maxWait: 10000,
+	})
+
+	function handleEditorContentChange(jsonData: SerializedEditorState) {
+		if (!initialNoteState) return
+		setProgressSaved(false)
+		debounceSaveData(jsonData)
+	}
 
 	useEffect(() => {
 		window
@@ -47,34 +75,10 @@ export default function EditableNote({ noteId }: NoteProps) {
 				setDisplayError(true)
 				throw new Error(err)
 			})
-	}, [noteId])
 
-	async function saveData(jsonData: SerializedEditorState) {
-		// makes sure that the note is loaded
-		if (!initialNoteState) throw new Error('Tried saving empty note')
-
-		const updatedNote: Note = { ...initialNoteState, content: jsonData }
-		return window
-			.electronAPI!.saveNote({
-				note: updatedNote,
-			})
-			.then(() => {
-				console.log('data saved')
-				// save the updated note back to the main context
-				setAllNotes &&
-					setAllNotes((allNotes) => {
-						return { ...allNotes, [updatedNote.id]: updatedNote }
-					})
-				setProgressSaved(true)
-			})
-	}
-	const debounceSaveData = useDebouncedCallback(saveData, 1000)
-
-	function handleEditorContentChange(jsonData: SerializedEditorState) {
-		if (!initialNoteState) return
-		setProgressSaved(false)
-		debounceSaveData(jsonData)
-	}
+		// IMPORTANT! This calls the function right away in case the component unmounts (e.g. the user leaves the page)
+		return () => debounceSaveData.flush()
+	}, [noteId, debounceSaveData])
 
 	return (
 		<div className='grow flex h-full overflow-y-scroll justify-center'>
