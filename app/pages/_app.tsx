@@ -41,15 +41,22 @@ export default function App({ Component, pageProps }: AppProps) {
 import { Navigator } from '../src/components/Navigator'
 import { Spinner } from '../src/components/Spinner'
 import isNoteEmpty from '../src/utils/checkIfNoteIsEmpty'
+import { Dispatch, SetStateAction } from 'react'
 
 type WorkspaceLayoutProps = {
 	children: React.ReactNode
 }
 
-export const NotesContext = createContext<NoteList | undefined>(undefined)
+export const NotesContext = createContext<{
+	allNotes: NoteList | undefined
+	setAllNotes?: Dispatch<SetStateAction<NoteList>>
+}>({
+	allNotes: undefined,
+})
 
 function WorkspaceLayout(props: WorkspaceLayoutProps) {
-	const [allNotes, setAllNotes] = useState<NoteList>()
+	const [allNotes, setAllNotes] = useState<NoteList>({})
+	const contextValue = { allNotes, setAllNotes }
 
 	useEffect(() => {
 		window.electronAPI!.getAllNotes().then((allNotes) => {
@@ -76,7 +83,7 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 			<div className='flex grow'>
 				{/* check that initial data has been fetched */}
 				{allNotes ? (
-					<NotesContext.Provider value={allNotes}>
+					<NotesContext.Provider value={contextValue}>
 						<Navigator />
 						{props.children}
 					</NotesContext.Provider>

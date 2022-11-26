@@ -7,7 +7,7 @@ import Link from 'next/link'
 interface AllNotesProps {}
 
 export default function AllNotes(props: AllNotesProps) {
-	const allNotes = useContext(NotesContext)
+	const { allNotes } = useContext(NotesContext)
 
 	return (
 		<>

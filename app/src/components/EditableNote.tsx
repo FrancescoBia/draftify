@@ -1,21 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import dynamic from 'next/dynamic'
 const Editor = dynamic(() => import('./Editor'), {
 	ssr: false,
 })
 import { useDebouncedCallback } from 'use-debounce'
-import {
-	prettyFormatDate,
-	getNoteIdFromDate,
-	getFormattedDate,
-} from '../utils/dateFormatter'
+import { getNoteIdFromDate, getFormattedDate } from '../utils/dateFormatter'
 import { useRouter } from 'next/router'
-import Lock from '../assets/Lock.svg'
-import {
-	SerializedEditorState,
-	SerializedElementNode,
-	SerializedLexicalNode,
-} from 'lexical'
+import { SerializedEditorState } from 'lexical'
+import { NotesContext } from '../../pages/_app'
+import AllNotes from '../../pages/all'
 
 type NoteProps = {
 	noteId: Note['id']
@@ -27,6 +20,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 	const [displayError, setDisplayError] = useState(false)
 	const [progressSaved, setProgressSaved] = useState(true)
 	const [initialNoteState, setInitialNoteState] = useState<Note>()
+	const { setAllNotes } = useContext(NotesContext)
 
 	useEffect(() => {
 		window
@@ -59,12 +53,18 @@ export default function EditableNote({ noteId }: NoteProps) {
 		// makes sure that the note is loaded
 		if (!initialNoteState) throw new Error('Tried saving empty note')
 
+		const updatedNote: Note = { ...initialNoteState, content: jsonData }
 		return window
 			.electronAPI!.saveNote({
-				note: { ...initialNoteState, content: jsonData },
+				note: updatedNote,
 			})
 			.then(() => {
 				console.log('data saved')
+				// save the updated note back to the main context
+				setAllNotes &&
+					setAllNotes((allNotes) => {
+						return { ...allNotes, [updatedNote.id]: updatedNote }
+					})
 				setProgressSaved(true)
 			})
 	}
