@@ -24,11 +24,14 @@ export default function AllNotes(props: AllNotesProps) {
 						.map((noteId) => {
 							return (
 								<div
-									className='p-4 py-8 max-w-4xl mx-auto flex gap-x-6 gap-y-3 md:flex-row flex-col justify-between'
+									className='p-4 py-8 max-w-4xl mx-auto flex gap-x-6 gap-y-3 md:flex-row flex-col justify-between group'
 									key={'key-' + noteId}
 								>
-									<div className='text-gray-400 mt-1 shrink-0 font-semibold'>
+									<div className='text-gray-400 mt-1 shrink-0 font-semibold flex md:flex-col flex-row gap-y-2 md:items-start justify-between md:justify-start'>
 										<p>{prettyFormatDate(noteId)}</p>
+										<button className='button-secondary  opacity-0 group-hover:opacity-100 transition-all'>
+											Edit
+										</button>
 									</div>
 									<div className='max-w-2xl grow'>
 										<Editor
