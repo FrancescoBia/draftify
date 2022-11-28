@@ -4,6 +4,7 @@ module.exports = () => {
 	 * @see https://www.electron.build/configuration/configuration
 	 */
 	const options = {
+		productName: 'Draftify',
 		appId: 'app.draftify.app',
 		files: [
 			'!dist',
@@ -23,6 +24,11 @@ module.exports = () => {
 			category: 'public.app-category.productivity',
 			hardenedRuntime: true,
 			darkModeSupport: true,
+		},
+		publish: {
+			provider: 'spaces',
+			name: 'draftify-app',
+			region: 'nyc3', // https://docs.digitalocean.com/products/platform/availability-matrix/
 		},
 		// beforeBuild: async (context) => {
 		// 	console.log({ context })

@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import * as path from 'path'
+import { autoUpdater } from 'electron-updater'
 import {
 	checkIfWorkspaceIdIsSet,
 	deleteNote,
@@ -11,10 +12,10 @@ import {
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
-const appBaseUrl =
-	!process.env.NODE_ENV || process.env.NODE_ENV === 'development'
-		? 'http://localhost:3000'
-		: 'https://draftify.vercel.app'
+const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+const appBaseUrl = isDev
+	? 'http://localhost:3000'
+	: 'https://draftify.vercel.app'
 
 function createWindow() {
 	// Create the browser window.
@@ -52,13 +53,20 @@ app.whenReady().then(() => {
 		if (BrowserWindow.getAllWindows().length === 0) createWindow()
 	})
 
+	// --------------------
+
 	checkIfWorkspaceIdIsSet()
 	ipcMain.handle('note/save', saveNote)
 	ipcMain.handle('note/get', getNote)
 	ipcMain.handle('note/getAll', getAllNotes)
 	ipcMain.handle('note/delete', deleteNote)
 	// these methods should not be exposed if node_env != development
-	ipcMain.handle('_note/deleteAll', _deleteAllNotes)
+	if (isDev) {
+		ipcMain.handle('_note/deleteAll', _deleteAllNotes)
+	}
+
+	// --------------------
+	autoUpdater.checkForUpdatesAndNotify()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
