@@ -14,12 +14,21 @@ export const defaulTheme = {
 		h5: 'editor-heading-h5',
 	},
 	list: {
-		nested: {
-			listitem: 'editor-nested-listitem',
-		},
 		ol: 'editor-list-ol',
 		ul: 'editor-list-ul',
 		listitem: 'editor-listitem',
+		listitemChecked: 'editor-listitem-checked',
+		listitemUnchecked: 'editor-listitem-unchecked',
+		nested: {
+			listitem: 'editor-nested-listitem',
+		},
+		olDepth: [
+			'editor-ol1',
+			'editor-ol2',
+			'editor-ol3',
+			'editor-ol4',
+			'editor-ol5',
+		],
 	},
 	image: 'editor-image',
 	link: 'editor-link',

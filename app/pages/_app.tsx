@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 import '../styles/globals.css'
-import '../styles/editorTheme.css'
+import '../styles/Editor/index.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Provider } from 'react-redux'
