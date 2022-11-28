@@ -6,7 +6,7 @@ module.exports = () => {
 	const options = {
 		appId: 'app.draftify.app',
 		files: [
-			'dist/**/*',
+			'!dist',
 			'package.json',
 			{
 				from: 'build/prod/',
