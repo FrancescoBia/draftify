@@ -1,4 +1,4 @@
-import * as ElectronStore from 'electron-store'
+import ElectronStore from 'electron-store'
 import generatePushId from './utils/generatePushId'
 
 type ElectronAPIHandle<Method extends keyof ElectronAPI> = (
