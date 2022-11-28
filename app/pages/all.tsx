@@ -18,7 +18,7 @@ export default function AllNotes(props: AllNotesProps) {
 					You don&apos;t have any older notes... Yet!
 				</div>
 			) : (
-				<div className='grow overflow-y-scroll divide-y mr-4 mb-12'>
+				<div className='grow overflow-y-scroll divide-y dark:divide-gray-800 mr-4 mb-12'>
 					{(Object.keys(allNotes) as Note['id'][])
 						// remove today's note from view
 						.filter((noteId) => noteId !== getNoteIdFromDate())
