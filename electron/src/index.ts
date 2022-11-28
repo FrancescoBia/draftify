@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import * as path from 'path'
 import {
 	checkIfWorkspaceIdIsSet,
@@ -10,6 +10,11 @@ import {
 } from './handleLocalDatabase'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
+
+const appBaseUrl =
+	!process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+		? 'http://localhost:3000'
+		: 'https://draftify.vercel.app'
 
 function createWindow() {
 	// Create the browser window.
@@ -26,11 +31,10 @@ function createWindow() {
 	})
 
 	// and load the index.html of the app.
-	if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-		mainWindow.loadURL('http://localhost:3000')
+	mainWindow.loadURL(appBaseUrl)
+	// open dev tools
+	if (process.env.NODE_ENV === 'development') {
 		mainWindow.webContents.openDevTools()
-	} else {
-		mainWindow.loadURL('https://draftify.vercel.app')
 	}
 
 	// Open the DevTools.
@@ -66,5 +70,16 @@ app.on('window-all-closed', () => {
 	}
 })
 
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
+const URL = require('url').URL
+
+app.on('web-contents-created', (event, contents) => {
+	contents.on('will-navigate', (event, navigationUrl) => {
+		const parsedUrl = new URL(navigationUrl)
+		const appUrl = new URL(appBaseUrl)
+
+		if (parsedUrl.origin !== appUrl.origin) {
+			event.preventDefault()
+			shell.openExternal(parsedUrl.href)
+		}
+	})
+})
