@@ -79,6 +79,8 @@ app.on('web-contents-created', (event, contents) => {
 
 		if (parsedUrl.origin !== appUrl.origin) {
 			event.preventDefault()
+			// This is not a good practice
+			// see: https://www.electronjs.org/docs/latest/tutorial/security#how-12
 			shell.openExternal(parsedUrl.href)
 		}
 	})
