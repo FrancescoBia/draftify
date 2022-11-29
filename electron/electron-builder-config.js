@@ -24,6 +24,16 @@ module.exports = () => {
 			category: 'public.app-category.productivity',
 			hardenedRuntime: true,
 			darkModeSupport: true,
+			target: [
+				{
+					target: 'dmg',
+					arch: ['x64', 'arm64'],
+				},
+				{
+					target: 'zip',
+					arch: ['x64', 'arm64'],
+				},
+			],
 		},
 		publish: {
 			provider: 'spaces',

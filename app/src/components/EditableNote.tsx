@@ -111,6 +111,8 @@ export default function EditableNote({ noteId }: NoteProps) {
 									<LegendItem label='1. numbered list' />
 									<LegendItem label='-[] checklist' />
 									<LegendItem label='-[x] checklist' />
+									<LegendItem label='`code`' />
+									<LegendItem label='``` codeblock' />
 								</div>
 							</div>
 						)}

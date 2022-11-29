@@ -17,7 +17,7 @@ import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import ListMaxIndentLevelPlugin from './plugins/ListMaxIndentLevelPlugin'
-// import CodeHighlightPlugin from './plugins/CodeHighlightPlugin'
+import CodeHighlightPlugin from './plugins/CodeHighlightPlugin'
 import AutoLinkPlugin from './plugins/AutoLinkPlugin'
 import { LexicalEditor } from 'lexical'
 import { CustomMarkdownShortcutPlugin } from './plugins/CustomMarkdownShortcutPlugin'
@@ -87,7 +87,7 @@ export default function Editor({ editable = true, ...props }: Props) {
 				/>
 				<HistoryPlugin />
 				<AutoFocusPlugin />
-				{/* <CodeHighlightPlugin /> */}
+				<CodeHighlightPlugin />
 				<ListPlugin />
 				<LinkPlugin />
 				<AutoLinkPlugin />
