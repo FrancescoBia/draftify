@@ -3,7 +3,7 @@ type ElectronAPI = {
 	 * Returns the version of the Electron app installed.
 	 * This can be used to make sure that the client can use certain methods.
 	 */
-	getLocalAppVersion: () => Promise<string>
+	appVersion: () => string
 	/**
 	 * returns promise with status of the save operation
 	 */

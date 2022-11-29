@@ -2,7 +2,7 @@ import { contextBridge, ipcRenderer } from 'electron'
 import { version } from '../package.json'
 
 const electronAPI: ElectronAPI = {
-	getLocalAppVersion: async () => version,
+	appVersion: () => version,
 	saveNote: (data) => ipcRenderer.invoke('note/save', data),
 	getNote: (data) => ipcRenderer.invoke('note/get', data),
 	getAllNotes: () => ipcRenderer.invoke('note/getAll'),
