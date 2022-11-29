@@ -10,7 +10,7 @@ export default function checkIfNoteIsEmpty(jsonData: SerializedEditorState) {
 		if (parentNode.text) return false
 		else {
 			return (
-				parentNode.children
+				(parentNode.children || [])
 					.map((childNode: any) => {
 						return _isNodeEmpty({ rootOrNode: childNode })
 					})
