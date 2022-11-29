@@ -1,6 +1,6 @@
 {
 	"name": "draftify",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"description": "Draftify is an app to help you quickly note down your thoughts when needed.",
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
@@ -9,7 +9,7 @@
 		"lint": "eslint -c .eslintrc --ext .ts ./src",
 		"dev": "NODE_ENV=development npm run build:dev && electron ./build/dev/index.js",
 		"test:pack": "npm run build:prod && electron-builder --config ./electron-builder-config.js --dir -c.mac.identity=null",
-		"dist": "npm run build:prod && electron-builder --config ./electron-builder-config.js -c.afterSign=notarize.js"
+		"dist": "npm run build:prod && electron-builder --config ./electron-builder-config.js -c.afterSign=notarize.js --publish 'always'"
 	},
 	"repository": "https://github.com/electron/electron-quick-start-typescript",
 	"keywords": [],
@@ -32,6 +32,7 @@
 		"webpack-cli": "^5.0.0"
 	},
 	"dependencies": {
+		"electron-updater": "^5.3.0",
 		"electron-store": "^8.1.0"
 	}
 }

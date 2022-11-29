@@ -41,6 +41,10 @@ https://codesandbox.io/s/lexical-rich-text-example-5tncvy?file=/src/styles.css
 	/* @apply text-red-500; */
 }
 
+.editor-quote {
+	@apply bg-gray-100 dark:bg-gray-900 p-4 rounded;
+}
+
 .editor-heading-h1 {
 	@apply text-2xl font-bold mt-6;
 }
@@ -53,6 +57,35 @@ https://codesandbox.io/s/lexical-rich-text-example-5tncvy?file=/src/styles.css
 	@apply text-lg font-bold mb-1;
 }
 
+.editor-text-underline {
+	@apply underline underline-offset-4;
+}
+
+.editor-text-strikethrough {
+	@apply line-through;
+}
+
+/* Links */
+
 .editor-link {
-	@apply text-blue-600 underline underline-offset-4 cursor-pointer;
+	@apply text-blue-600 underline underline-offset-4 cursor-pointer relative;
+}
+
+.editor-input[contenteditable='true'] a {
+	@apply cursor-text;
+}
+
+.editor-input[contenteditable='true'] a::after {
+	@apply mt-1 px-4 py-2 bg-gray-100 rounded-lg dark:bg-gray-900 dark:text-gray-200 absolute bottom-auto left-0 z-10 whitespace-nowrap hidden;
+	content: 'visit link ↗';
+}
+
+/* .editor-input[contenteditable='true'] a:hover::after {
+	@apply block;
+} */
+
+/* Code */
+
+.editor-text-code {
+	@apply dark:bg-gray-800 bg-gray-200 px-1.5 py-0.5 rounded-md text-sm;
 }
