@@ -4,6 +4,7 @@ https://codesandbox.io/s/lexical-rich-text-example-5tncvy?file=/src/styles.css
 */
 
 @import url(./ListElements.css);
+@import url(./CodeElements.css);
 
 .editor-container {
 	@apply relative h-full;
@@ -83,9 +84,3 @@ https://codesandbox.io/s/lexical-rich-text-example-5tncvy?file=/src/styles.css
 /* .editor-input[contenteditable='true'] a:hover::after {
 	@apply block;
 } */
-
-/* Code */
-
-.editor-text-code {
-	@apply dark:bg-gray-800 bg-gray-200 px-1.5 py-0.5 rounded-md text-sm;
-}
