@@ -84,6 +84,10 @@ const getWorkspaceId = () => {
 	return workspaceId
 }
 
+function checkIfVaultIsSet(): string {
+	return store.get('vault.path')
+}
+
 async function createDraftifyFolderPath() {
 	return dialog
 		.showSaveDialog({
