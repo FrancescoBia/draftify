@@ -3,6 +3,9 @@ import { version } from '../package.json'
 
 const electronAPI: ElectronAPI = {
 	appVersion: () => version,
+	// vault
+	getVaultPath: () => ipcRenderer.invoke('vault/get'),
+	// notes
 	saveNote: (data) => ipcRenderer.invoke('note/save', data),
 	getNote: (data) => ipcRenderer.invoke('note/get', data),
 	getAllNotes: () => ipcRenderer.invoke('note/getAll'),

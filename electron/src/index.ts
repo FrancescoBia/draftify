@@ -9,6 +9,7 @@ import {
 	saveNote,
 	_deleteAllNotes,
 } from './notes-controller'
+import { checkIfVaultIsSet } from './vault-controller'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
@@ -56,6 +57,9 @@ app.whenReady().then(() => {
 	// --------------------
 
 	checkIfWorkspaceIdIsSet()
+	// vault
+	ipcMain.handle('vault/get', checkIfVaultIsSet)
+	// notes
 	ipcMain.handle('note/save', saveNote)
 	ipcMain.handle('note/get', getNote)
 	ipcMain.handle('note/getAll', getAllNotes)

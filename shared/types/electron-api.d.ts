@@ -4,6 +4,7 @@ type ElectronAPI = {
 	 * This can be used to make sure that the client can use certain methods.
 	 */
 	appVersion: () => string
+	getVaultPath: () => Promise<string | undefined>
 	/**
 	 * returns promise with status of the save operation
 	 */
