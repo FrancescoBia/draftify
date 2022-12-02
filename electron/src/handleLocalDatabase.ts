@@ -14,7 +14,9 @@ type MySchema = {
 		[noteId: Note['id']]: Note
 	}
 	workspaceId: string
-	lastBackup: string
+	vault: {
+		path: string
+	}
 }
 
 const schema: ElectronStore.Schema<MySchema> = {
@@ -34,8 +36,11 @@ const schema: ElectronStore.Schema<MySchema> = {
 	workspaceId: {
 		type: 'string',
 	},
-	lastBackup: {
-		type: 'string',
+	vault: {
+		type: 'object',
+		properties: {
+			path: { type: 'string' },
+		},
 	},
 }
 
@@ -79,8 +84,8 @@ const getWorkspaceId = () => {
 	return workspaceId
 }
 
-function createDraftifyFolderPath() {
-	dialog
+async function createDraftifyFolderPath() {
+	return dialog
 		.showSaveDialog({
 			title: 'Select the location to use for the Draftify file vault',
 			defaultPath: '*/Draftify Vault',
@@ -92,16 +97,8 @@ function createDraftifyFolderPath() {
 			if (!file.canceled) {
 				console.log(file.filePath.toString())
 
-				// Creating and Writing to the sample.txt file
-				// fs.writeFile(
-				// 	file.filePath.toString(),
-				// 	'This is a Sample File',
-				// 	function (err) {
-				// 		if (err) throw err
-				// 		console.log('Saved!')
-				// 	}
-				// )
-			}
+				return store.set('vault.path', file.filePath.toString())
+			} else return
 		})
 		.catch((err) => {
 			console.log(err)
