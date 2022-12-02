@@ -20,4 +20,5 @@ type ElectronAPI = {
 	 * This is to be used only for testing purposes
 	 */
 	_deleteAllNotes?: (data: 'delete-all-notes' | undefined) => Promise<void>
+	_removeVault?: () => Promise<void>
 }

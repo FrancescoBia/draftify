@@ -9,7 +9,7 @@ import {
 	saveNote,
 	_deleteAllNotes,
 } from './notes-controller'
-import { checkIfVaultIsSet } from './vault-controller'
+import { checkIfVaultIsSet, _removeVault } from './vault-controller'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
@@ -67,6 +67,7 @@ app.whenReady().then(() => {
 	// these methods should not be exposed if node_env != development
 	if (isDev) {
 		ipcMain.handle('_note/deleteAll', _deleteAllNotes)
+		ipcMain.handle('_vault/remove', _removeVault)
 	}
 
 	// --------------------

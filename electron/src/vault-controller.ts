@@ -48,3 +48,7 @@ export async function selectExistingVault() {
 			} else throw new Error('Path incorrectly selected')
 		})
 }
+
+export function _removeVault() {
+	return store.delete('vault')
+}
