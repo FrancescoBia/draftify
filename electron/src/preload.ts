@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { version } from '../package.json'
 
 const electronAPI: ElectronAPI = {
@@ -7,6 +7,7 @@ const electronAPI: ElectronAPI = {
 	getVaultPath: () => ipcRenderer.invoke('vault/get'),
 	createVault: () => ipcRenderer.invoke('vault/create'),
 	selectExistingVault: () => ipcRenderer.invoke('vault/select-existing'),
+	onUpdateVaultPath: (callback) => ipcRenderer.on('vault/update', callback),
 	// notes
 	saveNote: (data) => ipcRenderer.invoke('note/save', data),
 	getNote: (data) => ipcRenderer.invoke('note/get', data),

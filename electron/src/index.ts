@@ -23,9 +23,11 @@ const appBaseUrl = isDev
 	? 'http://localhost:3000'
 	: 'https://draftify.vercel.app'
 
+let mainWindow: BrowserWindow
+
 function createWindow() {
 	// Create the browser window.
-	const mainWindow = new BrowserWindow({
+	mainWindow = new BrowserWindow({
 		width: 1100,
 		height: 800,
 		minWidth: 600,
@@ -64,8 +66,8 @@ app.whenReady().then(() => {
 	checkIfWorkspaceIdIsSet()
 	// vault
 	ipcMain.handle('vault/get', checkIfVaultIsSet)
-	ipcMain.handle('vault/create', createVault)
-	ipcMain.handle('vault/select-existing', selectExistingVault)
+	ipcMain.handle('vault/create', () => createVault(mainWindow))
+	ipcMain.handle('vault/select-existing', () => selectExistingVault(mainWindow))
 	// notes
 	ipcMain.handle('note/save', saveNote)
 	ipcMain.handle('note/get', getNote)
@@ -74,7 +76,7 @@ app.whenReady().then(() => {
 	// these methods should not be exposed if node_env != development
 	if (isDev) {
 		ipcMain.handle('_note/deleteAll', _deleteAllNotes)
-		ipcMain.handle('_vault/remove', _removeVault)
+		ipcMain.handle('_vault/remove', () => _removeVault(mainWindow))
 	}
 
 	// --------------------

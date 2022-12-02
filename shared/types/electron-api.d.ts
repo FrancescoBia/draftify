@@ -9,6 +9,9 @@ type ElectronAPI = {
 	getVaultPath: () => Promise<string | undefined>
 	createVault: () => Promise<string | undefined>
 	selectExistingVault: () => Promise<string | undefined>
+	onUpdateVaultPath: (
+		callback: (event: IpcRendererEvent, vaultPath: string) => void
+	) => void
 	// -------------------------
 	/**
 	 * returns promise with status of the save operation
