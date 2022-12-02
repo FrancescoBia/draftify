@@ -12,20 +12,27 @@ export async function createVault() {
 			title: 'Select the location to use for the Draftify file vault',
 			defaultPath: 'Documents/Draftify Vault',
 			buttonLabel: 'Create Folder',
-			properties: ['createDirectory'],
+			properties: ['createDirectory', 'showOverwriteConfirmation'],
+			securityScopedBookmarks: true,
 		})
 		.then((file) => {
-			console.log({ file })
-
 			// Stating whether dialog operation was cancelled or not.
 			if (!file.canceled) {
 				const selectedPath = file.filePath.toString()
 				console.log({ selectedPath })
 
-				// create folder (NB. this will NOT override a folder if it already exists)
-				fs.mkdirSync(selectedPath)
+				if (fs.existsSync(selectedPath)) {
+					// override the folder if it already exists
+					// NB. the user is prompted and asked whether to remove it, so
+					// it's fine to directly remove it
+					fs.rmdirSync(selectedPath, { recursive: true })
+				}
 
-				return store.set('vault.path', file.filePath.toString())
+				// create the new vault
+				fs.mkdirSync(selectedPath)
+				store.set('vault.path', selectedPath)
+
+				return selectedPath
 			} else return
 		})
 		.catch((err) => {
