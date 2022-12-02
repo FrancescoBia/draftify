@@ -60,6 +60,18 @@ export const NotesContext = createContext<{
 function WorkspaceLayout(props: WorkspaceLayoutProps) {
 	const [allNotes, setAllNotes] = useState<NoteList>({})
 	const contextValue = { allNotes, setAllNotes }
+	const [vaultIsSet, setVaultIsSet] = useState<boolean>()
+
+	useEffect(() => {
+		// this will load once the app loads for the first time
+		window.electronAPI!!.getVaultPath().then((path) => {
+			setVaultIsSet(!!path)
+		})
+		// this will listen for updates on the vault path (set/removed)
+		window.electronAPI!.onUpdateVaultPath((_, path) => {
+			setVaultIsSet(!!path)
+		})
+	}, [])
 
 	useEffect(() => {
 		window.electronAPI!.getAllNotes().then((allNotes) => {
@@ -85,7 +97,9 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 			{/* App  */}
 			<div className='flex grow'>
 				{/* check that initial data has been fetched */}
-				{allNotes ? (
+				{!vaultIsSet ? (
+					<SelectVault />
+				) : allNotes ? (
 					<NotesContext.Provider value={contextValue}>
 						<Navigator />
 						{props.children}
@@ -101,3 +115,39 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 }
 
 // https://tally.so/r/wArxyk
+
+function SelectVault() {
+	return (
+		<div className='flex items-center justify-center grow'>
+			<div className='bg-secondary p-4 rounded-xl max-w-sm grow'>
+				<h2 className=''>Select vault location</h2>
+				<button
+					className='p-4 rounded-lg bg-tertiary-int my-4 w-full text-left'
+					onClick={() => {
+						window.electronAPI!.createVault().then((path) => {
+							console.log({ path })
+						})
+					}}
+				>
+					<h3 className='text-lg mb-0.5'>Create a new vault</h3>
+					<p className='text-secondary text-sm'>
+						Create a new Draftify vault in a folder
+					</p>
+				</button>
+				<button
+					className='p-4 rounded-lg bg-tertiary-int w-full text-left'
+					onClick={() => {
+						window.electronAPI!.selectExistingVault().then((path) => {
+							console.log({ path })
+						})
+					}}
+				>
+					<h3 className='text-lg mb-0.5'>Open an existing vault</h3>
+					<p className='text-secondary text-sm'>
+						Choose an existing Draftify vault in a folder
+					</p>
+				</button>
+			</div>
+		</div>
+	)
+}
