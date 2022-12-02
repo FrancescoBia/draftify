@@ -49,9 +49,10 @@ export async function selectExistingVault() {
 			properties: ['openDirectory'],
 		})
 		.then((file) => {
-			console.log({ file })
+			console.log({ paths: file.filePaths })
 			if (!file.canceled && file.filePaths[0]) {
-				return store.set('vault.path', file.filePaths[0])
+				store.set('vault.path', file.filePaths[0])
+				return file.filePaths[0]
 			} else throw new Error('Path incorrectly selected')
 		})
 }
