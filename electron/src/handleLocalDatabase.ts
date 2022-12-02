@@ -1,3 +1,6 @@
+import { dialog } from 'electron'
+import path from 'path'
+import fs from 'fs'
 import ElectronStore from 'electron-store'
 import generatePushId from './utils/generatePushId'
 
@@ -42,6 +45,7 @@ const store = new ElectronStore({ schema })
 // NOTES
 
 export const saveNote: ElectronAPIHandle<'saveNote'> = async (_, { note }) => {
+	createDraftifyFolderPath()
 	return store.set(`notes.${note.id}`, note)
 }
 
@@ -73,6 +77,35 @@ const createWorkspace = () => {
 const getWorkspaceId = () => {
 	const workspaceId = store.get('workspaceId')
 	return workspaceId
+}
+
+function createDraftifyFolderPath() {
+	dialog
+		.showSaveDialog({
+			title: 'Select the location to use for the Draftify file vault',
+			defaultPath: '*/Draftify Vault',
+			buttonLabel: 'Create Folder',
+			properties: ['createDirectory'],
+		})
+		.then((file) => {
+			// Stating whether dialog operation was cancelled or not.
+			if (!file.canceled) {
+				console.log(file.filePath.toString())
+
+				// Creating and Writing to the sample.txt file
+				// fs.writeFile(
+				// 	file.filePath.toString(),
+				// 	'This is a Sample File',
+				// 	function (err) {
+				// 		if (err) throw err
+				// 		console.log('Saved!')
+				// 	}
+				// )
+			}
+		})
+		.catch((err) => {
+			console.log(err)
+		})
 }
 
 export const checkIfWorkspaceIdIsSet = () => {
