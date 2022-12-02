@@ -8,7 +8,7 @@ import {
 	getNote,
 	saveNote,
 	_deleteAllNotes,
-} from './handleLocalDatabase'
+} from './notes-controller'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
