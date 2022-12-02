@@ -93,9 +93,15 @@ async function createDraftifyFolderPath() {
 			properties: ['createDirectory'],
 		})
 		.then((file) => {
+			console.log({ file })
+
 			// Stating whether dialog operation was cancelled or not.
 			if (!file.canceled) {
-				console.log(file.filePath.toString())
+				const selectedPath = file.filePath.toString()
+				console.log({ selectedPath })
+
+				// create folder (NB. this will NOT override a folder if it already exists)
+				fs.mkdirSync(selectedPath)
 
 				return store.set('vault.path', file.filePath.toString())
 			} else return
