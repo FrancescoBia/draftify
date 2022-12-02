@@ -10,7 +10,7 @@ export async function createVault() {
 	return dialog
 		.showSaveDialog({
 			title: 'Select the location to use for the Draftify file vault',
-			defaultPath: 'Documents',
+			defaultPath: 'Documents/Draftify Vault',
 			buttonLabel: 'Create Folder',
 			properties: ['createDirectory'],
 		})
