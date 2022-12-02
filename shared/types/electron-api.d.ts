@@ -8,6 +8,7 @@ type ElectronAPI = {
 	// VAULT
 	getVaultPath: () => Promise<string | undefined>
 	createVault: () => Promise<string | undefined>
+	selectExistingVault: () => Promise<string | undefined>
 	// -------------------------
 	/**
 	 * returns promise with status of the save operation

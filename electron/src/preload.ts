@@ -6,6 +6,7 @@ const electronAPI: ElectronAPI = {
 	// vault
 	getVaultPath: () => ipcRenderer.invoke('vault/get'),
 	createVault: () => ipcRenderer.invoke('vault/create'),
+	selectExistingVault: () => ipcRenderer.invoke('vault/select-existing'),
 	// notes
 	saveNote: (data) => ipcRenderer.invoke('note/save', data),
 	getNote: (data) => ipcRenderer.invoke('note/get', data),

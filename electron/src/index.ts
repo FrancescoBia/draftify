@@ -11,8 +11,9 @@ import {
 } from './notes-controller'
 import {
 	checkIfVaultIsSet,
-	_removeVault,
 	createVault,
+	selectExistingVault,
+	_removeVault,
 } from './vault-controller'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
@@ -64,6 +65,7 @@ app.whenReady().then(() => {
 	// vault
 	ipcMain.handle('vault/get', checkIfVaultIsSet)
 	ipcMain.handle('vault/create', createVault)
+	ipcMain.handle('vault/select-existing', selectExistingVault)
 	// notes
 	ipcMain.handle('note/save', saveNote)
 	ipcMain.handle('note/get', getNote)
