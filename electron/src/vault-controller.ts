@@ -6,11 +6,11 @@ export function checkIfVaultIsSet(): string {
 	return store.get('vault.path')
 }
 
-export async function createDraftifyFolderPath() {
+export async function createVault() {
 	return dialog
 		.showSaveDialog({
 			title: 'Select the location to use for the Draftify file vault',
-			defaultPath: '*/Draftify Vault',
+			defaultPath: 'Documents',
 			buttonLabel: 'Create Folder',
 			properties: ['createDirectory'],
 		})
@@ -30,5 +30,21 @@ export async function createDraftifyFolderPath() {
 		})
 		.catch((err) => {
 			console.log(err)
+		})
+}
+
+export async function selectExistingVault() {
+	return dialog
+		.showOpenDialog({
+			title: 'Load your existing Draftify file vault',
+			defaultPath: 'Documents',
+			buttonLabel: 'Select Folder',
+			properties: ['openDirectory'],
+		})
+		.then((file) => {
+			console.log({ file })
+			if (!file.canceled && file.filePaths[0]) {
+				return store.set('vault.path', file.filePaths[0])
+			} else throw new Error('Path incorrectly selected')
 		})
 }
