@@ -42,6 +42,13 @@ export const getAllNotes: ElectronAPIHandle<'getAllNotes'> = async (_) => {
 	return (store.get(`notes`) || {}) as NoteList
 }
 
+/** legacy method - needed for migration purposes (<v1.1.0) */
+export const getAllNotesFromElectronStore: ElectronAPIHandle<
+	'getAllNotesFromStore'
+> = async (_) => {
+	return (store.get(`notes`) || {}) as NoteList
+}
+
 export const deleteNote: ElectronAPIHandle<'deleteNote'> = async (
 	_,
 	{ noteId }

@@ -30,6 +30,12 @@ type ElectronAPI = {
 	onMigrationRun: (
 		callback: (event: IpcRendererEvent, version: string) => void
 	) => void
+	/**
+	 * This method is needed to migrate the old notes, from electron-store to the vault folder.
+	 * (introduced with v1.1.0)
+	 */
+	getAllNotesFromStore: () => Promise<NoteList>
+
 	// -------------------------
 	/**
 	 * IMPORTANT!

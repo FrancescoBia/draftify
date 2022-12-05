@@ -8,6 +8,7 @@ import {
 	getNote,
 	saveNote,
 	_deleteAllNotes,
+	getAllNotesFromElectronStore,
 } from './notes-controller'
 import {
 	checkIfVaultIsSet,
@@ -79,6 +80,10 @@ app.whenReady().then(() => {
 	ipcMain.handle('note/get', getNote)
 	ipcMain.handle('note/getAll', getAllNotes)
 	ipcMain.handle('note/delete', deleteNote)
+
+	// various
+	ipcMain.handle('migration/getNotesFromStore', getAllNotesFromElectronStore)
+
 	// these methods should not be exposed if node_env != development
 	if (isDev) {
 		ipcMain.handle('_note/deleteAll', _deleteAllNotes)
