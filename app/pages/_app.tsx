@@ -50,8 +50,6 @@ type ElectronAppProps = {
 const ElectronApp = (props: ElectronAppProps) => {
 	const electronMinAppVersion: AppVersion = 'v1.1.0'
 
-	console.log(window.electronAPI!.appVersion(), electronMinAppVersion)
-
 	return (
 		<div className='h-screen flex flex-col'>
 			{/* Electron window frame */}
