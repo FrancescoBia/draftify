@@ -9,11 +9,19 @@ export async function checkAndRunMigration() {
 	const allMigrations = Object.keys(migrationScripts) as AppVersion[]
 
 	for (const version of allMigrations) {
+		// needs to be changed in order not to confuse
+		// electron-store's dot notation in objects' keys
+		const electronStoreVersion = version.replaceAll(
+			'.',
+			'-'
+		) as `v${number}-${number}-${number}`
+
 		// run migration if it's either undefined or false
-		if (!migrationsArchive[version]) {
+		if (!migrationsArchive[electronStoreVersion]) {
 			try {
 				await migrationScripts[version]().then(() => {
-					// migrationsList[version] = true
+					// migrationsArchive[version] = true
+					store.set(`migration.${electronStoreVersion}`, true)
 					migrationLog.push(version)
 				})
 			} catch (error) {
