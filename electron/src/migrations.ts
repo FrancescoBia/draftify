@@ -1,5 +1,5 @@
 import { store } from './store'
-import { mainWindow, clientIsReady } from './'
+import { mainWindow, clientIsReady, appBaseUrl } from './'
 
 export async function checkAndRunMigration() {
 	// check if any migration needs to be runned
@@ -39,12 +39,11 @@ const migrationScripts: {
 	'v1.1.0': async () => {
 		const vaultPath = store.get('vault.path')
 		if (vaultPath) {
-			console.log('running this')
-			retryUntilClientIsReady(() => {
-				// mainWindow.webContents.send('migration/run', 'v1.1.0')
+			return retryUntilClientIsReady(() => {
+				mainWindow.loadURL(`${appBaseUrl}/migrate/v1.1.0`)
+				// webContents.send('migration/run', 'v1.1.0')
 			})
-		}
-		return Promise.resolve()
+		} else Promise.reject('Vault path is not defined yet')
 	},
 }
 

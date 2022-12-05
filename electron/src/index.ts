@@ -21,7 +21,7 @@ import { checkAndRunMigration } from './migrations'
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
 const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
-const appBaseUrl = isDev
+export const appBaseUrl = isDev
 	? 'http://localhost:3000'
 	: 'https://draftify.vercel.app'
 

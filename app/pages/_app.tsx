@@ -74,13 +74,14 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 		window.electronAPI!.onUpdateVaultPath((_, path) => {
 			setVaultIsSet(!!path)
 		})
-
-		// window.electronAPI!.onMigrationRun((_, version) => {
-		// 	console.log('pushing this', { version })
-
-		// 	router.push(`/migrate/${version}`)
-		// })
 	}, [])
+
+	// useEffect(() => {
+	// 	window.electronAPI!.onMigrationRun((_, version) => {
+	// 		console.log('pushing this', { version })
+	// 		router.push(`/migrate/${version}`)
+	// 	})
+	// }, [router])
 
 	useEffect(() => {
 		window.electronAPI!.getAllNotes().then((allNotes) => {
