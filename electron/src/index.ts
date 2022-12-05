@@ -24,7 +24,8 @@ const appBaseUrl = isDev
 	? 'http://localhost:3000'
 	: 'https://draftify.vercel.app'
 
-let mainWindow: BrowserWindow
+export let mainWindow: BrowserWindow
+export let clientIsReady = false
 
 function createWindow() {
 	// Create the browser window.
@@ -63,6 +64,13 @@ app.whenReady().then(() => {
 	})
 
 	// --------------------
+	ipcMain.handle('client/ready', (_, isReady: boolean) => {
+		// prevent re-running this if the state hasn't changed
+		if (clientIsReady !== isReady) {
+			clientIsReady = isReady
+			console.log({ 'Client state has changed, it is now ready:': isReady })
+		}
+	})
 	checkAndRunMigration()
 	checkIfWorkspaceIdIsSet()
 	// vault

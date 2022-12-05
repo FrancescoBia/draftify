@@ -63,6 +63,7 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 	const [allNotes, setAllNotes] = useState<NoteList>({})
 	const contextValue = { allNotes, setAllNotes }
 	const [vaultIsSet, setVaultIsSet] = useState<boolean>()
+	const router = useRouter()
 
 	useEffect(() => {
 		// this will load once the app loads for the first time
@@ -73,6 +74,14 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 		window.electronAPI!.onUpdateVaultPath((_, path) => {
 			setVaultIsSet(!!path)
 		})
+
+		window.electronAPI!.notifyMain.clientIsReady(true)
+
+		// window.electronAPI!.onMigrationRun((_, version) => {
+		// 	console.log('pushing this', { version })
+
+		// 	router.push(`/migrate/${version}`)
+		// })
 	}, [])
 
 	useEffect(() => {

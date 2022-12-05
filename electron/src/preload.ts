@@ -13,6 +13,11 @@ const electronAPI: ElectronAPI = {
 	getNote: (data) => ipcRenderer.invoke('note/get', data),
 	getAllNotes: () => ipcRenderer.invoke('note/getAll'),
 	deleteNote: (data) => ipcRenderer.invoke('note/delete', data),
+	// migration
+	onMigrationRun: (callback) => ipcRenderer.on('migration/run', callback),
+	notifyMain: {
+		clientIsReady: (isReady) => ipcRenderer.invoke('client/ready', isReady),
+	},
 	// ---------------------------------
 	// Development-only methods
 	...((process.env.NODE_ENV === 'development'

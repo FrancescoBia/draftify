@@ -23,6 +23,17 @@ type ElectronAPI = {
 	getNote: (data: { noteId: Note['id'] }) => Promise<Note | undefined>
 	getAllNotes: () => Promise<NoteList>
 	deleteNote: (data: { noteId: Note['id'] }) => Promise<void>
+	// -------------------------
+	// various
+	notifyMain: {
+		clientIsReady: (isReady: boolean) => void
+	}
+	// -------------------------
+	// Migrations
+	onMigrationRun: (
+		callback: (event: IpcRendererEvent, version: string) => void
+	) => void
+	// -------------------------
 	/**
 	 * IMPORTANT!
 	 * This is to be used only for testing purposes

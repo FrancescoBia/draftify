@@ -1,4 +1,5 @@
 import { store } from './store'
+import { mainWindow, clientIsReady } from './'
 
 export async function checkAndRunMigration() {
 	// check if any migration needs to be runned
@@ -32,9 +33,40 @@ export async function checkAndRunMigration() {
 
 // each migration needs to return a boolean stating whether to continue
 // (e.g. the preconditions for a migration might be missing)
-const migrationScripts: { [v: AppVersion]: () => Promise<void> } = {
+const migrationScripts: {
+	[v: AppVersion]: () => Promise<void>
+} = {
 	'v1.1.0': async () => {
-		console.log('running this')
-		return Promise.reject()
+		const vaultPath = store.get('vault.path')
+		if (vaultPath) {
+			console.log('running this')
+			retryUntilClientIsReady(() => {
+				// mainWindow.webContents.send('migration/run', 'v1.1.0')
+			})
+		}
+		return Promise.resolve()
 	},
+}
+
+async function retryUntilClientIsReady(callback: Function, interval = 100) {
+	return new Promise<void>((resolve) => {
+		if (clientIsReady) {
+			// run directly
+			resolve()
+		} else {
+			let functionHasRunned = false
+			// await for client availability
+			const myInterval = setInterval(() => {
+				console.log('...waiting for client to be ready')
+
+				if (!functionHasRunned) {
+					if (clientIsReady) {
+						console.log('👍 client is ready - calling')
+						resolve()
+						clearInterval(myInterval)
+					}
+				}
+			}, interval)
+		}
+	}).then(() => callback())
 }
