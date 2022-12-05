@@ -15,6 +15,7 @@ import {
 	selectExistingVault,
 	_removeVault,
 } from './vault-controller'
+import { checkAndRunMigration } from './migrations'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
@@ -62,7 +63,7 @@ app.whenReady().then(() => {
 	})
 
 	// --------------------
-
+	checkAndRunMigration()
 	checkIfWorkspaceIdIsSet()
 	// vault
 	ipcMain.handle('vault/get', checkIfVaultIsSet)

@@ -1,6 +1,7 @@
 import { BrowserWindow, dialog } from 'electron'
 import fs from 'fs'
 import { store } from './store'
+import { checkAndRunMigration } from './migrations'
 
 export function checkIfVaultIsSet(): string {
 	return store.get('vault.path')
@@ -30,7 +31,7 @@ export async function createVault(rendererWindow: BrowserWindow) {
 
 				// create the new vault
 				fs.mkdirSync(selectedPath)
-				store.set('vault.path', selectedPath)
+				setVaultPathInLocalStore(selectedPath)
 
 				rendererWindow.webContents.send('vault/update', selectedPath)
 
@@ -51,12 +52,17 @@ export async function selectExistingVault(rendererWindow: BrowserWindow) {
 			console.log({ paths: file.filePaths })
 			if (!file.canceled) {
 				const selectedPath = file.filePaths[0]
-				store.set('vault.path', selectedPath)
+				setVaultPathInLocalStore(selectedPath)
 
 				rendererWindow.webContents.send('vault/update', selectedPath)
 				return selectedPath
 			} else return
 		})
+}
+
+function setVaultPathInLocalStore(path: string) {
+	store.set('vault.path', path)
+	checkAndRunMigration()
 }
 
 export function _removeVault(rendererWindow: BrowserWindow) {

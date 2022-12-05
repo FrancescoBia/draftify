@@ -8,6 +8,10 @@ type MySchema = {
 	vault: {
 		path: string
 	}
+	migration: {
+		// `true` if the migration has been completed
+		[minVersion: AppVersion]: boolean
+	}
 }
 
 const schema: ElectronStore.Schema<MySchema> = {
@@ -31,6 +35,13 @@ const schema: ElectronStore.Schema<MySchema> = {
 		type: 'object',
 		properties: {
 			path: { type: 'string' },
+		},
+	},
+	migration: {
+		type: 'object',
+		additionalProperties: {
+			type: 'boolean',
+			default: false,
 		},
 	},
 }

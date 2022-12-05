@@ -1,3 +1,5 @@
+type AppVersion = `v${number}.${number}.${number}`
+
 interface User {
 	readonly id: string
 }
