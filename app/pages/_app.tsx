@@ -84,7 +84,6 @@ const ElectronApp = (props: ElectronAppProps) => {
 
 import { Navigator } from '../src/components/Navigator'
 import { Spinner } from '../src/components/Spinner'
-import isNoteEmpty from '../src/utils/checkIfNoteIsEmpty'
 import { Dispatch, SetStateAction } from 'react'
 import Image from 'next/image'
 
@@ -130,7 +129,7 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 				return (
 					(Object.keys(allNotes) as Note['id'][])
 						// filter out empty notes
-						.filter((noteId) => !isNoteEmpty(allNotes[noteId].content!))
+						.filter((noteId) => allNotes[noteId].content)
 						// recompose object
 						.reduce<NoteList>((acc, noteId) => {
 							return { ...acc, [noteId]: allNotes[noteId] }

@@ -44,7 +44,7 @@ export default function AllNotes(props: AllNotesProps) {
 											editable={false}
 											onChange={() => {}}
 											key={'key-' + noteId}
-											initialText={JSON.stringify(allNotes[noteId].content)}
+											initialText={allNotes[noteId].content}
 										/>
 									</div>
 								</div>

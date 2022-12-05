@@ -1,7 +1,7 @@
 import { store } from './store'
 import generatePushId from './utils/generatePushId'
 import { checkIfVaultIsSet } from './vault-controller'
-import { writeFile, readFile, statSync } from 'fs'
+import { writeFile, readFile, statSync, readdir } from 'fs'
 import { getFormattedDate } from './utils/dateFormatter'
 
 let vaultPath: string
@@ -19,7 +19,10 @@ export const saveNote: ElectronAPIHandle<'saveNote'> = async (_, { note }) => {
 	})
 }
 
-export const getNote: ElectronAPIHandle<'getNote'> = async (_, { noteId }) => {
+export const getNote: ElectronAPIHandle<'getNote'> = async (_, { noteId }) =>
+	_getNote(noteId)
+
+function _getNote(noteId: Note['id']) {
 	const notePath = `${getVaultPath()}/${noteId}.md`
 	return new Promise<Note>((resolve, reject) => {
 		readFile(notePath, (err, data) => {
@@ -39,7 +42,25 @@ export const getNote: ElectronAPIHandle<'getNote'> = async (_, { noteId }) => {
 }
 
 export const getAllNotes: ElectronAPIHandle<'getAllNotes'> = async (_) => {
-	return (store.get(`notes`) || {}) as NoteList
+	return new Promise<NoteList>((resolve, reject) => {
+		readdir(getVaultPath(), (err, files) => {
+			if (err) reject(err)
+			const noteArray_promise = files
+				.filter((filename) => filename.endsWith('.md'))
+				.map((filename) => {
+					const noteDate = filename.split('.')[0] as Note['id']
+					return _getNote(noteDate)
+				})
+
+			return Promise.all(noteArray_promise)
+				.then((notesArray) => {
+					return notesArray.reduce<NoteList>((acc, currentNote) => {
+						return { ...acc, [currentNote.id]: currentNote }
+					}, {})
+				})
+				.then((noteList) => resolve(noteList))
+		})
+	})
 }
 
 /** legacy method - needed for migration purposes (<v1.1.0) */
