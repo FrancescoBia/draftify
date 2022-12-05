@@ -121,7 +121,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 						<Editor
 							key={`${noteId}-editor`}
 							onChange={handleEditorContentChange}
-							initialText={JSON.stringify(initialNoteState.content)}
+							initialText={initialNoteState.content}
 						/>
 					</div>
 				</div>

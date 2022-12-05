@@ -20,7 +20,10 @@ import ListMaxIndentLevelPlugin from './plugins/ListMaxIndentLevelPlugin'
 import CodeHighlightPlugin from './plugins/CodeHighlightPlugin'
 import AutoLinkPlugin from './plugins/AutoLinkPlugin'
 import { LexicalEditor } from 'lexical'
-import { $convertToMarkdownString } from '@lexical/markdown'
+import {
+	$convertToMarkdownString,
+	$convertFromMarkdownString,
+} from '@lexical/markdown'
 import {
 	CustomMarkdownShortcutPlugin,
 	customTransformers,
@@ -38,7 +41,8 @@ type Props = {
 export default function Editor({ editable = true, ...props }: Props) {
 	const editorConfig: InitialConfig = {
 		namespace: props.key,
-		editorState: props.initialText,
+		editorState: () =>
+			$convertFromMarkdownString(props.initialText || '', customTransformers),
 		editable,
 		// -----
 		// default stuff below
