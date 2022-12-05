@@ -1,5 +1,6 @@
 import { store } from './store'
 import { mainWindow, clientIsReady, appBaseUrl } from './'
+import { ipcMain } from 'electron'
 
 export async function checkAndRunMigration() {
 	// check if any migration needs to be runned
@@ -37,14 +38,19 @@ const migrationScripts: {
 	[v: AppVersion]: () => Promise<void>
 } = {
 	'v1.1.0': async () => {
-		const vaultPath = store.get('vault.path')
-		if (vaultPath) {
-			return retryUntilClientIsReady(() => {
-				mainWindow.loadURL(`${appBaseUrl}/migrate/v1.1.0`)
-				// webContents.send('migration/run', 'v1.1.0')
-			})
-		} else Promise.reject('Vault path is not defined yet')
+		return new Promise((resolve, reject) => {
+			const vaultPath = store.get('vault.path')
+			if (vaultPath) {
+				retryUntilClientIsReady(() => {
+					ipcMain.on('migration/completed/v1.1.0', () => resolve())
+					mainWindow.loadURL(`${appBaseUrl}/migrate/v1.1.0`)
+				})
+			} else reject('Vault path is not defined yet')
+		})
 	},
+	// 'v2.0.0': async () => {
+	// 	console.log('⚠️⚠️⚠️⚠️⚠️ test migration')
+	// },
 }
 
 async function retryUntilClientIsReady(callback: Function, interval = 100) {

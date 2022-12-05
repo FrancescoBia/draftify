@@ -14,7 +14,8 @@ const electronAPI: ElectronAPI = {
 	getAllNotes: () => ipcRenderer.invoke('note/getAll'),
 	deleteNote: (data) => ipcRenderer.invoke('note/delete', data),
 	// migration
-	onMigrationRun: (callback) => ipcRenderer.on('migration/run', callback),
+	migrationCompleted: (version) =>
+		ipcRenderer.send(`migration/completed/${version}`),
 	getAllNotesFromStore: () => ipcRenderer.invoke('migration/getNotesFromStore'),
 	// ---------------------------------
 	// Development-only methods

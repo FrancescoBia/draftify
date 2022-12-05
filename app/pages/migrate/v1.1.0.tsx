@@ -9,19 +9,30 @@ type LegacyNote = {
 	content: any // serializedJsonData
 }
 
-const process = {
-	noteId: 'promise',
-}
-
 export default function Migrate() {
 	const [noteList, setNoteList] = useState<NoteList>({})
-	// const router = useRouter()
+	const [notesToMigrate, setNotesToMigrate] = useState<number>()
+	const [notesMigrated, setNotesMigrated] = useState(0)
+	const router = useRouter()
 
 	useEffect(() => {
-		window
-			.electronAPI!.getAllNotesFromStore()
-			.then((noteList) => setNoteList(noteList))
+		window.electronAPI!.getAllNotesFromStore().then((noteList) => {
+			setNoteList(noteList)
+			setNotesToMigrate(
+				Object.keys(noteList).filter(
+					(noteId) =>
+						!checkIfNoteIsEmpty(noteList[noteId as Note['id']].content)
+				).length
+			)
+		})
 	}, [])
+
+	useEffect(() => {
+		if (notesToMigrate !== undefined && notesMigrated == notesToMigrate) {
+			window.electronAPI!.migrationCompleted('v1.1.0')
+			router.push('/')
+		}
+	}, [notesMigrated, notesToMigrate, router])
 
 	return (
 		<div className='grow'>
@@ -36,7 +47,9 @@ export default function Migrate() {
 								onChange={(markdownData) => {
 									const updatedNote: Note = { ...note, content: markdownData }
 									if (markdownData) {
-										window.electronAPI!.saveNote({ note: updatedNote })
+										window
+											.electronAPI!.saveNote({ note: updatedNote })
+											.then(() => setNotesMigrated((i) => i + 1))
 									}
 								}}
 							/>
@@ -65,6 +78,7 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import checkIfNoteIsEmpty from '../../src/utils/checkIfNoteIsEmpty'
 
 type InitialConfig = Parameters<typeof LexicalComposer>[0]['initialConfig']
 
@@ -100,7 +114,6 @@ const Editor = (props: {
 			// transform to Markdown
 			const markdownData = $convertToMarkdownString(customTransformers)
 			props.onChange(markdownData)
-			// console.log(markdownData)
 		})
 	}
 
