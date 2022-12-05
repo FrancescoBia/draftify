@@ -37,9 +37,6 @@ export async function createVault(rendererWindow: BrowserWindow) {
 				return selectedPath
 			} else return
 		})
-		.catch((err) => {
-			console.log(err)
-		})
 }
 
 export async function selectExistingVault(rendererWindow: BrowserWindow) {
@@ -58,7 +55,7 @@ export async function selectExistingVault(rendererWindow: BrowserWindow) {
 
 				rendererWindow.webContents.send('vault/update', selectedPath)
 				return selectedPath
-			} else throw new Error('Path incorrectly selected')
+			} else return
 		})
 }
 
