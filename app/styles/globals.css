@@ -39,6 +39,10 @@ a {
 	@apply text-gray-700 dark:text-gray-400;
 }
 
+.text-accent {
+	@apply text-blue-500;
+}
+
 .bg-primary {
 	@apply bg-white dark:bg-black;
 }

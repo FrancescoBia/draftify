@@ -2,7 +2,7 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { version } from '../package.json'
 
 const electronAPI: ElectronAPI = {
-	appVersion: () => version,
+	appVersion: () => ('v' + version) as AppVersion,
 	// vault
 	getVaultPath: () => ipcRenderer.invoke('vault/get'),
 	createVault: () => ipcRenderer.invoke('vault/create'),
