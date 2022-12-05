@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { store } from '../src/redux/store'
 import { useRouter } from 'next/router'
+import Logo from '../src/assets/images/logo.png'
 
 export default function App({ Component, pageProps }: AppProps) {
 	const router = useRouter()
@@ -45,6 +46,7 @@ import { Navigator } from '../src/components/Navigator'
 import { Spinner } from '../src/components/Spinner'
 import isNoteEmpty from '../src/utils/checkIfNoteIsEmpty'
 import { Dispatch, SetStateAction } from 'react'
+import Image from 'next/image'
 
 type WorkspaceLayoutProps = {
 	children: React.ReactNode
@@ -116,11 +118,17 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 
 // https://tally.so/r/wArxyk
 
+import HelpCircle from '../src/assets/help-circle.svg'
 function SelectVault() {
 	return (
-		<div className='flex items-center justify-center grow'>
-			<div className='bg-secondary p-4 rounded-xl max-w-sm grow'>
-				<h2 className=''>Select vault location</h2>
+		<div className='flex flex-col items-center justify-center grow bg-secondary'>
+			<div className='w-24 my-4'>
+				<Image src={Logo} alt='draftify logo' className='drop-shadow-icon' />
+			</div>
+			<div className='p-4 rounded-xl max-w-sm'>
+				<h2 className='text-secondary text-sm'>
+					Select a vault location for your documents:
+				</h2>
 				<button
 					className='p-4 rounded-lg bg-tertiary-int my-4 w-full text-left'
 					onClick={() => {
@@ -129,7 +137,7 @@ function SelectVault() {
 						})
 					}}
 				>
-					<h3 className='text-lg mb-0.5'>Create a new vault</h3>
+					<h3 className='font-semibold'>Create a new vault</h3>
 					<p className='text-secondary text-sm'>
 						Create a new Draftify vault in a folder
 					</p>
@@ -142,11 +150,20 @@ function SelectVault() {
 						})
 					}}
 				>
-					<h3 className='text-lg mb-0.5'>Open an existing vault</h3>
+					<h3 className='font-semibold'>Open an existing vault</h3>
 					<p className='text-secondary text-sm'>
 						Choose an existing Draftify vault in a folder
 					</p>
 				</button>
+				<div className='bg-purple-100 text-purple-700 rounded-lg p-2 px-3 text-sm mt-10 flex gap-x-3 items-center'>
+					<div className='w-6'>
+						<HelpCircle />
+					</div>
+					<p className=''>
+						If you previously created documents without a vault, these will be
+						automatically migrated.
+					</p>
+				</div>
 			</div>
 		</div>
 	)
