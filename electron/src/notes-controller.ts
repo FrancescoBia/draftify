@@ -1,7 +1,7 @@
 import { store } from './store'
 import generatePushId from './utils/generatePushId'
 import { checkIfVaultIsSet } from './vault-controller'
-import { writeFile, readFile, statSync, readdir } from 'fs'
+import { writeFile, readFile, statSync, readdir, rm } from 'fs'
 import { getFormattedDate } from './utils/dateFormatter'
 
 let vaultPath: string
@@ -74,8 +74,14 @@ export const deleteNote: ElectronAPIHandle<'deleteNote'> = async (
 	_,
 	{ noteId }
 ) => {
-	//
-	return store.delete(`notes.${noteId}` as any)
+	const notePath = `${getVaultPath()}/${noteId}.md`
+	return new Promise((resolve, reject) => {
+		try {
+			rm(notePath, () => resolve())
+		} catch (error) {
+			reject(error)
+		}
+	})
 }
 
 // ------------------------------------
