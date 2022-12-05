@@ -20,11 +20,11 @@ export default function EditableNote({ noteId }: NoteProps) {
 	const [initialNoteState, setInitialNoteState] = useState<Note>()
 	const { setAllNotes } = useContext(NotesContext)
 
-	async function saveData(jsonData: SerializedEditorState) {
+	async function saveData(markdownData: string) {
 		// makes sure that the note is loaded
 		if (!initialNoteState) throw new Error('Tried saving empty note')
 
-		const updatedNote: Note = { ...initialNoteState, content: jsonData }
+		const updatedNote: Note = { ...initialNoteState, content: markdownData }
 		return window
 			.electronAPI!.saveNote({
 				note: updatedNote,
@@ -44,10 +44,10 @@ export default function EditableNote({ noteId }: NoteProps) {
 		maxWait: 10000,
 	})
 
-	function handleEditorContentChange(jsonData: SerializedEditorState) {
+	function handleEditorContentChange(markdownData: string) {
 		if (!initialNoteState) return
 		setProgressSaved(false)
-		debounceSaveData(jsonData)
+		debounceSaveData(markdownData)
 	}
 
 	useEffect(() => {

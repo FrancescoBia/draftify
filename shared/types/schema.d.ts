@@ -7,7 +7,7 @@ interface Note {
 	readonly dateCreated: string
 	lastModified: string
 	// title?: string
-	content: SerializedEditorState | undefined
+	content: string | undefined
 }
 
 interface NoteList {

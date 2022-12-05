@@ -2,7 +2,10 @@ import { store } from './store'
 import generatePushId from './utils/generatePushId'
 
 export const saveNote: ElectronAPIHandle<'saveNote'> = async (_, { note }) => {
-	return store.set(`notes.${note.id}`, note)
+	// return store.set(`notes.${note.id}`, note)
+	console.log(note)
+
+	return
 }
 
 export const getNote: ElectronAPIHandle<'getNote'> = async (_, { noteId }) => {

@@ -9,22 +9,6 @@ import {
 } from '@lexical/list'
 import { TRANSFORMERS, ElementTransformer } from '@lexical/markdown'
 
-/**
- * WHY THIS FILE?
- * The default <MarkdownShortcutPlugin> currently doesn't support the text transformation for
- * checlists. Or to be more specific, it does support it, but it doesn't work properly.
- * Therefore it has been extracted the methods from the lexical package (check the TRANSFORMER import
- * above for more info) and customize to work with a custom transformation regex.
- * Probably this will be fixed in the future and this will be possible to remove.
- */
-export function CustomMarkdownShortcutPlugin() {
-	return (
-		<MarkdownShortcutPlugin
-			transformers={[...TRANSFORMERS, checkListTransformer]}
-		/>
-	)
-}
-
 const listExport = (listNode: any, exportChildren: any, depth: any): any => {
 	const output = []
 	const children = listNode.getChildren()
@@ -94,4 +78,18 @@ const checkListTransformer: ElementTransformer = {
 	regExp: /^(\s*)(?:-\s?)?\s?(\[(\s|x)?\])\s/i,
 	replace: listReplace('check'),
 	type: 'element',
+}
+
+export const customTransformers = [...TRANSFORMERS, checkListTransformer]
+
+/**
+ * WHY THIS FILE?
+ * The default <MarkdownShortcutPlugin> currently doesn't support the text transformation for
+ * checlists. Or to be more specific, it does support it, but it doesn't work properly.
+ * Therefore it has been extracted the methods from the lexical package (check the TRANSFORMER import
+ * above for more info) and customize to work with a custom transformation regex.
+ * Probably this will be fixed in the future and this will be possible to remove.
+ */
+export function CustomMarkdownShortcutPlugin() {
+	return <MarkdownShortcutPlugin transformers={customTransformers} />
 }
