@@ -25,9 +25,6 @@ type ElectronAPI = {
 	deleteNote: (data: { noteId: Note['id'] }) => Promise<void>
 	// -------------------------
 	// various
-	notifyMain: {
-		clientIsReady: (isReady: boolean) => void
-	}
 	// -------------------------
 	// Migrations
 	onMigrationRun: (

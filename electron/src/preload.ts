@@ -15,9 +15,6 @@ const electronAPI: ElectronAPI = {
 	deleteNote: (data) => ipcRenderer.invoke('note/delete', data),
 	// migration
 	onMigrationRun: (callback) => ipcRenderer.on('migration/run', callback),
-	notifyMain: {
-		clientIsReady: (isReady) => ipcRenderer.invoke('client/ready', isReady),
-	},
 	// ---------------------------------
 	// Development-only methods
 	...((process.env.NODE_ENV === 'development'

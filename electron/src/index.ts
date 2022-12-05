@@ -64,12 +64,9 @@ app.whenReady().then(() => {
 	})
 
 	// --------------------
-	ipcMain.handle('client/ready', (_, isReady: boolean) => {
-		// prevent re-running this if the state hasn't changed
-		if (clientIsReady !== isReady) {
-			clientIsReady = isReady
-			console.log({ 'Client state has changed, it is now ready:': isReady })
-		}
+	mainWindow.webContents.on('did-finish-load', () => {
+		console.log('client has loaded')
+		clientIsReady = true
 	})
 	checkAndRunMigration()
 	checkIfWorkspaceIdIsSet()

@@ -75,8 +75,6 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 			setVaultIsSet(!!path)
 		})
 
-		window.electronAPI!.notifyMain.clientIsReady(true)
-
 		// window.electronAPI!.onMigrationRun((_, version) => {
 		// 	console.log('pushing this', { version })
 
