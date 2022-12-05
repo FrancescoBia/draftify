@@ -1,11 +1,21 @@
 import { store } from './store'
 import generatePushId from './utils/generatePushId'
+import { checkIfVaultIsSet } from './vault-controller'
+import { writeFile } from 'fs'
+
+let vaultPath: string
+function getVaultPath() {
+	if (!vaultPath) {
+		vaultPath = checkIfVaultIsSet()
+		if (!vaultPath) throw new Error('Vault path is not set')
+	}
+	return vaultPath
+}
 
 export const saveNote: ElectronAPIHandle<'saveNote'> = async (_, { note }) => {
-	// return store.set(`notes.${note.id}`, note)
-	console.log(note)
-
-	return
+	return writeFile(`${getVaultPath()}/${note.id}.md`, note.content, (err) => {
+		if (err) throw err
+	})
 }
 
 export const getNote: ElectronAPIHandle<'getNote'> = async (_, { noteId }) => {
