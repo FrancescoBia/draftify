@@ -121,21 +121,22 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 	// }, [router])
 
 	useEffect(() => {
-		window.electronAPI!.getAllNotes().then((allNotes) => {
-			console.log({ notes: allNotes })
-			setAllNotes(() => {
-				return (
-					(Object.keys(allNotes) as Note['id'][])
-						// filter out empty notes
-						.filter((noteId) => allNotes[noteId].content)
-						// recompose object
-						.reduce<NoteList>((acc, noteId) => {
-							return { ...acc, [noteId]: allNotes[noteId] }
-						}, {})
-				)
+		vaultIsSet &&
+			window.electronAPI!.getAllNotes().then((allNotes) => {
+				console.log({ notes: allNotes })
+				setAllNotes(() => {
+					return (
+						(Object.keys(allNotes) as Note['id'][])
+							// filter out empty notes
+							.filter((noteId) => allNotes[noteId].content)
+							// recompose object
+							.reduce<NoteList>((acc, noteId) => {
+								return { ...acc, [noteId]: allNotes[noteId] }
+							}, {})
+					)
+				})
 			})
-		})
-	}, [])
+	}, [vaultIsSet])
 
 	return (
 		<>
