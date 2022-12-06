@@ -101,6 +101,7 @@ const SearchModal = () => {
 	const { allNotes } = useContext(NotesContext)
 	const [cleanNotesArray, setCleanNotesArray] = useState<Note[]>()
 	const [searchTerm, setSearchTerm] = useState('')
+	const [openModal, setOpenModal] = useState(false)
 
 	useEffect(() => {
 		//
@@ -124,15 +125,21 @@ const SearchModal = () => {
 
 	return (
 		<>
-			<Dialog.Root>
-				<Dialog.Trigger asChild>
-					<button className='text-gray-400 bg-primary-int rounded-lg relative p-3 m-3 flex items-center group/label justify-center'>
-						<SearchIcon />
-						<FloatingLabel label='Search' />
-					</button>
-				</Dialog.Trigger>
+			<Dialog.Root onOpenChange={setOpenModal} open={openModal}>
+				<button
+					className='text-gray-400 bg-primary-int rounded-lg relative p-3 m-3 flex items-center group/label justify-center'
+					onClick={() => setOpenModal(true)}
+				>
+					<SearchIcon />
+					<FloatingLabel label='Search' />
+				</button>
 				<Dialog.Portal>
-					<Dialog.Overlay className='dialog-overlay' />
+					<Dialog.Overlay
+						className='dialog-overlay'
+						onClick={() => {
+							setOpenModal(false)
+						}}
+					/>
 					<Dialog.Content className='dialog-content position-top flex flex-col p-2'>
 						<fieldset className='Fieldset'>
 							<input
