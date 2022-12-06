@@ -59,6 +59,7 @@ export default function AllNotes(props: AllNotesProps) {
 
 import * as Dialog from '@radix-ui/react-alert-dialog'
 const SearchModal = () => {
+	const { allNotes } = useContext(NotesContext)
 	const [searchTerm, setSearchTerm] = useState('')
 
 	return (
@@ -84,51 +85,17 @@ const SearchModal = () => {
 							/>
 						</fieldset>
 						<div className='overflow-y-scroll bg-secondary rounded'>
-							<SearchResult
-								noteId='2022-11-01'
-								content=''
-								searchParam={searchTerm}
-							/>
-							<SearchResult
-								noteId='2022-11-01'
-								content=''
-								searchParam={searchTerm}
-							/>
-							<SearchResult
-								noteId='2022-11-01'
-								content=''
-								searchParam={searchTerm}
-							/>
-							<SearchResult
-								noteId='2022-11-01'
-								content=''
-								searchParam={searchTerm}
-							/>
-							<SearchResult
-								noteId='2022-11-01'
-								content=''
-								searchParam={searchTerm}
-							/>
-							<SearchResult
-								noteId='2022-11-01'
-								content=''
-								searchParam={searchTerm}
-							/>
-							<SearchResult
-								noteId='2022-11-01'
-								content=''
-								searchParam={searchTerm}
-							/>
-							<SearchResult
-								noteId='2022-11-01'
-								content=''
-								searchParam={searchTerm}
-							/>
-							<SearchResult
-								noteId='2022-11-01'
-								content=''
-								searchParam={searchTerm}
-							/>
+							{allNotes &&
+								Object.keys(allNotes).map((noteId) => {
+									return (
+										<SearchResult
+											noteId={noteId as Note['id']}
+											key={'key' + noteId}
+											content={allNotes[noteId as Note['id']].content || ''}
+											searchParam={searchTerm}
+										/>
+									)
+								})}
 						</div>
 					</Dialog.Content>
 				</Dialog.Portal>
@@ -142,16 +109,14 @@ const SearchResult = (props: {
 	content: string
 	searchParam: string
 }) => {
-	const content = `first of all, I think the value proposition is not compelling enough. What should makes people wanting to buy this? I think I need a better framework to define the user problem. Or maybe I need to do validation before building anything.`
-
 	return (
 		<>
-			{content.includes(props.searchParam) ? (
-				<button className='px-4 py-3 bg-secondary-int text-left'>
+			{props.content && props.content.includes(props.searchParam) ? (
+				<button className='px-4 py-3 bg-secondary-int text-left w-full'>
 					<h4 className='text-sm font-semibold mb-1'>
 						{prettyFormatDate(props.noteId)}
 					</h4>
-					<div className='text-xs'>{content}</div>
+					<div className='text-xs line-clamp-3'>{props.content}</div>
 				</button>
 			) : (
 				<></>
