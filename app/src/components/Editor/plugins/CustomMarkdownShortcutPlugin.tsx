@@ -9,22 +9,6 @@ import {
 } from '@lexical/list'
 import { TRANSFORMERS, ElementTransformer } from '@lexical/markdown'
 
-/**
- * WHY THIS FILE?
- * The default <MarkdownShortcutPlugin> currently doesn't support the text transformation for
- * checlists. Or to be more specific, it does support it, but it doesn't work properly.
- * Therefore it has been extracted the methods from the lexical package (check the TRANSFORMER import
- * above for more info) and customize to work with a custom transformation regex.
- * Probably this will be fixed in the future and this will be possible to remove.
- */
-export function CustomMarkdownShortcutPlugin() {
-	return (
-		<MarkdownShortcutPlugin
-			transformers={[...TRANSFORMERS, checkListTransformer]}
-		/>
-	)
-}
-
 const listExport = (listNode: any, exportChildren: any, depth: any): any => {
 	const output = []
 	const children = listNode.getChildren()
@@ -94,4 +78,35 @@ const checkListTransformer: ElementTransformer = {
 	regExp: /^(\s*)(?:-\s?)?\s?(\[(\s|x)?\])\s/i,
 	replace: listReplace('check'),
 	type: 'element',
+}
+
+const unorderedListTransformer: ElementTransformer = {
+	dependencies: [ListNode, ListItemNode],
+	export: (node, exportChildren) => {
+		return $isListNode(node) ? listExport(node, exportChildren, 0) : null
+	},
+	regExp: /^(\s*)[-*+]\s(?!(\[(\s|x)?\]))/,
+	replace: listReplace('bullet'),
+	type: 'element',
+}
+
+// quite ugly, but this removes the default unordered list
+// since it's replaced by the custom one
+TRANSFORMERS.splice(3, 1)
+export const customTransformers = [
+	...TRANSFORMERS,
+	checkListTransformer,
+	unorderedListTransformer,
+]
+
+/**
+ * WHY THIS FILE?
+ * The default <MarkdownShortcutPlugin> currently doesn't support the text transformation for
+ * checlists. Or to be more specific, it does support it, but it doesn't work properly.
+ * Therefore it has been extracted the methods from the lexical package (check the TRANSFORMER import
+ * above for more info) and customize to work with a custom transformation regex.
+ * Probably this will be fixed in the future and this will be possible to remove.
+ */
+export function CustomMarkdownShortcutPlugin() {
+	return <MarkdownShortcutPlugin transformers={customTransformers} />
 }

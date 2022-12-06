@@ -1,14 +1,30 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { version } from '../package.json'
 
 const electronAPI: ElectronAPI = {
-	appVersion: () => version,
+	appVersion: () => ('v' + version) as AppVersion,
+	// vault
+	getVaultPath: () => ipcRenderer.invoke('vault/get'),
+	createVault: () => ipcRenderer.invoke('vault/create'),
+	selectExistingVault: () => ipcRenderer.invoke('vault/select-existing'),
+	onUpdateVaultPath: (callback) => ipcRenderer.on('vault/update', callback),
+	// notes
 	saveNote: (data) => ipcRenderer.invoke('note/save', data),
 	getNote: (data) => ipcRenderer.invoke('note/get', data),
 	getAllNotes: () => ipcRenderer.invoke('note/getAll'),
 	deleteNote: (data) => ipcRenderer.invoke('note/delete', data),
-	//
-	_deleteAllNotes: () => ipcRenderer.invoke('_note/deleteAll'),
+	// migration
+	migrationCompleted: (version) =>
+		ipcRenderer.send(`migration/completed/${version}`),
+	getAllNotesFromStore: () => ipcRenderer.invoke('migration/getNotesFromStore'),
+	// ---------------------------------
+	// Development-only methods
+	...((process.env.NODE_ENV === 'development'
+		? {
+				_deleteAllNotes: () => ipcRenderer.invoke('_note/deleteAll'),
+				_removeVault: () => ipcRenderer.invoke('_vault/remove'),
+		  }
+		: {}) as Partial<ElectronAPI>),
 }
 
 // Expose protected methods that allow the renderer process to use

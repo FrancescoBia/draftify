@@ -20,12 +20,19 @@ import ListMaxIndentLevelPlugin from './plugins/ListMaxIndentLevelPlugin'
 import CodeHighlightPlugin from './plugins/CodeHighlightPlugin'
 import AutoLinkPlugin from './plugins/AutoLinkPlugin'
 import { LexicalEditor } from 'lexical'
-import { CustomMarkdownShortcutPlugin } from './plugins/CustomMarkdownShortcutPlugin'
+import {
+	$convertToMarkdownString,
+	$convertFromMarkdownString,
+} from '@lexical/markdown'
+import {
+	CustomMarkdownShortcutPlugin,
+	customTransformers,
+} from './plugins/CustomMarkdownShortcutPlugin'
 
 type InitialConfig = Parameters<typeof LexicalComposer>[0]['initialConfig']
 
 type Props = {
-	onChange: (jsonData: SerializedEditorState) => any
+	onChange: (markdownData: string) => any
 	initialText?: string
 	editable?: boolean
 	key: string
@@ -34,7 +41,8 @@ type Props = {
 export default function Editor({ editable = true, ...props }: Props) {
 	const editorConfig: InitialConfig = {
 		namespace: props.key,
-		editorState: props.initialText,
+		editorState: () =>
+			$convertFromMarkdownString(props.initialText || '', customTransformers),
 		editable,
 		// -----
 		// default stuff below
@@ -61,17 +69,19 @@ export default function Editor({ editable = true, ...props }: Props) {
 	}
 
 	function onChange(editorState: EditorState, editor: LexicalEditor) {
-		// transform to HTML (not in use)
-		// editor.update(() => {
-		// 	const htmlString = $generateHtmlFromNodes(editor)
-		// })
+		// transform to Markdown
+		editor.update(() => {
+			const markdownData = $convertToMarkdownString(customTransformers)
+			props.onChange(markdownData)
+		})
 		// editor.update(() => {
 		// 	console.log($rootTextContent())
 		// })
 
+		// const jsonData = editorState.toJSON()
+		// props.onChange(jsonData)
+
 		//
-		const jsonData = editorState.toJSON()
-		props.onChange(jsonData)
 	}
 
 	return (

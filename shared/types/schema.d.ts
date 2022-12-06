@@ -1,3 +1,5 @@
+type AppVersion = `v${number}.${number}.${number}`
+
 interface User {
 	readonly id: string
 }
@@ -7,7 +9,7 @@ interface Note {
 	readonly dateCreated: string
 	lastModified: string
 	// title?: string
-	content: SerializedEditorState | undefined
+	content: string | undefined
 }
 
 interface NoteList {

@@ -1,3 +1,5 @@
+const { version: electronAppVersion } = require('../electron/package.json')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: false,
@@ -9,6 +11,18 @@ const nextConfig = {
 		})
 
 		return config
+	},
+	async rewrites() {
+		return [
+			{
+				source: '/download/latest/mac-intel',
+				destination: `https://draftify-app.nyc3.digitaloceanspaces.com/Draftify-${electronAppVersion}.dmg`,
+			},
+			{
+				source: '/download/latest/mac-silicon',
+				destination: `https://draftify-app.nyc3.digitaloceanspaces.com/Draftify-${electronAppVersion}-arm64.dmg`,
+			},
+		]
 	},
 }
 

@@ -8,18 +8,29 @@ import {
 	getNote,
 	saveNote,
 	_deleteAllNotes,
-} from './handleLocalDatabase'
+	getAllNotesFromElectronStore,
+} from './notes-controller'
+import {
+	checkIfVaultIsSet,
+	createVault,
+	selectExistingVault,
+	_removeVault,
+} from './vault-controller'
+import { checkAndRunMigration } from './migrations'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
 const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
-const appBaseUrl = isDev
+export const appBaseUrl = isDev
 	? 'http://localhost:3000'
 	: 'https://draftify.vercel.app'
 
+export let mainWindow: BrowserWindow
+export let clientIsReady = false
+
 function createWindow() {
 	// Create the browser window.
-	const mainWindow = new BrowserWindow({
+	mainWindow = new BrowserWindow({
 		width: 1100,
 		height: 800,
 		minWidth: 600,
@@ -54,15 +65,29 @@ app.whenReady().then(() => {
 	})
 
 	// --------------------
-
+	mainWindow.webContents.on('did-finish-load', () => {
+		console.log('client has loaded')
+		clientIsReady = true
+	})
+	checkAndRunMigration()
 	checkIfWorkspaceIdIsSet()
+	// vault
+	ipcMain.handle('vault/get', checkIfVaultIsSet)
+	ipcMain.handle('vault/create', () => createVault(mainWindow))
+	ipcMain.handle('vault/select-existing', () => selectExistingVault(mainWindow))
+	// notes
 	ipcMain.handle('note/save', saveNote)
 	ipcMain.handle('note/get', getNote)
 	ipcMain.handle('note/getAll', getAllNotes)
 	ipcMain.handle('note/delete', deleteNote)
+
+	// various
+	ipcMain.handle('migration/getNotesFromStore', getAllNotesFromElectronStore)
+
 	// these methods should not be exposed if node_env != development
 	if (isDev) {
 		ipcMain.handle('_note/deleteAll', _deleteAllNotes)
+		ipcMain.handle('_vault/remove', () => _removeVault(mainWindow))
 	}
 
 	// --------------------
