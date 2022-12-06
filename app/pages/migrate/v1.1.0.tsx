@@ -30,6 +30,7 @@ export default function Migrate() {
 	useEffect(() => {
 		if (notesToMigrate !== undefined && notesMigrated == notesToMigrate) {
 			window.electronAPI!.migrationCompleted('v1.1.0')
+			window.electronAPI!.getAllNotes()
 			router.push('/')
 		}
 	}, [notesMigrated, notesToMigrate, router])
