@@ -1,7 +1,7 @@
 import { store } from './store'
 import generatePushId from './utils/generatePushId'
 import { checkIfVaultIsSet } from './vault-controller'
-import { writeFile, readFile, statSync, readdir, rm } from 'fs'
+import { writeFile, readFile, statSync, readdir, rm, access } from 'fs'
 import { getFormattedDate } from './utils/dateFormatter'
 
 let vaultPath: string
@@ -25,18 +25,23 @@ export const getNote: ElectronAPIHandle<'getNote'> = async (_, { noteId }) =>
 function _getNote(noteId: Note['id']) {
 	const notePath = `${getVaultPath()}/${noteId}.md`
 	return new Promise<Note>((resolve, reject) => {
-		readFile(notePath, (err, data) => {
-			if (err) reject(err)
-			else {
-				const { mtime } = statSync(notePath)
-				const content = data.toString()
-				resolve({
-					id: noteId,
-					content,
-					lastModified: getFormattedDate(mtime.toString()),
-					dateCreated: getFormattedDate(noteId),
-				} as Note)
-			}
+		access(notePath, (err) => {
+			// note is not found
+			if (err) resolve(undefined)
+			// note exists
+			readFile(notePath, (err, data) => {
+				if (err) reject(err)
+				else {
+					const { mtime } = statSync(notePath)
+					const content = data.toString()
+					resolve({
+						id: noteId,
+						content,
+						lastModified: getFormattedDate(mtime.toString()),
+						dateCreated: getFormattedDate(noteId),
+					} as Note)
+				}
+			})
 		})
 	})
 }
