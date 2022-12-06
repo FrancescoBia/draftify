@@ -137,12 +137,14 @@ const SearchResult = (props: {
 	return (
 		<>
 			{props.content && props.content.includes(props.searchParam) ? (
-				<button className='px-4 py-3 bg-secondary-int text-left w-full'>
-					<h4 className='text-sm font-semibold mb-1'>
-						{prettyFormatDate(props.noteId)}
-					</h4>
-					<div className='text-xs line-clamp-3'>{props.content}</div>
-				</button>
+				<Link href={`/${props.noteId}/edit`}>
+					<div className='px-4 py-3 bg-secondary-int text-left w-full'>
+						<h4 className='text-sm font-semibold mb-1'>
+							{prettyFormatDate(props.noteId)}
+						</h4>
+						<div className='text-xs line-clamp-3'>{props.content}</div>
+					</div>
+				</Link>
 			) : (
 				<></>
 			)}
