@@ -80,7 +80,24 @@ const checkListTransformer: ElementTransformer = {
 	type: 'element',
 }
 
-export const customTransformers = [...TRANSFORMERS, checkListTransformer]
+const unorderedListTransformer: ElementTransformer = {
+	dependencies: [ListNode, ListItemNode],
+	export: (node, exportChildren) => {
+		return $isListNode(node) ? listExport(node, exportChildren, 0) : null
+	},
+	regExp: /^(\s*)[-*+]\s(?!(\[(\s|x)?\]))/,
+	replace: listReplace('bullet'),
+	type: 'element',
+}
+
+// quite ugly, but this removes the default unordered list
+// since it's replaced by the custom one
+TRANSFORMERS.splice(3, 1)
+export const customTransformers = [
+	...TRANSFORMERS,
+	checkListTransformer,
+	unorderedListTransformer,
+]
 
 /**
  * WHY THIS FILE?
