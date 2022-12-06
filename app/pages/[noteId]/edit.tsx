@@ -41,7 +41,7 @@ export default function EditPage(props: Props) {
 						</Dialog.Trigger>
 						<Dialog.Portal>
 							<Dialog.Overlay className='dialog-overlay' />
-							<Dialog.Content className='dialog-content'>
+							<Dialog.Content className='dialog-content position-middle'>
 								<Dialog.Title className='text-primary text-lg'>
 									Do you want to delete this note?
 								</Dialog.Title>

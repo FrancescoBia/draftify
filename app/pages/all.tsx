@@ -74,8 +74,8 @@ const SearchModal = () => {
 				</Dialog.Trigger>
 				<Dialog.Portal>
 					<Dialog.Overlay className='dialog-overlay' />
-					<Dialog.Content className='dialog-content flex flex-col p-2'>
-						<fieldset className='Fieldset mb-2'>
+					<Dialog.Content className='dialog-content position-top flex flex-col p-2'>
+						<fieldset className='Fieldset'>
 							<input
 								className='Input py-3'
 								id='search'
@@ -84,19 +84,23 @@ const SearchModal = () => {
 								onChange={({ target }) => setSearchTerm(target.value)}
 							/>
 						</fieldset>
-						<div className='overflow-y-scroll bg-secondary rounded'>
-							{allNotes &&
-								Object.keys(allNotes).map((noteId) => {
-									return (
-										<SearchResult
-											noteId={noteId as Note['id']}
-											key={'key' + noteId}
-											content={allNotes[noteId as Note['id']].content || ''}
-											searchParam={searchTerm}
-										/>
-									)
-								})}
-						</div>
+						{searchTerm === '' ? (
+							<></>
+						) : (
+							<div className='overflow-y-scroll bg-secondary rounded mt-2'>
+								{allNotes &&
+									Object.keys(allNotes).map((noteId) => {
+										return (
+											<SearchResult
+												noteId={noteId as Note['id']}
+												key={'key' + noteId}
+												content={allNotes[noteId as Note['id']].content || ''}
+												searchParam={searchTerm}
+											/>
+										)
+									})}
+							</div>
+						)}
 					</Dialog.Content>
 				</Dialog.Portal>
 			</Dialog.Root>
