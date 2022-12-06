@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { NotesContext } from './_app'
 import Editor from '../src/components/Editor'
 import { prettyFormatDate, getNoteIdFromDate } from '../src/utils/dateFormatter'
@@ -60,7 +60,21 @@ export default function AllNotes(props: AllNotesProps) {
 import * as Dialog from '@radix-ui/react-alert-dialog'
 const SearchModal = () => {
 	const { allNotes } = useContext(NotesContext)
+	const [cleanNotesArray, setCleanNotesArray] = useState<Note[]>()
 	const [searchTerm, setSearchTerm] = useState('')
+
+	useEffect(() => {
+		//
+		allNotes &&
+			setCleanNotesArray(() => {
+				return Object.keys(allNotes)
+					.map((noteId) => {
+						return allNotes[noteId as Note['id']]
+					})
+					.sort()
+					.reverse()
+			})
+	}, [allNotes])
 
 	return (
 		<>
@@ -88,13 +102,13 @@ const SearchModal = () => {
 							<></>
 						) : (
 							<div className='overflow-y-scroll bg-secondary rounded mt-2'>
-								{allNotes &&
-									Object.keys(allNotes).map((noteId) => {
+								{cleanNotesArray &&
+									cleanNotesArray.map((note) => {
 										return (
 											<SearchResult
-												noteId={noteId as Note['id']}
-												key={'key' + noteId}
-												content={allNotes[noteId as Note['id']].content || ''}
+												noteId={note.id}
+												key={'key' + note.id}
+												content={note.content || ''}
 												searchParam={searchTerm}
 											/>
 										)
