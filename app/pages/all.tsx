@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { NotesContext } from './_app'
 import Editor from '../src/components/Editor'
 import { prettyFormatDate, getNoteIdFromDate } from '../src/utils/dateFormatter'
@@ -11,7 +11,7 @@ export default function AllNotes(props: AllNotesProps) {
 
 	return (
 		<>
-			{/* <SearchModal /> */}
+			<SearchModal />
 			{!allNotes ? (
 				'loading'
 			) : Object.values(allNotes).length < 1 ? (
@@ -59,6 +59,8 @@ export default function AllNotes(props: AllNotesProps) {
 
 import * as Dialog from '@radix-ui/react-alert-dialog'
 const SearchModal = () => {
+	const [searchTerm, setSearchTerm] = useState('')
+
 	return (
 		<>
 			<Dialog.Root defaultOpen={true}>
@@ -73,18 +75,60 @@ const SearchModal = () => {
 					<Dialog.Overlay className='dialog-overlay' />
 					<Dialog.Content className='dialog-content flex flex-col p-2'>
 						<fieldset className='Fieldset mb-2'>
-							<input className='Input py-3' id='search' placeholder='Search' />
+							<input
+								className='Input py-3'
+								id='search'
+								placeholder='Search'
+								value={searchTerm}
+								onChange={({ target }) => setSearchTerm(target.value)}
+							/>
 						</fieldset>
 						<div className='overflow-y-scroll bg-secondary rounded'>
-							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
-							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
-							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
-							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
-							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
-							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
-							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
-							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
-							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
+							<SearchResult
+								noteId='2022-11-01'
+								content=''
+								searchParam={searchTerm}
+							/>
+							<SearchResult
+								noteId='2022-11-01'
+								content=''
+								searchParam={searchTerm}
+							/>
+							<SearchResult
+								noteId='2022-11-01'
+								content=''
+								searchParam={searchTerm}
+							/>
+							<SearchResult
+								noteId='2022-11-01'
+								content=''
+								searchParam={searchTerm}
+							/>
+							<SearchResult
+								noteId='2022-11-01'
+								content=''
+								searchParam={searchTerm}
+							/>
+							<SearchResult
+								noteId='2022-11-01'
+								content=''
+								searchParam={searchTerm}
+							/>
+							<SearchResult
+								noteId='2022-11-01'
+								content=''
+								searchParam={searchTerm}
+							/>
+							<SearchResult
+								noteId='2022-11-01'
+								content=''
+								searchParam={searchTerm}
+							/>
+							<SearchResult
+								noteId='2022-11-01'
+								content=''
+								searchParam={searchTerm}
+							/>
 						</div>
 					</Dialog.Content>
 				</Dialog.Portal>
@@ -98,17 +142,20 @@ const SearchResult = (props: {
 	content: string
 	searchParam: string
 }) => {
+	const content = `first of all, I think the value proposition is not compelling enough. What should makes people wanting to buy this? I think I need a better framework to define the user problem. Or maybe I need to do validation before building anything.`
+
 	return (
-		<button className='px-4 py-3 bg-secondary-int text-left'>
-			<h4 className='text-sm font-semibold mb-1'>
-				{prettyFormatDate(props.noteId)}
-			</h4>
-			<div className='text-xs'>
-				first of all, I think the value proposition is not compelling enough.
-				What should makes people wanting to buy this? I think I need a better
-				framework to define the user problem. Or maybe I need to do validation
-				before building anything.
-			</div>
-		</button>
+		<>
+			{content.includes(props.searchParam) ? (
+				<button className='px-4 py-3 bg-secondary-int text-left'>
+					<h4 className='text-sm font-semibold mb-1'>
+						{prettyFormatDate(props.noteId)}
+					</h4>
+					<div className='text-xs'>{content}</div>
+				</button>
+			) : (
+				<></>
+			)}
+		</>
 	)
 }
