@@ -85,7 +85,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 	return (
 		<div className='grow flex h-full overflow-y-scroll justify-center'>
 			{isLoading ? (
-				'Loading'
+				<></>
 			) : displayError || !initialNoteState ? (
 				'error'
 			) : (

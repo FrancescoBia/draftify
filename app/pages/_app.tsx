@@ -147,9 +147,9 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 
 			<div className='flex grow'>
 				{/* check that initial data has been fetched */}
-				{!vaultIsSet ? (
+				{vaultIsSet === false ? (
 					<SelectVault />
-				) : allNotes ? (
+				) : allNotes && vaultIsSet ? (
 					<NotesContext.Provider value={contextValue}>
 						<Navigator />
 						{props.children}
