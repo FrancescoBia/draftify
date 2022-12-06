@@ -19,6 +19,7 @@ a {
 
 * {
 	box-sizing: border-box;
+	outline-color: transparent;
 }
 
 @media (prefers-color-scheme: dark) {

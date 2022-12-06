@@ -11,7 +11,6 @@ export default function AllNotes(props: AllNotesProps) {
 
 	return (
 		<>
-			<SearchModal />
 			{!allNotes ? (
 				'loading'
 			) : Object.values(allNotes).length < 1 ? (
@@ -52,101 +51,6 @@ export default function AllNotes(props: AllNotesProps) {
 							)
 						})}
 				</div>
-			)}
-		</>
-	)
-}
-
-import * as Dialog from '@radix-ui/react-alert-dialog'
-const SearchModal = () => {
-	const { allNotes } = useContext(NotesContext)
-	const [cleanNotesArray, setCleanNotesArray] = useState<Note[]>()
-	const [searchTerm, setSearchTerm] = useState('')
-
-	useEffect(() => {
-		//
-		allNotes &&
-			setCleanNotesArray(() => {
-				return Object.keys(allNotes)
-					.map((noteId) => {
-						const note = allNotes[noteId as Note['id']]
-
-						const cleanupContent = (note.content || '')
-							.replaceAll('`', '')
-							.replaceAll('#', '')
-							.replaceAll('*', '')
-
-						return { ...note, content: cleanupContent }
-					})
-					.sort()
-					.reverse()
-			})
-	}, [allNotes])
-
-	return (
-		<>
-			<Dialog.Root defaultOpen={true}>
-				<Dialog.Trigger asChild>
-					<button className='fixed bottom-0 right-0 m-4 flex justify-center items-center w-8 h-8 bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400 rounded-xl border border-red-200 dark:border-red-800 hover:bg-red-200 group dark:hover:bg-red-800'>
-						<div className='absolute hidden group-hover:block right-full top-0 whitespace-nowrap mr-2 bg-gray-100 dark:bg-gray-900 rounded-xl px-3 py-1 text-secondary text-sm h-full'>
-							Delete note
-						</div>
-					</button>
-				</Dialog.Trigger>
-				<Dialog.Portal>
-					<Dialog.Overlay className='dialog-overlay' />
-					<Dialog.Content className='dialog-content position-top flex flex-col p-2'>
-						<fieldset className='Fieldset'>
-							<input
-								className='Input py-3'
-								id='search'
-								placeholder='Search'
-								value={searchTerm}
-								onChange={({ target }) => setSearchTerm(target.value)}
-							/>
-						</fieldset>
-						{searchTerm === '' ? (
-							<></>
-						) : (
-							<div className='overflow-y-scroll bg-secondary rounded mt-2'>
-								{cleanNotesArray &&
-									cleanNotesArray.map((note) => {
-										return (
-											<SearchResult
-												noteId={note.id}
-												key={'key' + note.id}
-												content={note.content || ''}
-												searchParam={searchTerm}
-											/>
-										)
-									})}
-							</div>
-						)}
-					</Dialog.Content>
-				</Dialog.Portal>
-			</Dialog.Root>
-		</>
-	)
-}
-
-const SearchResult = (props: {
-	noteId: Note['id']
-	content: string
-	searchParam: string
-}) => {
-	return (
-		<>
-			{props.content && props.content.includes(props.searchParam) ? (
-				<Link href={`/${props.noteId}/edit`}>
-					<div className='px-4 py-3 bg-secondary-int text-left w-full'>
-						<h4 className='text-sm font-semibold mb-1'>
-							{prettyFormatDate(props.noteId)}
-						</h4>
-						<div className='text-xs line-clamp-3'>{props.content}</div>
-					</div>
-				</Link>
-			) : (
-				<></>
 			)}
 		</>
 	)
