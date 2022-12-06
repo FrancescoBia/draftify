@@ -69,7 +69,14 @@ const SearchModal = () => {
 			setCleanNotesArray(() => {
 				return Object.keys(allNotes)
 					.map((noteId) => {
-						return allNotes[noteId as Note['id']]
+						const note = allNotes[noteId as Note['id']]
+
+						const cleanupContent = (note.content || '')
+							.replaceAll('`', '')
+							.replaceAll('#', '')
+							.replaceAll('*', '')
+
+						return { ...note, content: cleanupContent }
 					})
 					.sort()
 					.reverse()
