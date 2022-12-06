@@ -143,6 +143,7 @@ const SearchModal = () => {
 					<Dialog.Content className='dialog-content position-top flex flex-col p-2'>
 						<fieldset className='Fieldset'>
 							<input
+								autoFocus={true}
 								className='Input py-3'
 								id='search'
 								placeholder='Search'
