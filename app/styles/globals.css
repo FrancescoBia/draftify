@@ -47,6 +47,10 @@ a {
 	@apply bg-white dark:bg-black;
 }
 
+.bg-primary-int {
+	@apply bg-white dark:bg-black hover:bg-gray-100 dark:hover:bg-gray-900;
+}
+
 .bg-secondary {
 	@apply bg-gray-100 dark:bg-gray-900;
 }

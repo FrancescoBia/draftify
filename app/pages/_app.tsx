@@ -164,8 +164,6 @@ function WorkspaceLayout(props: WorkspaceLayoutProps) {
 	)
 }
 
-// https://tally.so/r/wArxyk
-
 // -------------------------------------------------------
 //
 // -------------------------------------------------------
