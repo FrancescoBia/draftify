@@ -8,26 +8,31 @@ import HelpIcon from '../assets/help-circle.svg'
 
 type Props = {}
 
-const Navigator = (props: Props) => {
+export default function Navigator(props: Props) {
 	return (
-		<div className='p-4 w-[104px] shrink-0 z-10 h-full'>
-			<div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 fixed rounded-xl '>
-				<IconButton
-					href='/today'
-					image={today_note}
-					alt="button to today's note"
-				/>
-				<IconButton href='/all' image={past_notes} alt='button to past notes' />
-			</div>
-			<a
-				className='text-gray-400 fixed bottom-8  bg-primary-int rounded-lg p-4 left-8 group/label'
-				href='https://tally.so/r/wArxyk'
-			>
-				<div className='scale-150 '>
-					<HelpIcon />
+		<div className='p-4 w-[104px] shrink-0 z-10 pb-5'>
+			<div className='fixed h-[calc(100vh-4rem)]'>
+				<div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-xl '>
+					<IconButton
+						href='/today'
+						image={today_note}
+						alt="button to today's note"
+					/>
+					<IconButton
+						href='/all'
+						image={past_notes}
+						alt='button to past notes'
+					/>
 				</div>
-				<FloatingLabel label='Support' />
-			</a>
+				{location.pathname === '/all' && <SearchModal />}
+				<a
+					className='text-gray-400 bg-primary-int rounded-lg p-3 m-3 flex items-center group/label justify-center absolute bottom-0'
+					href='https://tally.so/r/wArxyk'
+				>
+					<HelpIcon />
+					<FloatingLabel label='Support' />
+				</a>
+			</div>
 		</div>
 	)
 }
@@ -83,24 +88,114 @@ const FloatingLabel = (props: { label: string }) => {
 	)
 }
 
-type NoteItemProps = {
-	noteId: Note['id'] | 'today'
-}
+// -------------------------------------------------------
+// SEARCH MODAL
+// -------------------------------------------------------
 
-const NoteItem = (props: NoteItemProps) => {
-	const router = useRouter()
-	const isSelected = location.pathname.split('/')[1] === props.noteId
+import { useContext, useEffect, useState } from 'react'
+import { NotesContext } from '../../pages/_app'
+import SearchIcon from '../assets/search.svg'
+import * as Dialog from '@radix-ui/react-alert-dialog'
+
+const SearchModal = () => {
+	const { allNotes } = useContext(NotesContext)
+	const [cleanNotesArray, setCleanNotesArray] = useState<Note[]>()
+	const [searchTerm, setSearchTerm] = useState('')
+	const [openModal, setOpenModal] = useState(false)
+
+	useEffect(() => {
+		//
+		allNotes &&
+			setCleanNotesArray(() => {
+				return Object.keys(allNotes)
+					.map((noteId) => {
+						const note = allNotes[noteId as Note['id']]
+
+						const cleanupContent = (note.content || '')
+							.replaceAll('`', '')
+							.replaceAll('#', '')
+							.replaceAll('*', '')
+
+						return { ...note, content: cleanupContent }
+					})
+					.sort()
+					.reverse()
+			})
+	}, [allNotes])
 
 	return (
-		<button
-			className={`px-6 py-2 text-left ${
-				isSelected ? 'bg-gray-100 dark:bg-gray-800 font-bold' : ''
-			}`}
-			onClick={() => router.push(`/${props.noteId}`)}
-		>
-			{props.noteId === 'today' ? 'today' : prettyFormatDate(props.noteId)}
-		</button>
+		<>
+			<Dialog.Root onOpenChange={setOpenModal} open={openModal}>
+				<button
+					className='text-gray-400 bg-primary-int rounded-lg relative p-3 m-3 flex items-center group/label justify-center'
+					onClick={() => setOpenModal(true)}
+				>
+					<SearchIcon />
+					<FloatingLabel label='Search' />
+				</button>
+				<Dialog.Portal>
+					<Dialog.Overlay
+						className='dialog-overlay'
+						onClick={() => {
+							setOpenModal(false)
+						}}
+					/>
+					<Dialog.Content className='dialog-content position-top flex flex-col p-2'>
+						<fieldset className='Fieldset'>
+							<input
+								className='Input py-3'
+								id='search'
+								placeholder='Search'
+								value={searchTerm}
+								onChange={({ target }) => setSearchTerm(target.value)}
+							/>
+						</fieldset>
+						{searchTerm === '' ? (
+							<></>
+						) : (
+							<div className='overflow-y-scroll bg-secondary rounded mt-2 min-h-[4rem] relative'>
+								<p className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-tertiary text-sm z-0'>
+									No notes found
+								</p>
+								{cleanNotesArray &&
+									cleanNotesArray.map((note) => {
+										return (
+											<SearchResult
+												noteId={note.id}
+												key={'key' + note.id}
+												content={note.content || ''}
+												searchParam={searchTerm}
+											/>
+										)
+									})}
+							</div>
+						)}
+					</Dialog.Content>
+				</Dialog.Portal>
+			</Dialog.Root>
+		</>
 	)
 }
 
-export { Navigator }
+const SearchResult = (props: {
+	noteId: Note['id']
+	content: string
+	searchParam: string
+}) => {
+	return (
+		<>
+			{props.content && props.content.includes(props.searchParam) ? (
+				<Link href={`/${props.noteId}/edit`} className='relative z-10'>
+					<div className='px-4 py-3 bg-secondary-int text-left w-full'>
+						<h4 className='text-sm font-semibold mb-1'>
+							{prettyFormatDate(props.noteId)}
+						</h4>
+						<div className='text-xs line-clamp-3'>{props.content}</div>
+					</div>
+				</Link>
+			) : (
+				<></>
+			)}
+		</>
+	)
+}

@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { NotesContext } from './_app'
 import Editor from '../src/components/Editor'
 import { prettyFormatDate, getNoteIdFromDate } from '../src/utils/dateFormatter'

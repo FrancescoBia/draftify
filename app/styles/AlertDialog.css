@@ -4,14 +4,24 @@
 }
 
 .dialog-content {
-	@apply z-30 bg-white dark:bg-gray-900 top-1/2 left-1/2 fixed rounded-lg p-6;
+	@apply z-30 bg-white dark:bg-gray-900 left-1/2 fixed rounded-lg p-6;
 	box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
 		hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
-	transform: translate(-50%, -50%);
 	width: 90vw;
 	max-width: 500px;
 	max-height: 85vh;
-	animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialog-content.position-middle {
+	@apply top-1/2;
+	transform: translate(-50%, -50%);
+	animation: contentShow-middle 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialog-content.position-top {
+	@apply top-16;
+	transform: translateX(-50%);
+	animation: contentShow-top 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dialog-content:focus {
@@ -27,7 +37,7 @@
 	}
 }
 
-@keyframes contentShow {
+@keyframes contentShow-middle {
 	from {
 		opacity: 0;
 		transform: translate(-50%, -48%) scale(0.96);
@@ -36,4 +46,40 @@
 		opacity: 1;
 		transform: translate(-50%, -50%) scale(1);
 	}
+}
+
+@keyframes contentShow-top {
+	from {
+		opacity: 0;
+		transform: translateX(-50%) scale(0.96);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(-50%) scale(1);
+	}
+}
+
+.Fieldset {
+	@apply flex gap-5 items-center;
+}
+
+/* button,
+fieldset,
+input {
+	all: unset;
+} */
+
+.Input {
+	@apply w-full flex-1 inline-flex items-center justify-center rounded p-2 border;
+}
+.Input:focus-within {
+	@apply outline-blue-500;
+	/* box-shadow: 0 0 0 2px blue; */
+}
+
+.Label {
+	font-size: 15px;
+	color: var(--violet11);
+	width: 90px;
+	text-align: right;
 }

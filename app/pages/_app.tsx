@@ -80,7 +80,7 @@ const ElectronApp = (props: ElectronAppProps) => {
 // WORKSPACE
 // -------------------------------------------------------
 
-import { Navigator } from '../src/components/Navigator'
+import Navigator from '../src/components/Navigator'
 import { Spinner } from '../src/components/Spinner'
 import { Dispatch, SetStateAction } from 'react'
 import Image from 'next/image'

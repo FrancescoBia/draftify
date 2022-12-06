@@ -19,6 +19,7 @@ a {
 
 * {
 	box-sizing: border-box;
+	outline-color: transparent;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -57,6 +58,10 @@ a {
 
 .bg-secondary {
 	@apply bg-gray-100 dark:bg-gray-900;
+}
+
+.bg-secondary-int {
+	@apply bg-gray-100 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800;
 }
 
 .bg-tertiary {
