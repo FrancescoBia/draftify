@@ -153,7 +153,10 @@ const SearchModal = () => {
 						{searchTerm === '' ? (
 							<></>
 						) : (
-							<div className='overflow-y-scroll bg-secondary rounded mt-2'>
+							<div className='overflow-y-scroll bg-secondary rounded mt-2 min-h-[4rem] relative'>
+								<p className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-tertiary text-sm z-0'>
+									No notes found
+								</p>
 								{cleanNotesArray &&
 									cleanNotesArray.map((note) => {
 										return (
@@ -182,7 +185,7 @@ const SearchResult = (props: {
 	return (
 		<>
 			{props.content && props.content.includes(props.searchParam) ? (
-				<Link href={`/${props.noteId}/edit`}>
+				<Link href={`/${props.noteId}/edit`} className='relative z-10'>
 					<div className='px-4 py-3 bg-secondary-int text-left w-full'>
 						<h4 className='text-sm font-semibold mb-1'>
 							{prettyFormatDate(props.noteId)}
