@@ -215,6 +215,9 @@ function SelectVault() {
 					</p>
 				</div>
 			</div>
+			<a href='https://tally.so/r/wArxyk' className='text-sm text-tertiary'>
+				Contact support
+			</a>
 		</div>
 	)
 }

@@ -39,6 +39,10 @@ a {
 	@apply text-gray-700 dark:text-gray-400;
 }
 
+.text-tertiary {
+	@apply text-gray-400 dark:text-gray-600;
+}
+
 .text-accent {
 	@apply text-blue-500;
 }
