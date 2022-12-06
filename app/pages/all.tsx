@@ -11,6 +11,7 @@ export default function AllNotes(props: AllNotesProps) {
 
 	return (
 		<>
+			{/* <SearchModal /> */}
 			{!allNotes ? (
 				'loading'
 			) : Object.values(allNotes).length < 1 ? (
@@ -53,5 +54,61 @@ export default function AllNotes(props: AllNotesProps) {
 				</div>
 			)}
 		</>
+	)
+}
+
+import * as Dialog from '@radix-ui/react-alert-dialog'
+const SearchModal = () => {
+	return (
+		<>
+			<Dialog.Root defaultOpen={true}>
+				<Dialog.Trigger asChild>
+					<button className='fixed bottom-0 right-0 m-4 flex justify-center items-center w-8 h-8 bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400 rounded-xl border border-red-200 dark:border-red-800 hover:bg-red-200 group dark:hover:bg-red-800'>
+						<div className='absolute hidden group-hover:block right-full top-0 whitespace-nowrap mr-2 bg-gray-100 dark:bg-gray-900 rounded-xl px-3 py-1 text-secondary text-sm h-full'>
+							Delete note
+						</div>
+					</button>
+				</Dialog.Trigger>
+				<Dialog.Portal>
+					<Dialog.Overlay className='dialog-overlay' />
+					<Dialog.Content className='dialog-content flex flex-col p-2'>
+						<fieldset className='Fieldset mb-2'>
+							<input className='Input py-3' id='search' placeholder='Search' />
+						</fieldset>
+						<div className='overflow-y-scroll bg-secondary rounded'>
+							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
+							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
+							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
+							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
+							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
+							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
+							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
+							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
+							<SearchResult noteId='2022-11-01' content='' searchParam='for' />
+						</div>
+					</Dialog.Content>
+				</Dialog.Portal>
+			</Dialog.Root>
+		</>
+	)
+}
+
+const SearchResult = (props: {
+	noteId: Note['id']
+	content: string
+	searchParam: string
+}) => {
+	return (
+		<button className='px-4 py-3 bg-secondary-int text-left'>
+			<h4 className='text-sm font-semibold mb-1'>
+				{prettyFormatDate(props.noteId)}
+			</h4>
+			<div className='text-xs'>
+				first of all, I think the value proposition is not compelling enough.
+				What should makes people wanting to buy this? I think I need a better
+				framework to define the user problem. Or maybe I need to do validation
+				before building anything.
+			</div>
+		</button>
 	)
 }

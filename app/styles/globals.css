@@ -59,6 +59,10 @@ a {
 	@apply bg-gray-100 dark:bg-gray-900;
 }
 
+.bg-secondary-int {
+	@apply bg-gray-100 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800;
+}
+
 .bg-tertiary {
 	@apply bg-gray-200 dark:bg-gray-800;
 }
