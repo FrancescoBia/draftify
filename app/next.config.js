@@ -15,11 +15,11 @@ const nextConfig = {
 	async rewrites() {
 		return [
 			{
-				source: '/download/latest/mac-intel',
+				source: '/download/latest/mac-intel.dmg',
 				destination: `https://draftify-app.nyc3.digitaloceanspaces.com/Draftify-${electronAppVersion}.dmg`,
 			},
 			{
-				source: '/download/latest/mac-silicon',
+				source: '/download/latest/mac-silicon.dmg',
 				destination: `https://draftify-app.nyc3.digitaloceanspaces.com/Draftify-${electronAppVersion}-arm64.dmg`,
 			},
 		]
