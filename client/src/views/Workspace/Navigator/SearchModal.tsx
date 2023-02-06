@@ -3,7 +3,7 @@ import { NotesContext } from '../../App'
 import { Search } from 'react-feather'
 import * as Dialog from '@radix-ui/react-alert-dialog'
 import FloatingLabel from '../../../components/FloatingLabel'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { prettyFormatDate } from '../../../utils/dateFormatter'
 
 export default function SearchModal() {
@@ -75,6 +75,7 @@ export default function SearchModal() {
 												key={'key' + note.id}
 												content={note.content || ''}
 												searchParam={searchTerm}
+												closeModal={() => setOpenModal(false)}
 											/>
 										)
 									})}
@@ -91,21 +92,25 @@ const SearchResult = (props: {
 	noteId: Note['id']
 	content: string
 	searchParam: string
+	closeModal: () => void
 }) => {
-	return (
-		<>
-			{props.content && props.content.includes(props.searchParam) ? (
-				<Link to={`/${props.noteId}/edit`} className='relative z-10'>
-					<div className='px-4 py-3 bg-secondary-int text-left w-full'>
-						<h4 className='text-sm font-semibold mb-1'>
-							{prettyFormatDate(props.noteId)}
-						</h4>
-						<div className='text-xs line-clamp-3'>{props.content}</div>
-					</div>
-				</Link>
-			) : (
-				<></>
-			)}
-		</>
+	const navigate = useNavigate()
+
+	function handleLinkClick() {
+		navigate(`/${props.noteId}`)
+		props.closeModal()
+	}
+
+	return props.content && props.content.includes(props.searchParam) ? (
+		<button onClick={handleLinkClick} className='relative z-10 w-full'>
+			<div className='px-4 py-3 bg-secondary-int text-left w-full'>
+				<h4 className='text-sm font-semibold mb-1'>
+					{prettyFormatDate(props.noteId)}
+				</h4>
+				<div className='text-xs line-clamp-3'>{props.content}</div>
+			</div>
+		</button>
+	) : (
+		<></>
 	)
 }
