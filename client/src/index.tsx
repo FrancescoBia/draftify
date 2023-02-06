@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import './index.css'
+import './style/index.css'
 import App from './views/App'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)

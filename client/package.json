@@ -46,6 +46,7 @@
 		]
 	},
 	"devDependencies": {
+		"@tailwindcss/line-clamp": "^0.4.2",
 		"autoprefixer": "^10.4.13",
 		"postcss": "^8.4.21",
 		"react-router-dom": "^6.8.0",

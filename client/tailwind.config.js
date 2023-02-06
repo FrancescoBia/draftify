@@ -1,8 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: ['./src/**/*.{js,jsx,ts,tsx}'],
+	content: ['./src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
-		extend: {},
+		extend: {
+			dropShadow: {
+				icon: '0 2px 10px rgba(0, 0, 0, 0.1)',
+			},
+		},
 	},
-	plugins: [],
+	plugins: [require('@tailwindcss/line-clamp')],
 }
