@@ -52,7 +52,7 @@ export default function App() {
 	}, [isVaultSet])
 
 	return (
-		<div className='flex grow'>
+		<>
 			{/* check that initial data has been fetched */}
 			{isVaultSet === false ? (
 				<SelectVault />
@@ -65,6 +65,6 @@ export default function App() {
 					<Spinner />
 				</div>
 			)}
-		</div>
+		</>
 	)
 }
