@@ -6,6 +6,7 @@ import {
 	useEffect,
 } from 'react'
 import SelectVault from './SelectVault'
+import Workspace from './Workspace'
 
 export const NotesContext = createContext<{
 	allNotes: NoteList | undefined
@@ -56,9 +57,7 @@ export default function App() {
 				<SelectVault />
 			) : allNotes && isVaultSet ? (
 				<NotesContext.Provider value={contextValue}>
-					{/* <Navigator /> */}
-					<div>Navigator</div>
-					{/* {props.children} */}
+					<Workspace />
 				</NotesContext.Provider>
 			) : (
 				<div className='h-full w-full flex items-center justify-center'>
