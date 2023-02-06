@@ -1,0 +1,35 @@
+.spinner {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 4px rgba(0, 0, 0, 0.25) solid;
+	border-top: 4px black solid;
+	border-radius: 50%;
+	-webkit-animation: spin2 0.75s infinite linear;
+	animation: spin2 0.75s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+	from {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}
+@keyframes spin2 {
+	from {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}

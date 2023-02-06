@@ -7,6 +7,7 @@ import {
 } from 'react'
 import SelectVault from './SelectVault'
 import Workspace from './Workspace'
+import Spinner from '../components/Spinner'
 
 export const NotesContext = createContext<{
 	allNotes: NoteList | undefined
@@ -61,7 +62,7 @@ export default function App() {
 				</NotesContext.Provider>
 			) : (
 				<div className='h-full w-full flex items-center justify-center'>
-					{/* <Spinner /> */}
+					<Spinner />
 				</div>
 			)}
 		</div>
