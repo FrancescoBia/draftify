@@ -6,13 +6,16 @@ import { NotesContext } from '../App'
 import { useContext } from 'react'
 import * as Dialog from '@radix-ui/react-alert-dialog'
 import { Trash } from 'react-feather'
+import { getNoteIdFromDate } from '../../utils/dateFormatter'
 
 export default function Workspace() {
+	const today = getNoteIdFromDate()
+
 	return (
 		<div className='flex grow'>
 			<Navigator />
 			<Routes>
-				<Route path='/' element={<EditableNote noteId='2023-01-31' />} />
+				<Route path='/' element={<EditableNote noteId={today} />} />
 				<Route path='all' element={<NoteList />} />
 				<Route path=':date' element={<PastEditableNote />} />
 			</Routes>

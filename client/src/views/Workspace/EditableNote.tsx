@@ -12,7 +12,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 	const [isLoading, setIsLoading] = useState(true)
 	const [displayError, setDisplayError] = useState(false)
 	// progressSaved currently not displayed, but useful to keep for eventual later use
-	const [progressSaved, setProgressSaved] = useState(true)
+	const [progressIsSaved, setProgressSaved] = useState(true)
 	const [initialNoteState, setInitialNoteState] = useState<Note>()
 	const { setAllNotes } = useContext(NotesContext)
 
