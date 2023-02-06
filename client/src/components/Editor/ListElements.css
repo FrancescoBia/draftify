@@ -1,0 +1,102 @@
+.editor-list-ol,
+.editor-list-ul {
+	@apply ml-1;
+}
+
+.editor-listitem {
+	@apply ml-4 my-1;
+}
+
+/* Checklist style */
+
+.editor-listitem-checked,
+.editor-listitem-unchecked {
+	@apply relative ml-0 px-6 outline-none list-none;
+}
+
+.editor-listitem-checked {
+	@apply line-through text-gray-400;
+}
+
+.editor-listitem-unchecked:before,
+.editor-listitem-checked:before {
+	@apply w-4 h-4 top-1 left-0 cursor-pointer block bg-cover absolute rounded;
+	content: '';
+}
+
+.editor-listitem-unchecked[dir='rtl']:before,
+.editor-listitem-checked[dir='rtl']:before {
+	@apply left-auto right-0;
+}
+
+/* ._checkMark {
+	@apply rounde-xl;
+} */
+
+.editor-listitem-unchecked:focus:before,
+.editor-listitem-checked:focus:before {
+	/* @apply; */
+	box-shadow: 0 0 0 3px #a6cdfe;
+}
+
+.editor-listitem-unchecked:before {
+	@apply border border-gray-400;
+}
+
+.editor-listitem-checked:before {
+	@apply border border-blue-500 bg-blue-500 bg-no-repeat;
+}
+
+.editor-listitem-checked:after {
+	@apply text-white absolute block top-1 left-[3px] text-xs;
+	content: '✔︎';
+}
+
+/* .editor-nestedListitem- {
+	list-style-type: none;
+}
+.editor-nestedListitem-:before,
+.editor-nestedListitem-:after {
+	display: none;
+} */
+
+/* Nested lists */
+
+.editor-nested-listitem {
+	list-style-type: none;
+}
+
+.editor-nested-listitem:before,
+.editor-nested-listitem:after {
+	display: none;
+}
+/* 
+.editor-ol1 {
+	@apply p-0 m-0 ml-4;
+	list-style-position: inside;
+}
+.editor-ol2 {
+	@apply p-0 m-0 ml-4;
+	list-style-type: upper-alpha;
+	list-style-position: inside;
+}
+.editor-ol3 {
+	@apply p-0 m-0 ml-4;
+	list-style-type: lower-alpha;
+	list-style-position: inside;
+}
+.editor-ol4 {
+	@apply p-0 m-0 ml-4;
+	list-style-type: upper-roman;
+	list-style-position: inside;
+}
+.editor-ol5 {
+	@apply p-0 m-0 ml-4;
+	list-style-type: lower-roman;
+	list-style-position: inside;
+}
+
+.editor-ul {
+	@apply p-0 m-0 ml-4;
+	list-style-position: inside;
+} */
