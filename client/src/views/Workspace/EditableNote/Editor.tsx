@@ -1,14 +1,20 @@
 import { useState, useEffect, useContext } from 'react'
-import Editor from '../../components/Editor'
+import LexicalEditor from '../../../components/LexicalEditor'
 import { useDebouncedCallback } from 'use-debounce'
-import { getNoteIdFromDate, getFormattedDate } from '../../utils/dateFormatter'
-import { NotesContext } from '../App'
+import {
+	getNoteIdFromDate,
+	getFormattedDate,
+} from '../../../utils/dateFormatter'
+import { NotesContext } from '../../App'
 
 type NoteProps = {
 	noteId: Note['id']
+	/** The component key is necessary to make sure that a new instance
+	 * of the component is created when the note id changes */
+	key: Note['id']
 }
 
-export default function EditableNote({ noteId }: NoteProps) {
+export default function Editor({ noteId }: NoteProps) {
 	const [isLoading, setIsLoading] = useState(true)
 	const [displayError, setDisplayError] = useState(false)
 	// progressSaved currently not displayed, but useful to keep for eventual later use
@@ -115,7 +121,7 @@ export default function EditableNote({ noteId }: NoteProps) {
 						)}
 					</div>
 					<div className='grow p-4'>
-						<Editor
+						<LexicalEditor
 							key={`${noteId}-editor`}
 							onChange={handleEditorContentChange}
 							initialText={initialNoteState.content}

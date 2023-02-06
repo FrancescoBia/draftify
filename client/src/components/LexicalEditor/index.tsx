@@ -19,7 +19,7 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import ListMaxIndentLevelPlugin from './plugins/ListMaxIndentLevelPlugin'
 import CodeHighlightPlugin from './plugins/CodeHighlightPlugin'
 import AutoLinkPlugin from './plugins/AutoLinkPlugin'
-import { LexicalEditor } from 'lexical'
+import { LexicalEditor as LexicalEditorType } from 'lexical'
 import {
 	$convertToMarkdownString,
 	$convertFromMarkdownString,
@@ -40,7 +40,7 @@ type Props = {
 	key: string
 }
 
-export default function Editor({ editable = true, ...props }: Props) {
+export default function LexicalEditor({ editable = true, ...props }: Props) {
 	const editorConfig: InitialConfig = {
 		namespace: props.key,
 		editorState: () =>
@@ -70,7 +70,7 @@ export default function Editor({ editable = true, ...props }: Props) {
 		],
 	}
 
-	function onChange(editorState: EditorState, editor: LexicalEditor) {
+	function onChange(editorState: EditorState, editor: LexicalEditorType) {
 		// transform to Markdown
 		editor.update(() => {
 			const markdownData = $convertToMarkdownString(customTransformers)

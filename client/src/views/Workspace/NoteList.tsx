@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { NotesContext } from '../App'
-import Editor from '../../components/Editor'
+import Editor from '../../components/LexicalEditor'
 import {
 	prettyFormatDate,
 	getNoteIdFromDate,
