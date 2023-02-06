@@ -5,7 +5,7 @@ import NoteList from './NoteList'
 
 export default function Workspace() {
 	return (
-		<div className='flex '>
+		<div className='flex grow'>
 			<Navigator />
 			<Routes>
 				<Route path='/' element={<EditableNote noteId='2023-01-31' />} />
@@ -18,6 +18,5 @@ export default function Workspace() {
 
 function PastEditableNote() {
 	const { date } = useParams()
-
 	return <EditableNote noteId={date as Note['id']} />
 }

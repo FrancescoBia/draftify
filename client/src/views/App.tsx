@@ -52,7 +52,10 @@ export default function App() {
 	}, [isVaultSet])
 
 	return (
-		<>
+		<div className='h-screen flex flex-col'>
+			{/* Electron window frame */}
+			<div className='webkit-app-drag h-7 w-full shrink-0' />
+
 			{/* check that initial data has been fetched */}
 			{isVaultSet === false ? (
 				<SelectVault />
@@ -65,6 +68,6 @@ export default function App() {
 					<Spinner />
 				</div>
 			)}
-		</>
+		</div>
 	)
 }
