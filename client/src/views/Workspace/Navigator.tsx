@@ -2,8 +2,8 @@
 import { Link, useLocation } from 'react-router-dom'
 // import { useRouter } from 'next/router'
 // import { prettyFormatDate } from '../../utils/dateFormatter'
-// import today_note from '../assets/images/today_note.png'
-// import past_notes from '../assets/images/past_notes.png'
+import today_note from '../../assets/images/today_note.png'
+import past_notes from '../../assets/images/past_notes.png'
 // import HelpIcon from '../assets/help-circle.svg'
 
 type Props = {}
@@ -15,12 +15,12 @@ export default function Navigator(props: Props) {
 				<div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-xl '>
 					<IconButton
 						href='/'
-						// image={today_note}
+						image={today_note}
 						alt="button to today's note"
 					/>
 					<IconButton
 						href='/all'
-						// image={past_notes}
+						image={past_notes}
 						alt='button to past notes'
 					/>
 				</div>
@@ -39,7 +39,7 @@ export default function Navigator(props: Props) {
 
 type ButtonProps = {
 	href: string
-	// image: StaticImageData
+	image: string
 	alt: string
 }
 
@@ -69,13 +69,7 @@ const IconButton = (props: ButtonProps) => {
 				// </p>
 				<></>
 			)}
-			{/* <Image
-				src={props.image}
-				alt={props.alt}
-				className='drop-shadow-icon'
-				priority
-			/> */}
-			{props.alt}
+			<img src={props.image} alt={props.alt} className='drop-shadow-icon' />
 		</Link>
 	)
 }
