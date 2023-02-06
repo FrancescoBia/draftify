@@ -36,7 +36,7 @@ export default function NoteList(props: AllNotesProps) {
 									<div className='text-gray-400 mt-1 shrink-0 font-semibold flex md:flex-col flex-row gap-y-2 items-center md:items-start justify-between md:justify-start'>
 										<p>{prettyFormatDate(noteId)}</p>
 										<Link
-											to={`/${noteId}/edit`}
+											to={`/${noteId}`}
 											className='button-secondary  opacity-0 group-hover:opacity-100 transition-all'
 										>
 											Edit
