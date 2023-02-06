@@ -5,6 +5,7 @@ import {
 	useState,
 	useEffect,
 } from 'react'
+import SelectVault from './SelectVault'
 
 export const NotesContext = createContext<{
 	allNotes: NoteList | undefined
@@ -52,8 +53,7 @@ export default function App() {
 		<div className='flex grow'>
 			{/* check that initial data has been fetched */}
 			{isVaultSet === false ? (
-				// <SelectVault />
-				<div>Select Vault</div>
+				<SelectVault />
 			) : allNotes && isVaultSet ? (
 				<NotesContext.Provider value={contextValue}>
 					{/* <Navigator /> */}
