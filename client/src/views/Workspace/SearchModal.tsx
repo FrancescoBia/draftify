@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { NotesContext } from '../App'
-import SearchIcon from '../assets/search.svg'
+import { Search } from 'react-feather'
 import * as Dialog from '@radix-ui/react-alert-dialog'
 import FloatingLabel from '../../components/FloatingLabel'
 import { Link } from 'react-router-dom'
@@ -39,7 +39,7 @@ export default function SearchModal() {
 					className='text-gray-400 bg-primary-int rounded-lg relative p-3 m-3 flex items-center group/label justify-center'
 					onClick={() => setOpenModal(true)}
 				>
-					<SearchIcon />
+					<Search />
 					<FloatingLabel label='Search' />
 				</button>
 				<Dialog.Portal>
