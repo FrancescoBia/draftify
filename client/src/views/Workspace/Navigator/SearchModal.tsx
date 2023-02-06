@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
-import { NotesContext } from '../App'
+import { NotesContext } from '../../App'
 import { Search } from 'react-feather'
 import * as Dialog from '@radix-ui/react-alert-dialog'
-import FloatingLabel from '../../components/FloatingLabel'
+import FloatingLabel from '../../../components/FloatingLabel'
 import { Link } from 'react-router-dom'
-import { prettyFormatDate } from '../../utils/dateFormatter'
+import { prettyFormatDate } from '../../../utils/dateFormatter'
 
 export default function SearchModal() {
 	const { allNotes } = useContext(NotesContext)

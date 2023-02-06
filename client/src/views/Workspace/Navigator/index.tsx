@@ -2,9 +2,9 @@
 import { Link, useLocation } from 'react-router-dom'
 // import { useRouter } from 'next/router'
 // import { prettyFormatDate } from '../../utils/dateFormatter'
-import today_note from '../../assets/images/today_note.png'
-import past_notes from '../../assets/images/past_notes.png'
-import FloatingLabel from '../../components/FloatingLabel'
+import today_note from '../../../assets/images/today_note.png'
+import past_notes from '../../../assets/images/past_notes.png'
+import FloatingLabel from '../../../components/FloatingLabel'
 import SearchModal from './SearchModal'
 import { HelpCircle } from 'react-feather'
 

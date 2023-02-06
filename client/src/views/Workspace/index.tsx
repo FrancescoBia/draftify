@@ -5,6 +5,7 @@ import NoteList from './NoteList'
 import { NotesContext } from '../App'
 import { useContext } from 'react'
 import * as Dialog from '@radix-ui/react-alert-dialog'
+import { Trash } from 'react-feather'
 
 export default function Workspace() {
 	return (
@@ -47,8 +48,7 @@ function PastEditableNote() {
 								<div className='absolute hidden group-hover:block right-full top-0 whitespace-nowrap mr-2 bg-gray-100 dark:bg-gray-900 rounded-xl px-3 py-1 text-secondary text-sm h-full'>
 									Delete note
 								</div>
-								{/* <TrashIcon /> */}
-								Trash icon
+								<Trash />
 							</button>
 						</Dialog.Trigger>
 						<Dialog.Portal>
