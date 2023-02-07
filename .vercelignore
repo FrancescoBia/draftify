@@ -1,2 +1,3 @@
 electron
+client
 !electron/package.json
