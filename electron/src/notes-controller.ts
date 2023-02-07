@@ -68,13 +68,6 @@ export const getAllNotes: ElectronAPIHandle<'getAllNotes'> = async (_) => {
 	})
 }
 
-/** legacy method - needed for migration purposes (<v1.1.0) */
-export const getAllNotesFromElectronStore: ElectronAPIHandle<
-	'getAllNotesFromStore'
-> = async (_) => {
-	return (store.get(`notes`) || {}) as NoteList
-}
-
 export const deleteNote: ElectronAPIHandle<'deleteNote'> = async (
 	_,
 	{ noteId }
@@ -106,18 +99,4 @@ const getWorkspaceId = () => {
 export const checkIfWorkspaceIdIsSet = () => {
 	const workspaceId = getWorkspaceId()
 	if (!workspaceId) createWorkspace()
-}
-
-// -------------------------------------
-// DEV only methods!
-
-export function _deleteAllNotes() {
-	if (process.env.NODE_ENV === 'development') {
-		store.delete('notes')
-	} else {
-		console.log(
-			'Error: tried calling a dev-only method while NODE_ENV is:',
-			process.env.NODE_ENV
-		)
-	}
 }

@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { version } from '../package.json'
 
 const electronAPI: ElectronAPI = {
@@ -13,10 +13,6 @@ const electronAPI: ElectronAPI = {
 	getNote: (data) => ipcRenderer.invoke('note/get', data),
 	getAllNotes: () => ipcRenderer.invoke('note/getAll'),
 	deleteNote: (data) => ipcRenderer.invoke('note/delete', data),
-	// migration
-	migrationCompleted: (version) =>
-		ipcRenderer.send(`migration/completed/${version}`),
-	getAllNotesFromStore: () => ipcRenderer.invoke('migration/getNotesFromStore'),
 	// ---------------------------------
 	// Development-only methods
 	...((process.env.NODE_ENV === 'development'
@@ -30,22 +26,3 @@ const electronAPI: ElectronAPI = {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld('electronAPI', electronAPI)
-
-// // NB! the stuff below was already included in the template - not sure if to keep
-// // All of the Node.js APIs are available in the preload process.
-// // It has the same sandbox as a Chrome extension.
-// window.addEventListener('DOMContentLoaded', () => {
-// 	const replaceText = (selector: string, text: string) => {
-// 		const element = document.getElementById(selector)
-// 		if (element) {
-// 			element.innerText = text
-// 		}
-// 	}
-
-// 	for (const type of ['chrome', 'node', 'electron']) {
-// 		replaceText(
-// 			`${type}-version`,
-// 			process.versions[type as keyof NodeJS.ProcessVersions]
-// 		)
-// 	}
-// })
