@@ -63,7 +63,7 @@ app.whenReady().then(() => {
 
 	// --------------------
 	mainWindow.webContents.on('did-finish-load', () => {
-		console.log('client has loaded')
+		// console.log('client has loaded')
 		clientIsReady = true
 	})
 
@@ -99,11 +99,11 @@ app.on('window-all-closed', () => {
 app.on('web-contents-created', (_, contents) => {
 	contents.on('will-navigate', (event, navigationUrl) => {
 		event.preventDefault()
-		const parsedUrl = new URL(navigationUrl)
+		const urlPathname = navigationUrl.split('/').pop()
 
 		// Load only allowed urls
 		// see: https://www.electronjs.org/docs/latest/tutorial/security#how-12
-		if (parsedUrl.pathname === '/_support') {
+		if (urlPathname === '_support') {
 			shell.openExternal('https://tally.so/r/wArxyk')
 		}
 	})
