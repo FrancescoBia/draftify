@@ -62,9 +62,7 @@ module.exports = () => {
 			],
 		},
 		publish: {
-			provider: 'spaces',
-			name: 'draftify-app',
-			region: 'nyc3', // https://docs.digitalocean.com/products/platform/availability-matrix/
+			provider: 'github',
 		},
 	}
 
