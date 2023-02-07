@@ -1,6 +1,6 @@
 {
 	"name": "draftify",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Draftify is an app to help you quickly note down your thoughts when needed.",
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
