@@ -14,7 +14,7 @@ export default function SearchModal() {
 
 	useEffect(() => {
 		function listenForKeyEvent(event: KeyboardEvent) {
-			if (event.metaKey && event.code === 'KeyK') {
+			if (event.metaKey && event.code === 'KeyF') {
 				event.preventDefault()
 				setOpenModal((v) => !v)
 			}
@@ -54,7 +54,7 @@ export default function SearchModal() {
 				onClick={() => setOpenModal(true)}
 			>
 				<Search />
-				<FloatingLabel label='Search (⌘+K)' />
+				<FloatingLabel label='Search (⌘+F)' />
 			</button>
 			<Dialog.Portal>
 				<Dialog.Overlay
