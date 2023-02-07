@@ -29,7 +29,7 @@ export default function Navigator(props: Props) {
 				<SearchModal />
 				<a
 					className='text-gray-400 bg-primary-int rounded-lg p-3 m-3 flex items-center group/label justify-center absolute bottom-0'
-					href='https://tally.so/r/wArxyk'
+					href='_support'
 				>
 					<HelpCircle />
 					<FloatingLabel label='Support' />

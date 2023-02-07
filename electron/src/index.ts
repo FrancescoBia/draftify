@@ -18,9 +18,6 @@ import {
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
 const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
-export const appBaseUrl = isDev
-	? 'http://localhost:3000'
-	: 'https://draftify.vercel.app'
 
 export let mainWindow: BrowserWindow
 export let clientIsReady = false
@@ -36,17 +33,16 @@ function createWindow() {
 			preload: path.join(__dirname, 'preload.js'),
 		},
 		titleBarStyle: 'hidden',
-		// frame: false, // this hides the close/minimze controls as well
 	})
 
 	// and load the index.html of the app.
-	mainWindow.loadURL(appBaseUrl)
-	// open dev tools
+	if (isDev) mainWindow.loadURL('http://localhost:3000')
+	else mainWindow.loadFile('')
+
+	// Open the DevTools
 	if (process.env.NODE_ENV === 'development') {
 		mainWindow.webContents.openDevTools()
 	}
-
-	// Open the DevTools.
 }
 
 // This method will be called when Electron has finished
@@ -96,18 +92,15 @@ app.on('window-all-closed', () => {
 	}
 })
 
-const URL = require('url').URL
-
-app.on('web-contents-created', (event, contents) => {
+app.on('web-contents-created', (_, contents) => {
 	contents.on('will-navigate', (event, navigationUrl) => {
+		event.preventDefault()
 		const parsedUrl = new URL(navigationUrl)
-		const appUrl = new URL(appBaseUrl)
 
-		if (parsedUrl.origin !== appUrl.origin) {
-			event.preventDefault()
-			// This is not a good practice
-			// see: https://www.electronjs.org/docs/latest/tutorial/security#how-12
-			shell.openExternal(parsedUrl.href)
+		// Load only allowed urls
+		// see: https://www.electronjs.org/docs/latest/tutorial/security#how-12
+		if (parsedUrl.pathname === '/_support') {
+			shell.openExternal('https://tally.so/r/wArxyk')
 		}
 	})
 })

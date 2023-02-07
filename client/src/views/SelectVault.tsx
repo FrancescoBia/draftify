@@ -38,7 +38,7 @@ export default function SelectVault() {
 				</button>
 			</div>
 			<a
-				href='https://tally.so/r/wArxyk'
+				href='_support'
 				className='text-sm text-tertiary hover:text-gray-700 font-medium'
 			>
 				Support
