@@ -34,7 +34,7 @@ import './index.css'
 type InitialConfig = Parameters<typeof LexicalComposer>[0]['initialConfig']
 
 type Props = {
-	onChange: (markdownData: string) => any
+	onChange: (markdownData: string) => void
 	initialText?: string
 	editable?: boolean
 	key: string
@@ -74,16 +74,10 @@ export default function LexicalEditor({ editable = true, ...props }: Props) {
 		// transform to Markdown
 		editor.update(() => {
 			const markdownData = $convertToMarkdownString(customTransformers)
-			props.onChange(markdownData)
+			if (markdownData !== props.initialText) {
+				props.onChange(markdownData)
+			}
 		})
-		// editor.update(() => {
-		// 	console.log($rootTextContent())
-		// })
-
-		// const jsonData = editorState.toJSON()
-		// props.onChange(jsonData)
-
-		//
 	}
 
 	return (
