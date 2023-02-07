@@ -2,7 +2,10 @@ import { store } from './store'
 import generatePushId from '../../shared/utils/generatePushId'
 import { checkIfVaultIsSet } from './vault-controller'
 import { writeFile, readFile, statSync, readdir, rm, access } from 'fs'
-import { getFormattedDate } from '../../shared/utils/dateFormatter'
+import {
+	getFormattedDate,
+	getNoteIdFromDate,
+} from '../../shared/utils/dateFormatter'
 
 let vaultPath: string
 function getVaultPath() {
@@ -50,6 +53,7 @@ export const getAllNotes: ElectronAPIHandle<'getAllNotes'> = async (_) => {
 	return new Promise<NoteList>((resolve, reject) => {
 		readdir(getVaultPath(), (err, files) => {
 			if (err) reject(err)
+
 			const noteArray_promise = files
 				.filter((filename) => filename.endsWith('.md'))
 				.map((filename) => {
@@ -57,11 +61,23 @@ export const getAllNotes: ElectronAPIHandle<'getAllNotes'> = async (_) => {
 					return _getNote(noteDate)
 				})
 
+			const today = getNoteIdFromDate()
 			return Promise.all(noteArray_promise)
 				.then((notesArray) => {
-					return notesArray.reduce<NoteList>((acc, currentNote) => {
-						return { ...acc, [currentNote.id]: currentNote }
-					}, {})
+					return (
+						notesArray
+							// remove notes with no content
+							.filter((note) => {
+								if (!note.content && note.id !== today) {
+									deleteNote(null, { noteId: note.id })
+									return null
+								} else return note
+							})
+							// convert array to object
+							.reduce<NoteList>((acc, currentNote) => {
+								return { ...acc, [currentNote.id]: currentNote }
+							}, {})
+					)
 				})
 				.then((noteList) => resolve(noteList))
 		})
