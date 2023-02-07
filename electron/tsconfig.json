@@ -19,8 +19,8 @@
 	"include": [
 		"src/**/*",
 		"../shared/types/**/*",
-		"webpack.config.ts"
-		// "electron-builder-config.js"
+		"webpack.config.ts",
+		"../shared/utils/generatePushId.ts" // "electron-builder-config.js"
 	],
 	"ts-node": {
 		"compilerOptions": {

@@ -1,8 +1,8 @@
 import { store } from './store'
-import generatePushId from './utils/generatePushId'
+import generatePushId from '../../shared/utils/generatePushId'
 import { checkIfVaultIsSet } from './vault-controller'
 import { writeFile, readFile, statSync, readdir, rm, access } from 'fs'
-import { getFormattedDate } from './utils/dateFormatter'
+import { getFormattedDate } from '../../shared/utils/dateFormatter'
 
 let vaultPath: string
 function getVaultPath() {
