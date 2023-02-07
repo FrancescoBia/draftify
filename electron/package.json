@@ -11,7 +11,7 @@
 		"test:pack": "npm run build:prod && electron-builder --config ./electron-builder-config.js --dir -c.mac.identity=null",
 		"dist": "npm run build:prod && electron-builder --config ./electron-builder-config.js -c.afterSign=notarize.js --publish 'always'"
 	},
-	"repository": "https://github.com/electron/electron-quick-start-typescript",
+	"repository": "https://github.com/FrancescoBia/draftify",
 	"keywords": [],
 	"author": "Francesco Bianchi <9106253+FrancescoBia@users.noreply.github.com>",
 	"license": "MIT",

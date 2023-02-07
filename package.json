@@ -8,12 +8,12 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/FrancescoBia/journal.git"
+		"url": "git+https://github.com/FrancescoBia/draftify"
 	},
 	"author": "Francesco Bianchi <9106253+FrancescoBia@users.noreply.github.com>",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/FrancescoBia/journal/issues"
+		"url": "https://github.com/FrancescoBia/draftify/issues"
 	},
-	"homepage": "https://github.com/FrancescoBia/journal#readme"
+	"homepage": "https://github.com/FrancescoBia/draftify"
 }
