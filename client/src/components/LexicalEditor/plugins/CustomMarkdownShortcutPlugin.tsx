@@ -9,7 +9,7 @@ import {
 } from '@lexical/list'
 import { TRANSFORMERS, ElementTransformer } from '@lexical/markdown'
 
-const listExport = (listNode: any, exportChildren: any, depth: any): any => {
+const listExport = (listNode: any, exportChildren: any, depth: number): any => {
 	const output = []
 	const children = listNode.getChildren()
 	let index = 0
@@ -62,7 +62,7 @@ const listReplace = (listType: 'bullet' | 'check' | 'number') => {
 
 		listItem.append(...children)
 		listItem.select(0, 0)
-		const indent = Math.floor(match[1].length / 7)
+		const indent = Math.floor(match[1].length / 3)
 
 		if (indent) {
 			listItem.setIndent(indent)
