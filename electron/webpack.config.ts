@@ -31,6 +31,7 @@ export default function webpackConfig(env: any) {
 			new webpack.DefinePlugin({
 				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 			}),
+			// copies the client production build into the electron build folder
 			new CopyWebpackPlugin({
 				patterns: [{ from: '../client/build', to: './client' }],
 			}),
