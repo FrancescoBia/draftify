@@ -1,7 +1,6 @@
 import { BrowserWindow, dialog } from 'electron'
 import fs from 'fs'
 import { store } from './store'
-import { checkAndRunMigration } from './migrations'
 
 export function checkIfVaultIsSet(): string {
 	return store.get('vault.path')
@@ -62,7 +61,6 @@ export async function selectExistingVault(rendererWindow: BrowserWindow) {
 
 function setVaultPathInLocalStore(path: string) {
 	store.set('vault.path', path)
-	checkAndRunMigration()
 }
 
 export function _removeVault(rendererWindow: BrowserWindow) {

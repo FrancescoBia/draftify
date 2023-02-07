@@ -1,0 +1,83 @@
+.editor-text-code {
+	@apply dark:bg-gray-900 bg-gray-100 px-1.5 py-0.5 rounded-md text-sm;
+}
+
+.editor-code {
+	@apply bg-gray-100 dark:bg-gray-900 block p-4 rounded text-sm dark:text-[#dadac3] text-[#34373A];
+	/* background-color: rgb(240, 242, 245); */
+	font-family: Menlo, Consolas, Monaco, monospace;
+	/* display: block; */
+	/* padding: 8px 8px 8px 52px; */
+	/* line-height: 1.53; */
+	/* font-size: 13px; */
+	/* margin: 0; */
+	/* margin-top: 8px; */
+	/* margin-bottom: 8px; */
+	tab-size: 2;
+	/* white-space: pre; */
+	/* overflow-x: auto; */
+	/* position: relative; */
+}
+
+/* .editor-code:before {
+	content: attr(data-gutter);
+	position: absolute;
+	background-color: #eee;
+	left: 0;
+	top: 0;
+	border-right: 1px solid #ccc;
+	padding: 8px;
+	color: #777;
+	white-space: pre-wrap;
+	text-align: right;
+	min-width: 25px;
+} */
+/* .editor-code:after {
+	content: attr(data-highlight-language);
+	top: 0;
+	right: 3px;
+	padding: 3px;
+	font-size: 10px;
+	text-transform: uppercase;
+	position: absolute;
+	color: rgba(0, 0, 0, 0.5);
+} */
+
+/* comments */
+.editor-tokenComment {
+	@apply text-[#4c842e] dark:text-[#7bb25d];
+}
+
+/* {}, () */
+.editor-tokenPunctuation {
+	@apply text-[#34373A] dark:text-[#dadac3];
+}
+
+/* number */
+.editor-tokenProperty {
+	@apply text-[#c05d07] dark:text-[#b8d7a3];
+}
+
+/* string */
+.editor-tokenSelector {
+	@apply text-[#637D2D] dark:text-[#db8b66];
+}
+
+/* =, => */
+.editor-tokenOperator {
+	@apply text-[#6f6f6f] dark:text-[#dadac3];
+}
+
+/* const, function, return */
+.editor-tokenAttr {
+	@apply text-[#22538E] dark:text-[#539ef5];
+}
+
+.editor-tokenVariable {
+	color: rgb(75, 65, 129);
+}
+
+/*  function name */
+.editor-tokenFunction {
+	@apply text-[#c05d07] dark:text-[#ebeba4];
+}

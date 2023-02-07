@@ -7,8 +7,6 @@ import {
 	getAllNotes,
 	getNote,
 	saveNote,
-	_deleteAllNotes,
-	getAllNotesFromElectronStore,
 } from './notes-controller'
 import {
 	checkIfVaultIsSet,
@@ -16,14 +14,10 @@ import {
 	selectExistingVault,
 	_removeVault,
 } from './vault-controller'
-import { checkAndRunMigration } from './migrations'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
 const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
-export const appBaseUrl = isDev
-	? 'http://localhost:3000'
-	: 'https://draftify.vercel.app'
 
 export let mainWindow: BrowserWindow
 export let clientIsReady = false
@@ -39,17 +33,20 @@ function createWindow() {
 			preload: path.join(__dirname, 'preload.js'),
 		},
 		titleBarStyle: 'hidden',
-		// frame: false, // this hides the close/minimze controls as well
 	})
 
 	// and load the index.html of the app.
-	mainWindow.loadURL(appBaseUrl)
-	// open dev tools
+	if (isDev) {
+		console.log('Running client from Dev Server')
+		mainWindow.loadURL('http://localhost:3000')
+	} else {
+		mainWindow.loadFile(path.join(__dirname, 'client', 'index.html'))
+	}
+
+	// Open the DevTools
 	if (process.env.NODE_ENV === 'development') {
 		mainWindow.webContents.openDevTools()
 	}
-
-	// Open the DevTools.
 }
 
 // This method will be called when Electron has finished
@@ -69,7 +66,7 @@ app.whenReady().then(() => {
 		console.log('client has loaded')
 		clientIsReady = true
 	})
-	checkAndRunMigration()
+
 	checkIfWorkspaceIdIsSet()
 	// vault
 	ipcMain.handle('vault/get', checkIfVaultIsSet)
@@ -81,12 +78,8 @@ app.whenReady().then(() => {
 	ipcMain.handle('note/getAll', getAllNotes)
 	ipcMain.handle('note/delete', deleteNote)
 
-	// various
-	ipcMain.handle('migration/getNotesFromStore', getAllNotesFromElectronStore)
-
 	// these methods should not be exposed if node_env != development
 	if (isDev) {
-		ipcMain.handle('_note/deleteAll', _deleteAllNotes)
 		ipcMain.handle('_vault/remove', () => _removeVault(mainWindow))
 	}
 
@@ -103,18 +96,15 @@ app.on('window-all-closed', () => {
 	}
 })
 
-const URL = require('url').URL
-
-app.on('web-contents-created', (event, contents) => {
+app.on('web-contents-created', (_, contents) => {
 	contents.on('will-navigate', (event, navigationUrl) => {
+		event.preventDefault()
 		const parsedUrl = new URL(navigationUrl)
-		const appUrl = new URL(appBaseUrl)
 
-		if (parsedUrl.origin !== appUrl.origin) {
-			event.preventDefault()
-			// This is not a good practice
-			// see: https://www.electronjs.org/docs/latest/tutorial/security#how-12
-			shell.openExternal(parsedUrl.href)
+		// Load only allowed urls
+		// see: https://www.electronjs.org/docs/latest/tutorial/security#how-12
+		if (parsedUrl.pathname === '/_support') {
+			shell.openExternal('https://tally.so/r/wArxyk')
 		}
 	})
 })

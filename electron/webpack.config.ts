@@ -1,8 +1,9 @@
 const path = require('path')
 const webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 export default function webpackConfig(env: any) {
-	console.log({ NODE_ENV: process.env.NODE_ENV })
+	console.log({ NODE_ENV: process.env.NODE_ENV, env })
 
 	const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
 
@@ -29,6 +30,10 @@ export default function webpackConfig(env: any) {
 		plugins: [
 			new webpack.DefinePlugin({
 				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+			}),
+			// copies the client production build into the electron build folder
+			new CopyWebpackPlugin({
+				patterns: [{ from: '../client/build', to: './client' }],
 			}),
 		],
 		output: {

@@ -24,17 +24,6 @@ type ElectronAPI = {
 	getAllNotes: () => Promise<NoteList>
 	deleteNote: (data: { noteId: Note['id'] }) => Promise<void>
 	// -------------------------
-	// various
-	// -------------------------
-	// Migrations
-	migrationCompleted: (version: AppVersion) => void
-	// -------------------------
-	/**
-	 * This method is needed to migrate the old notes, from electron-store to the vault folder.
-	 * (introduced with v1.1.0)
-	 */
-	getAllNotesFromStore: () => Promise<NoteList>
-	// -------------------------
 	/**
 	 * IMPORTANT!
 	 * This is to be used only for testing purposes
