@@ -54,7 +54,7 @@ export default function SearchModal() {
 				onClick={() => setOpenModal(true)}
 			>
 				<Search />
-				<FloatingLabel label='Search (⌘+F)' />
+				<FloatingLabel label='Search' keyShortcut='⌘+F' />
 			</button>
 			<Dialog.Portal>
 				<Dialog.Overlay

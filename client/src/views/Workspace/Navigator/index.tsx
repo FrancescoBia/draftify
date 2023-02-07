@@ -1,7 +1,5 @@
-// import Image, { StaticImageData } from 'next/image'
-import { Link, useLocation } from 'react-router-dom'
-// import { useRouter } from 'next/router'
-// import { prettyFormatDate } from '../../utils/dateFormatter'
+import { useEffect } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import today_note from '../../../assets/images/today_note.png'
 import past_notes from '../../../assets/images/past_notes.png'
 import FloatingLabel from '../../../components/FloatingLabel'
@@ -11,6 +9,28 @@ import { HelpCircle } from 'react-feather'
 type Props = {}
 
 export default function Navigator(props: Props) {
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		function listenForKeyEvent(event: KeyboardEvent) {
+			if (event.metaKey && event.code === 'Digit1') {
+				event.preventDefault()
+				navigate('/')
+			}
+
+			if (event.metaKey && event.code === 'Digit2') {
+				event.preventDefault()
+				navigate('/all')
+			}
+		}
+
+		document.addEventListener('keydown', listenForKeyEvent)
+
+		return () => {
+			document.removeEventListener('keydown', listenForKeyEvent)
+		}
+	}, [navigate])
+
 	return (
 		<div className='p-4 w-[104px] shrink-0 z-10 pb-5'>
 			<div className='fixed h-[calc(100vh-4rem)]'>
@@ -59,6 +79,7 @@ const IconButton = (props: ButtonProps) => {
 			)}
 			<FloatingLabel
 				label={props.href === '/' ? "Today's note" : 'All notes'}
+				keyShortcut={props.href === '/' ? '⌘+1' : '⌘+2'}
 			/>
 
 			{props.href === '/' ? (
