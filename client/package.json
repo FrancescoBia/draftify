@@ -2,6 +2,7 @@
 	"name": "client",
 	"version": "1.1.1",
 	"private": true,
+	"homepage": "./",
 	"dependencies": {
 		"@lexical/react": "^0.7.7",
 		"@radix-ui/react-alert-dialog": "^1.0.2",

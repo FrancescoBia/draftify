@@ -36,8 +36,12 @@ function createWindow() {
 	})
 
 	// and load the index.html of the app.
-	if (isDev) mainWindow.loadURL('http://localhost:3000')
-	else mainWindow.loadFile('')
+	if (isDev) {
+		console.log('Running client from Dev Server')
+		mainWindow.loadURL('http://localhost:3000')
+	} else {
+		mainWindow.loadFile(path.join(__dirname, 'client', 'index.html'))
+	}
 
 	// Open the DevTools
 	if (process.env.NODE_ENV === 'development') {
