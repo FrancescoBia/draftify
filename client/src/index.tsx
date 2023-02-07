@@ -7,8 +7,14 @@ import App from './views/App'
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
 	<React.StrictMode>
-		<BrowserRouter>
-			<App />
-		</BrowserRouter>
+		{window.electronAPI ? (
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
+		) : (
+			<div className='flex justify-center items-center h-screen text-red-600'>
+				Draftify requires Electron to run
+			</div>
+		)}
 	</React.StrictMode>
 )
