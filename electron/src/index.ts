@@ -99,12 +99,21 @@ app.on('window-all-closed', () => {
 app.on('web-contents-created', (_, contents) => {
 	contents.on('will-navigate', (event, navigationUrl) => {
 		event.preventDefault()
-		const urlPathname = navigationUrl.split('/').pop()
+		const url = new URL(navigationUrl)
 
 		// Load only allowed urls
 		// see: https://www.electronjs.org/docs/latest/tutorial/security#how-12
-		if (urlPathname === '_support') {
-			shell.openExternal('https://tally.so/r/wArxyk')
+		if (url.protocol === 'internal:') {
+			// url is a reference to a known url
+			const page = navigationUrl.split('//').pop()
+
+			if (page === 'support') {
+				shell.openExternal('https://tally.so/r/wArxyk')
+			}
+		}
+		// unrecognized url (e.g. external link) - ask before opening
+		else {
+			shell.openExternal(navigationUrl)
 		}
 	})
 })

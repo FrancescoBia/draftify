@@ -38,7 +38,7 @@ export default function SelectVault() {
 				</button>
 			</div>
 			<a
-				href='_support'
+				href='internal://support'
 				className='text-sm text-tertiary hover:text-gray-700 font-medium'
 			>
 				Support
