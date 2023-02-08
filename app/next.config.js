@@ -16,11 +16,11 @@ const nextConfig = {
 		return [
 			{
 				source: '/download/latest/mac-intel.dmg',
-				destination: `https://draftify-app.nyc3.digitaloceanspaces.com/Draftify-${electronAppVersion}.dmg`,
+				destination: `https://github.com/FrancescoBia/draftify/releases/download/v${electronAppVersion}/Draftify-${electronAppVersion}.dmg`,
 			},
 			{
 				source: '/download/latest/mac-silicon.dmg',
-				destination: `https://draftify-app.nyc3.digitaloceanspaces.com/Draftify-${electronAppVersion}-arm64.dmg`,
+				destination: `https://github.com/FrancescoBia/draftify/releases/download/v${electronAppVersion}/Draftify-${electronAppVersion}-arm64.dmg`,
 			},
 		]
 	},
