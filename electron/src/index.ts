@@ -14,6 +14,7 @@ import {
 	selectExistingVault,
 	_removeVault,
 } from './vault-controller'
+import internalUrls, { appProtocol } from '../../shared/lib/internal-urls'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
@@ -103,12 +104,12 @@ app.on('web-contents-created', (_, contents) => {
 
 		// Load only allowed urls
 		// see: https://www.electronjs.org/docs/latest/tutorial/security#how-12
-		if (url.protocol === 'internal:') {
+		if (url.protocol === appProtocol) {
 			// url is a reference to a known url
 			const page = navigationUrl.split('//').pop()
 
-			if (page === 'support') {
-				shell.openExternal('https://tally.so/r/wArxyk')
+			if (page in internalUrls) {
+				shell.openExternal(page)
 			}
 		}
 		// unrecognized url (e.g. external link) - ask before opening
