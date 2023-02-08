@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 export default function Electron() {
 	return (
 		<div className='w-full h-screen flex flex-col'>
@@ -11,7 +9,14 @@ export default function Electron() {
 					<p className='font-semibold'>Draftify needs to be updated</p>
 					<p className='text-sm my-4 text-secondary'>
 						The app should update automatically. If not, try restart it and wait
-						a couple of minutes, or manually download the new version.
+						a couple of minutes, or{' '}
+						<a
+							href='https://draftify.app'
+							className='underline underline-offset-4'
+						>
+							manually download
+						</a>{' '}
+						the new version.
 					</p>
 					<a
 						className='text-secondary'
