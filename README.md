@@ -9,7 +9,15 @@ Draftify is a minimal note and journal app (Mac only). It's a place to quickly w
 
 ![Screenshot of Draftify](./assets/cover-draftify.png)
 
-Rather than for creating perfect notes, Draftify aims to be a place for your unfinished thoughts and drafts. Every day you're given a blank canvas for your ideas and to-do lists (it supports Markdown formatting, which includes checklists). On the other page, you can see the older notes from past days, and edit/review them.
+Draftify is a mindful note app aimed to be a calm place for your passing thoughts, ideas, and to-do lists.
+By opening the app, every day you are given a fresh new note onto which jot down stuff. The note is then archived and a new empty one is created the next day. You can easily go back and see the notes from the previous days (and eventually delete them).
+
+### Features
+
+- Markdown support, including checklists and code blocks
+- Quick Search functionality
+- Keyboard shortcuts
+- Notes are stored locally
 
 ---
 
