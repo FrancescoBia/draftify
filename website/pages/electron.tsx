@@ -13,7 +13,11 @@ export default function Electron() {
 						The app should update automatically. If not, try restart it and wait
 						a couple of minutes, or manually download the new version.
 					</p>
-					<a className='text-secondary' href='https://tally.so/r/wArxyk'>
+					<a
+						className='text-secondary'
+						// use actual url as older versions might not have the newer internal url system
+						href='https://tally.so/r/wArxyk'
+					>
 						Contact support
 					</a>
 				</div>
