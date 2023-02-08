@@ -1,3 +1,4 @@
-electron/*
+assets
 client
+electron/*
 !electron/package.json
