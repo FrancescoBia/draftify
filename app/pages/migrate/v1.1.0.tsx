@@ -16,20 +16,24 @@ export default function Migrate() {
 	const router = useRouter()
 
 	useEffect(() => {
-		window.electronAPI!.getAllNotesFromStore().then((noteList) => {
-			setNoteList(noteList)
-			setNotesToMigrate(
-				Object.keys(noteList).filter(
-					(noteId) =>
-						!checkIfNoteIsEmpty(noteList[noteId as Note['id']].content)
-				).length
-			)
-		})
+		// migration exists only for versions <= v1.1.0
+		;(window.electronAPI! as any)
+			.getAllNotesFromStore()
+			.then((noteList: NoteList) => {
+				setNoteList(noteList)
+				setNotesToMigrate(
+					Object.keys(noteList).filter(
+						(noteId) =>
+							!checkIfNoteIsEmpty(noteList[noteId as Note['id']].content)
+					).length
+				)
+			})
 	}, [])
 
 	useEffect(() => {
 		if (notesToMigrate !== undefined && notesMigrated == notesToMigrate) {
-			window.electronAPI!.migrationCompleted('v1.1.0')
+			// migration exists only for versions <= v1.1.0
+			;(window.electronAPI! as any).migrationCompleted('v1.1.0')
 			window.electronAPI!.getAllNotes()
 			router.push('/')
 		}
