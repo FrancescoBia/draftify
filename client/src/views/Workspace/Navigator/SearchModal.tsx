@@ -117,7 +117,7 @@ const SearchResult = (props: {
 	return props.content && props.content.includes(props.searchParam) ? (
 		<button
 			onClick={handleLinkClick}
-			className='relative z-10 w-full bg-secondary-int px-4 py-3 text-left'
+			className='relative z-10 w-full bg-secondary-int px-4 py-3 text-left focus-within:outline-0'
 		>
 			<h4 className='text-sm font-semibold mb-1'>
 				{prettyFormatDate(props.noteId)}
