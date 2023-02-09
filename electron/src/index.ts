@@ -99,17 +99,19 @@ app.on('window-all-closed', () => {
 
 app.on('web-contents-created', (_, contents) => {
 	contents.on('will-navigate', (event, navigationUrl) => {
-		event.preventDefault()
-		const url = new URL(navigationUrl)
-
 		// Load only allowed urls
 		// see: https://www.electronjs.org/docs/latest/tutorial/security#how-12
-		if (url.protocol === appProtocol) {
-			// url is a reference to a known url
+
+		event.preventDefault()
+		const protocol = navigationUrl.split('//')[0]
+
+		// url is a reference to a known url
+		if (protocol === appProtocol) {
+			// get page
 			const page = navigationUrl.split('//').pop()
 
 			if (page in internalUrls) {
-				shell.openExternal(page)
+				shell.openExternal(internalUrls[page as keyof typeof internalUrls].url)
 			}
 		}
 		// unrecognized url (e.g. external link) - ask before opening
