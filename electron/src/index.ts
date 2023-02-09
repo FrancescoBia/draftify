@@ -116,6 +116,9 @@ app.on('web-contents-created', (_, contents) => {
 		}
 		// unrecognized url (e.g. external link) - ask before opening
 		else {
+			// prevent calling this whit dev server hot reload
+			if (isDev && navigationUrl.startsWith('http://localhost')) return
+
 			dialog
 				.showMessageBox(mainWindow, {
 					message: 'Open external url in browser?',
