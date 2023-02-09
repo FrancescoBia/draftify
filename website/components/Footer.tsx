@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Logo from '../assets/images/logo.png'
 
 export default function Footer() {
 	return (
@@ -9,9 +8,11 @@ export default function Footer() {
 					<div className='mb-6 md:mb-0'>
 						<a href='https://draftify.app' className='flex items-center'>
 							<Image
-								src={Logo}
+								src='/images/logo.png'
 								alt='Draftify Logo'
-								className='w-14 mr-3 shadow-md'
+								width={56}
+								height={56}
+								className='mr-3 drop-shadow-sm'
 							/>
 							<span className='self-center text-2xl font-semibold whitespace-nowrap dark:text-white'>
 								Draftify
