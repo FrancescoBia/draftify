@@ -1,5 +1,13 @@
 # Draftify
 
+<img src="./assets/logo_shadow.png" alt='draftify logo' width="100px"/>
+
+Made by [@frabia](https://twitter.com/frabia__) 👨‍💻
+
+---
+
+### Download links
+
 - [Download for Mac (Apple Silicon)](https://draftify.vercel.app/download/latest/mac-silicon.dmg)
 - [Download for Mac (Intel)](https://draftify.vercel.app/download/latest/mac-intel.dmg)
 
