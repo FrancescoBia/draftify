@@ -24,6 +24,15 @@ const nextConfig = {
 			},
 		]
 	},
+	async redirects() {
+		return [
+			{
+				source: '/',
+				destination: 'https://github.com/FrancescoBia/draftify',
+				permanent: false,
+			},
+		]
+	},
 }
 
 module.exports = nextConfig
