@@ -5,7 +5,7 @@ import NoteList from './NoteList'
 
 export default function Workspace() {
 	return (
-		<div className='flex grow'>
+		<div className='flex grow pt-8'>
 			<Navigator />
 			<Routes>
 				<Route path='/' element={<EditableNote />} />
