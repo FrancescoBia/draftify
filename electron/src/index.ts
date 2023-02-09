@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, shell, dialog } from 'electron'
 import * as path from 'path'
 import { autoUpdater } from 'electron-updater'
 import {
@@ -116,7 +116,19 @@ app.on('web-contents-created', (_, contents) => {
 		}
 		// unrecognized url (e.g. external link) - ask before opening
 		else {
-			shell.openExternal(navigationUrl)
+			dialog
+				.showMessageBox(mainWindow, {
+					message: 'Open external url in browser?',
+					detail: navigationUrl,
+					type: 'info',
+					buttons: ['open', 'cancel'],
+					defaultId: 0,
+				})
+				.then(({ response }) => {
+					if (response === 0) {
+						shell.openExternal(navigationUrl)
+					}
+				})
 		}
 	})
 })
