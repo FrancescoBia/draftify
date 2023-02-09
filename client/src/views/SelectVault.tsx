@@ -1,4 +1,5 @@
 import Logo from '../assets/images/logo.png'
+import internalUrls from '../lib/internal-urls'
 
 export default function SelectVault() {
 	return (
@@ -38,7 +39,7 @@ export default function SelectVault() {
 				</button>
 			</div>
 			<a
-				href='_support'
+				href={internalUrls.support.ref}
 				className='text-sm text-tertiary hover:text-gray-700 font-medium'
 			>
 				Support

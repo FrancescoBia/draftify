@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+	padding: 0;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+* {
+	box-sizing: border-box;
+	outline-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+	html {
+		color-scheme: dark;
+	}
+	body {
+		color: white;
+		background: black;
+	}
+}
+
+.text-primary {
+	@apply text-gray-900 dark:text-gray-100;
+}
+
+.text-secondary {
+	@apply text-gray-600 dark:text-gray-400;
+
+	+ a,
+	& a {
+		@apply hover:text-gray-700 dark:hover:text-gray-300;
+	}
+}
+
+.text-tertiary {
+	@apply text-gray-400 dark:text-gray-600;
+}
+
+.text-accent {
+	@apply text-blue-500;
+}
+
+.bg-primary {
+	@apply bg-white dark:bg-black;
+}
+
+.bg-primary-int {
+	@apply bg-white dark:bg-black hover:bg-gray-100 dark:hover:bg-gray-900;
+}
+
+.bg-secondary {
+	@apply bg-gray-100 dark:bg-gray-900;
+}
+
+.bg-secondary-int {
+	@apply bg-gray-100 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800;
+}
+
+.bg-tertiary {
+	@apply bg-gray-200 dark:bg-gray-800;
+}
+
+.bg-tertiary-int {
+	@apply bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700;
+}
+
+/* Components */
+
+.button-secondary {
+	@apply text-gray-900 flex gap-2 items-center bg-gray-100 focus:outline-none hover:bg-gray-200 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 fill-gray-900 dark:fill-white;
+}
+
+.button-destroy {
+	@apply text-red-900 flex gap-2 items-center bg-red-100 focus:outline-none hover:bg-red-200 focus:ring-4 focus:ring-red-200 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-800 dark:text-white dark:border-red-600 dark:hover:bg-red-700 dark:hover:border-red-600 dark:focus:ring-red-700 fill-red-900 dark:fill-white;
+}
+
+/* Used for the Electron title bar */
+.webkit-app-drag {
+	-webkit-app-region: drag;
+}
+
+/* Lists setting */
+
+ol {
+	list-style-type: decimal;
+}
+
+ol ol {
+	list-style-type: lower-alpha;
+}
+
+ol ol ol {
+	list-style-type: decimal;
+}
+
+ul {
+	list-style-type: disc;
+}
+
+ul ul {
+	list-style-type: circle;
+}
+
+ul ul ul {
+	list-style-type: disc;
+}
+
+/* Spinner elem classes */
+
+.spinner {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 4px rgba(0, 0, 0, 0.25) solid;
+	border-top: 4px black solid;
+	border-radius: 50%;
+	-webkit-animation: spin2 0.75s infinite linear;
+	animation: spin2 0.75s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+	from {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}
+@keyframes spin2 {
+	from {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}
+
+/* icon */
+
+.make-iso {
+	transform: skew(59deg, 334deg) scale(0.5);
+}

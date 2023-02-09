@@ -14,11 +14,11 @@ const electronAPI: ElectronAPI = {
 	getAllNotes: () => ipcRenderer.invoke('note/getAll'),
 	deleteNote: (data) => ipcRenderer.invoke('note/delete', data),
 	// ---------------------------------
+	_removeVault: () => ipcRenderer.invoke('_vault/remove'),
 	// Development-only methods
 	...((process.env.NODE_ENV === 'development'
 		? {
 				_deleteAllNotes: () => ipcRenderer.invoke('_note/deleteAll'),
-				_removeVault: () => ipcRenderer.invoke('_vault/remove'),
 		  }
 		: {}) as Partial<ElectronAPI>),
 }

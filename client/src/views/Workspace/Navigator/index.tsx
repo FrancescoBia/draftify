@@ -5,6 +5,7 @@ import past_notes from '../../../assets/images/past_notes.png'
 import FloatingLabel from '../../../components/FloatingLabel'
 import SearchModal from './SearchModal'
 import { HelpCircle } from 'react-feather'
+import internalUrls from '../../../lib/internal-urls'
 
 type Props = {}
 
@@ -49,7 +50,7 @@ export default function Navigator(props: Props) {
 				<SearchModal />
 				<a
 					className='text-gray-400 bg-primary-int rounded-lg p-3 m-3 flex items-center group/label justify-center absolute bottom-0'
-					href='_support'
+					href={internalUrls.support.ref}
 				>
 					<HelpCircle />
 					<FloatingLabel label='Support' />

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, shell, dialog } from 'electron'
 import * as path from 'path'
 import { autoUpdater } from 'electron-updater'
 import {
@@ -14,6 +14,7 @@ import {
 	selectExistingVault,
 	_removeVault,
 } from './vault-controller'
+import internalUrls, { appProtocol } from '../../client/src/lib/internal-urls'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 
@@ -98,13 +99,36 @@ app.on('window-all-closed', () => {
 
 app.on('web-contents-created', (_, contents) => {
 	contents.on('will-navigate', (event, navigationUrl) => {
-		event.preventDefault()
-		const urlPathname = navigationUrl.split('/').pop()
-
 		// Load only allowed urls
 		// see: https://www.electronjs.org/docs/latest/tutorial/security#how-12
-		if (urlPathname === '_support') {
-			shell.openExternal('https://tally.so/r/wArxyk')
+
+		event.preventDefault()
+		const protocol = navigationUrl.split('//')[0]
+
+		// url is a reference to a known url
+		if (protocol === appProtocol) {
+			// get page
+			const page = navigationUrl.split('//').pop()
+
+			if (page in internalUrls) {
+				shell.openExternal(internalUrls[page as keyof typeof internalUrls].url)
+			}
+		}
+		// unrecognized url (e.g. external link) - ask before opening
+		else {
+			dialog
+				.showMessageBox(mainWindow, {
+					message: 'Open external url in browser?',
+					detail: navigationUrl,
+					type: 'info',
+					buttons: ['open', 'cancel'],
+					defaultId: 0,
+				})
+				.then(({ response }) => {
+					if (response === 0) {
+						shell.openExternal(navigationUrl)
+					}
+				})
 		}
 	})
 })
