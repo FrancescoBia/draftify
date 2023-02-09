@@ -5,7 +5,7 @@ import past_notes from '../../../assets/images/past_notes.png'
 import FloatingLabel from '../../../components/FloatingLabel'
 import SearchModal from './SearchModal'
 import { HelpCircle } from 'react-feather'
-import internalUrls from '../../../../../shared/lib/internal-urls'
+import internalUrls from '../../../lib/internal-urls'
 
 type Props = {}
 

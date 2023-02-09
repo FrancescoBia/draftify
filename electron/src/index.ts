@@ -14,7 +14,7 @@ import {
 	selectExistingVault,
 	_removeVault,
 } from './vault-controller'
-import internalUrls, { appProtocol } from '../../shared/lib/internal-urls'
+import internalUrls, { appProtocol } from '../../client/src/lib/internal-urls'
 
 console.log({ NODE_ENV: process.env.NODE_ENV })
 

@@ -1,5 +1,5 @@
 import Logo from '../assets/images/logo.png'
-import internalUrls from '../../../shared/lib/internal-urls'
+import internalUrls from '../lib/internal-urls'
 
 export default function SelectVault() {
 	return (
