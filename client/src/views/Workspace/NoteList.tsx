@@ -1,15 +1,10 @@
 import { useContext } from 'react'
 import { NotesContext } from '../App'
 import Editor from '../../components/LexicalEditor'
-import {
-	prettyFormatDate,
-	getNoteIdFromDate,
-} from '../../../src/utils/dateFormatter'
+import { prettyFormatDate, getNoteIdFromDate } from '../../utils/dateFormatter'
 import { Link } from 'react-router-dom'
 
-interface AllNotesProps {}
-
-export default function NoteList(props: AllNotesProps) {
+export default function NoteList() {
 	const { allNotes } = useContext(NotesContext)
 
 	return (
