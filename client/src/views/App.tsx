@@ -54,7 +54,7 @@ export default function App() {
 	return (
 		<>
 			{/* Electron window frame */}
-			<div className='webkit-app-drag h-7 w-full shrink-0 fixed z-30 cursor-default backdrop-blur-xs bg-gray-200 opacity-0 hover:opacity-100 bg-opacity-50 transition-opacity duration-200' />
+			<div className='webkit-app-drag h-7 w-full shrink-0 fixed z-30 cursor-default backdrop-blur-xs bg-gray-200 dark:bg-gray-800 opacity-0 hover:opacity-100 bg-opacity-50 transition-opacity duration-200' />
 
 			{/* check that initial data has been fetched */}
 			{isVaultSet === false ? (
